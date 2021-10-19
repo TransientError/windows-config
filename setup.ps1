@@ -42,7 +42,7 @@ Install-If-Not-Installed -packageName scoop -installScript {
 }
 
 Install-If-Not-Installed -packageName ZLocation -installScript {
-    Install-Package -Name ZLocation -Force
+    Install-Module -Name ZLocation -Force
 }
 
 # starship
