@@ -1,4 +1,4 @@
-param([bool]$update = $false)
+param([bool]$update = $false, [bool]$work = $false)
 
 function Install-If-Not-Installed {
     param(
@@ -14,12 +14,22 @@ function Install-If-Not-Installed {
 function Update-Config-Or-Print-Error {
     param(
         [string]$sourcePath,
+        [string]$content,
         [string]$configPath
     )
     
     if ($update -or -not (Test-Path $configPath)) {
-        Copy-Item $sourcePath $configPath -Force
-    } elseif (-not $update) {
+        if ($sourcePath) {
+            Copy-Item $sourcePath $configPath -Force
+        }
+        elseif ($content) {
+            Out-File $content -FilePath $configPath -Encoding UTF8            
+        }
+        else {
+            Write-Error "No source file or content specified"
+        }
+    }
+    elseif (-not $update) {
         Write-Error "${(Get-Item $sourcePath).Basename} already exists at $configPath"
     }
 }
@@ -51,3 +61,19 @@ Install-If-Not-Installed -packageName starship -installScript {
 }
 
 Update-Config-Or-Print-Error -sourcePath .\starship\starship.toml -configPath  "$env:USERPROFILE\.config\starship.toml"
+
+# Git
+$gitConfigUser = if ($work) {
+    Get-Content -Path .\git\gitconfig.work -Encoding UTF8
+}
+else {
+    ""
+}
+
+$gitConfigCommon = Get-Content -Path .\git\gitconfig.common -Encoding UTF8
+
+Update-Config-Or-Print-Error -content "$gitConfigUser\n$gitConfigCommon" -configPath "$env:USERPROFILE\.gitconfig"
+
+Install-If-Not-Installed -packageName git -installScript {
+    scoop install git
+}
