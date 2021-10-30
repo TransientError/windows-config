@@ -38,6 +38,11 @@ function Update-Config-Or-Print-Error {
     }
 }
 
+function Is-Administrator {
+    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
 $startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
 Write-Output "Running with flags update=$update and work=$work..."
@@ -57,6 +62,7 @@ if ((Get-ExecutionPolicy).ToLower -ne "RemoteSigned") {
 
 Install-If-Not-Installed -provides scoop -installScript {
     Invoke-WebRequest -useb get.scoop.sh | Invoke-Expression
+    scoop bucket add extras
 }
 
 Install-If-Not-Installed -provides Invoke-ZLocation -installScript {
@@ -91,7 +97,6 @@ Install-If-Not-Installed -provides git -installScript {
 }
 
 # komorebi
-
 Install-If-Not-Installed -provides komorebi -installScript {
   scoop bucket add komorebi https://github.com/LGUG2Z/komorebi-bucket
   scoop install komorebi
@@ -99,3 +104,30 @@ Install-If-Not-Installed -provides komorebi -installScript {
 
 Update-Config-Or-Print-Error -content komorebi\komorebi.ahk -configPath $startup\komorebi.ahk
 
+# neovim
+Install-If-Not-Installed -provides nvim -installScript {
+    scoop install neovim
+}
+
+Update-Config-Or-Print-Error -content .\neovim\init.vim -configPath $env:USERPROFILE\AppData\Local\nvim\init.vim
+
+# neovide
+Install-If-Not-Installed -provides neovide -installScript {
+    scoop install neovide
+}
+
+if (Is-Administrator) {
+    if (!(Test-Path HKCR:)) {
+        Write-Output "Setting HKEY_CLASSES_ROOT to HKCR"
+        New-PSDrive -PSProvider registry -Root HKEY_CLASSES_ROOT -Name HKCR
+    }
+    if (!(Test-Path -LiteralPath HKCR:\*\shell\"Open With Neovide"\command)) {
+        Write-Output "Setting registry keys for Neovide context menu"
+        New-Item HKCR:`*\shell\"Open With Neovide" -ItemType "directory"
+        New-Item HKCR:`*\shell\"Open With Neovide"\command -Value "$env:USERPROFILE\scoop\shims\neovide.exe %1"
+    } else {
+        Write-Error "Neovide registry keys already set"
+    }
+} else {
+    Write-Output "Run as adminstrator to install neovide context menu"
+}
