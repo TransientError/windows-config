@@ -22,3 +22,6 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
+
+$env:startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Startup"
+
