@@ -45,7 +45,7 @@ Update-Config-Or-Print-Error -sourcePath .\powershell\Microsoft.PowerShell_profi
 
 # Setup PSGallery if needed
 if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne "Trusted") {
-    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted -Force
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted 
 }
 
 # Scoop
