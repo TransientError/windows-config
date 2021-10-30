@@ -43,6 +43,35 @@ function Is-Administrator {
     return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
+$REGISTRY_ROOTS = @{
+    HKEY_CLASSES_ROOT = "HKCR";
+}
+function Set-Registry {
+    param(
+        [string]$root,
+        [string]$program,
+        [string]$key,
+        [string]$value
+    )
+
+    if (Is-Administrator) {
+        $driveRoot = $REGISTRY_ROOTS.$root
+        if (!(Test-Path $driveRoot)) {
+            Write-Output "Setting $root to $driveRoot"
+            New-PSDrive -PSProvider registry -Root $root -Name $driveRoot
+        }
+        if (!(Test-Path -LiteralPath $key)) {
+            Write-Output "Setting registry keys for $program context menu"
+            New-Item $key -Value $value -Force
+        } else {
+            Write-Error "$program registry keys already set"
+        }
+    } else {
+        Write-Output "Run as adminstrator to install $program context menu"
+    }
+}
+
+
 $startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
 Write-Output "Running with flags update=$update and work=$work..."
@@ -116,18 +145,17 @@ Install-If-Not-Installed -provides neovide -installScript {
     scoop install neovide
 }
 
-if (Is-Administrator) {
-    if (!(Test-Path HKCR:)) {
-        Write-Output "Setting HKEY_CLASSES_ROOT to HKCR"
-        New-PSDrive -PSProvider registry -Root HKEY_CLASSES_ROOT -Name HKCR
-    }
-    if (!(Test-Path -LiteralPath HKCR:\*\shell\"Open With Neovide"\command)) {
-        Write-Output "Setting registry keys for Neovide context menu"
-        New-Item HKCR:`*\shell\"Open With Neovide" -ItemType "directory"
-        New-Item HKCR:`*\shell\"Open With Neovide"\command -Value "$env:USERPROFILE\scoop\shims\neovide.exe %1"
-    } else {
-        Write-Error "Neovide registry keys already set"
-    }
-} else {
-    Write-Output "Run as adminstrator to install neovide context menu"
+
+Set-Registry -root HKEY_CLASSES_ROOT `
+    -program neovide `
+    -key HKCR:`*\shell\"Open With Neovide" `
+    -value "$env:USERPROFILE\scoop\shims\less.exe"
+
+# less
+Install-If-Not-Installed -provides less -installScript {
+    scoop install less
 }
+
+Set-Registry -root HKEY_CLASSES_ROOT `
+    -program less `
+    -key HKCR:`*\shell\"Open with less"\command -value "$env:USERPROFILE\scoop\shims\less.exe %1"
