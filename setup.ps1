@@ -38,6 +38,8 @@ function Update-Config-Or-Print-Error {
     }
 }
 
+$startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+
 Write-Output "Running with flags update=$update and work=$work..."
 
 # Powershell
@@ -87,3 +89,13 @@ Update-Config-Or-Print-Error `
 Install-If-Not-Installed -provides git -installScript {
     scoop install git
 }
+
+# komorebi
+
+Install-If-Not-Installed -provides komorebi -installScript {
+  scoop bucket add komorebi https://github.com/LGUG2Z/komorebi-bucket
+  scoop install komorebi
+}
+
+Update-Config-Or-Print-Error -content komorebi\komorebi.ahk -configPath $startup\komorebi.ahk
+
