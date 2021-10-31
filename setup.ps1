@@ -203,3 +203,23 @@ Do-Program -program "chrome" -block {
         scoop install googlechrome
     }
 }
+
+# VSCode
+Do-Program -program "vscode" -block {
+    Install-If-Not-Installed -provides code -installScript {
+        scoop install vscode
+    }
+}
+
+Do-Program -program "windows-terminal" -block {
+    Install-If-Not-Installed `
+    -providesPath "$env:USERPROFILE\windows-store-shortcuts\Windows Terminal.lnk" `
+    -installScript {
+        scoop install windows-terminal
+    }
+}
+
+#Startup
+Do-Program -program "startup" -block {
+    Update-Config-Or-Print-Error -sourcePath .\startup\startup.ahk -configPath $startup\startup.ahk
+}
