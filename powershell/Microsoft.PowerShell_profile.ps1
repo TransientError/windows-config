@@ -23,5 +23,5 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
-$env:startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Startup"
+$env:startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
