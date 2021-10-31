@@ -177,8 +177,8 @@ Install-If-Not-Installed -provides neovide -installScript {
 
 Set-Registry -root HKEY_CLASSES_ROOT `
     -program neovide `
-    -key HKCR:`*\shell\"Open With Neovide" `
-    -value "$env:USERPROFILE\scoop\shims\neovide.exe `'%1`'"
+    -key HKCR:`*\shell\"Open With Neovide"\command `
+    -value "$env:USERPROFILE\scoop\shims\neovide.exe `"%1`""
 }
 
 # less
@@ -189,5 +189,6 @@ Do-Program -program "less" -block {
 
     Set-Registry -root HKEY_CLASSES_ROOT `
         -program less `
-        -key HKCR:`*\shell\"Open with less"\command -value "$env:USERPROFILE\scoop\shims\less.exe `'%1`'"
+        -key HKCR:`*\shell\"Open with less"\command `
+        -value "$env:USERPROFILE\scoop\shims\less.exe `"%1`""
 }
