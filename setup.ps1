@@ -116,8 +116,11 @@ $startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Progra
 
 Write-Output "Running with flags update=$update and work=$work..."
 
-# Powershell
 Do-Program -program "powershell" -block {
+    Install-If-Not-Installed -program "powershell 7" -provides pwsh -installScript {
+        scoop install pwsh
+    }
+
     Update-Config-Or-Print-Error -sourcePath .\powershell\Microsoft.PowerShell_profile.ps1 -configPath $profile
 
     # Setup PSGallery if needed
@@ -126,7 +129,6 @@ Do-Program -program "powershell" -block {
     }
 }
 
-# Scoop
 Do-Program -program "scoop" -block {
     if ((Get-ExecutionPolicy).ToLower -ne "RemoteSigned") {
         Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
@@ -145,7 +147,6 @@ Do-Program -program "zlocation" -block {
     }
 }
 
-# starship
 Do-Program -program "starship" -block {
     Install-If-Not-Installed -program starship -provides starship -installScript {
         scoop install starship
@@ -154,7 +155,6 @@ Do-Program -program "starship" -block {
     Update-Config-Or-Print-Error -sourcePath .\starship\starship.toml -configPath  "$env:USERPROFILE\.config\starship.toml"
 }
 
-# Git
 Do-Program -program "git" -block {
     $gitConfigUser = if ($work) {
         Get-Content -Path .\git\gitconfig-work -Encoding UTF8
@@ -176,7 +176,6 @@ Do-Program -program "git" -block {
     }
 }
 
-# komorebi
 Do-Program -program "komorebi" -block {
     Install-If-Not-Installed -program komorebi -provides komorebi -installScript {
         scoop bucket add komorebi https://github.com/LGUG2Z/komorebi-bucket
@@ -186,7 +185,6 @@ Do-Program -program "komorebi" -block {
     Update-Config-Or-Print-Error -sourcePath komorebi\komorebi.ahk -configPath $startup\komorebi.ahk
 }
 
-# neovim
 Do-Program -program "neovim" -block {
     Install-If-Not-Installed -program neovim -provides nvim -installScript {
         scoop install neovim
@@ -195,7 +193,6 @@ Do-Program -program "neovim" -block {
     Update-Config-Or-Print-Error -content .\neovim\init.vim -configPath $env:USERPROFILE\AppData\Local\nvim\init.vim
 }
 
-# neovide
 Do-Program -program "neovide" -block {
     Install-If-Not-Installed -program neovide -provides neovide -installScript {
         scoop install neovide
@@ -208,7 +205,6 @@ Do-Program -program "neovide" -block {
         -value "$env:USERPROFILE\scoop\shims\neovide.exe `"%1`""
 }
 
-# less
 Do-Program -program "less" -block {
     Install-If-Not-Installed -program less -provides less -installScript {
         scoop install less
@@ -220,7 +216,6 @@ Do-Program -program "less" -block {
         -value "$env:USERPROFILE\scoop\shims\less.exe `"%1`""
 }
 
-# Chrome
 Do-Program -program "chrome" -block {
     Install-If-Not-Installed $
         -program chrome `
@@ -230,7 +225,6 @@ Do-Program -program "chrome" -block {
         }
 }
 
-# VSCode
 Do-Program -program "vscode" -block {
     Install-If-Not-Installed -provides code -program vscode -installScript {
         scoop install vscode
@@ -250,12 +244,10 @@ Do-Program -program "windows-terminal" -block {
         -configPath $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 }
 
-#Startup
 Do-Program -program "startup" -block {
     Update-Config-Or-Print-Error -sourcePath .\startup\startup.ahk -configPath $startup\startup.ahk
 }
 
-#ssh
 Do-Program -program "ssh" -block {
     Install-If-Not-Installed -capability "OpenSSH.Client" -admin -program "ssh" -installScript {
         Add-WindowsCapability -CapabilityName "OpenSSH.Client"
