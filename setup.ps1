@@ -1,14 +1,39 @@
 param([switch]$update = $false, [switch]$work = $false, [string[]]$programs = @())
 
+function Test-Administrator {
+    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+function Test-Capability {
+    param([string]$capabilityName)
+
+    if (Test-Administrator) {
+        $capability = Get-WindowsCapability -Online | Where-Object Name -Like "$capabilityName*"
+        return $capability.State -eq "Installed"
+    } else {
+        Write-Error "Can't test capability without admin, defaulting to true"
+        return $true   
+    }
+}
+
 function Install-If-Not-Installed {
     param(
         [string]$provides,
         [string]$providesPath,
-        [scriptblock]$installScript
+        [string]$capability,
+        [scriptblock]$installScript,
+        [switch]$admin,
+        [string]$program
     )
 
     if (($provides -and -not (Get-Command $provides -ErrorAction SilentlyContinue)) -or `
-        ($providesPath -and -not (Test-Path $providesPath -ErrorAction SilentlyContinue))) {
+        ($providesPath -and -not (Test-Path $providesPath -ErrorAction SilentlyContinue)) -or `
+        ($capability -and -not (Test-Capability $capability))) {
+        if ($admin -and !(Test-Administrator)) {
+            Write-Error "Can't install $program without admin"
+            return
+        }
         $installScript.Invoke()
     }
 }
@@ -42,10 +67,6 @@ function Update-Config-Or-Print-Error {
     }
 }
 
-function Is-Administrator {
-    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-    return $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-}
 
 $REGISTRY_ROOTS = @{
     HKEY_CLASSES_ROOT = "HKCR";
@@ -58,7 +79,7 @@ function Set-Registry {
         [string]$value
     )
 
-    if (Is-Administrator) {
+    if (Test-Administrator) {
         $driveRoot = $REGISTRY_ROOTS.$root
         if (!(Test-Path $driveRoot)) {
             Write-Output "Setting $root to $driveRoot"
@@ -84,7 +105,9 @@ function Do-Program {
         [string]$program
     )
     if (($programs.Count -eq 0) -or ($programs -Contains $program)) {
+        Write-Output "Installing $program"
         $block.Invoke()
+        Write-Output "$program installed"
     }
 }
 
@@ -109,7 +132,7 @@ Do-Program -program "scoop" -block {
         Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     }
 
-    Install-If-Not-Installed -provides scoop -installScript {
+    Install-If-Not-Installed -program scoop -provides scoop -installScript {
         Invoke-WebRequest -useb get.scoop.sh | Invoke-Expression
         scoop bucket add extras
         scoop config kiennq
@@ -117,14 +140,14 @@ Do-Program -program "scoop" -block {
 }
 
 Do-Program -program "zlocation" -block {
-    Install-If-Not-Installed -provides Invoke-ZLocation -installScript {
+    Install-If-Not-Installed -program zlocation -provides Invoke-ZLocation -installScript {
         Install-Module -Name ZLocation -Force
     }
 }
 
 # starship
 Do-Program -program "starship" -block {
-    Install-If-Not-Installed -provides starship -installScript {
+    Install-If-Not-Installed -program starship -provides starship -installScript {
         scoop install starship
     }
 
@@ -148,14 +171,14 @@ Do-Program -program "git" -block {
         -content ($gitConfigContent -join "`r`n") `
         -configPath "$env:USERPROFILE\.gitconfig"
 
-    Install-If-Not-Installed -provides git -installScript {
+    Install-If-Not-Installed -program git -provides git -installScript {
         scoop install git
     }
 }
 
 # komorebi
 Do-Program -program "komorebi" -block {
-    Install-If-Not-Installed -provides komorebi -installScript {
+    Install-If-Not-Installed -program komorebi -provides komorebi -installScript {
         scoop bucket add komorebi https://github.com/LGUG2Z/komorebi-bucket
         scoop install komorebi
     }
@@ -165,7 +188,7 @@ Do-Program -program "komorebi" -block {
 
 # neovim
 Do-Program -program "neovim" -block {
-    Install-If-Not-Installed -provides nvim -installScript {
+    Install-If-Not-Installed -program neovim -provides nvim -installScript {
         scoop install neovim
     }
 
@@ -174,7 +197,7 @@ Do-Program -program "neovim" -block {
 
 # neovide
 Do-Program -program "neovide" -block {
-    Install-If-Not-Installed -provides neovide -installScript {
+    Install-If-Not-Installed -program neovide -provides neovide -installScript {
         scoop install neovide
     }
 
@@ -187,7 +210,7 @@ Do-Program -program "neovide" -block {
 
 # less
 Do-Program -program "less" -block {
-    Install-If-Not-Installed -provides less -installScript {
+    Install-If-Not-Installed -program less -provides less -installScript {
         scoop install less
     }
 
@@ -199,20 +222,24 @@ Do-Program -program "less" -block {
 
 # Chrome
 Do-Program -program "chrome" -block {
-    Install-If-Not-Installed -providesPath "C:\Program Files\Google\Chrome\Application\chrome.exe" -installScript {
-        scoop install googlechrome
-    }
+    Install-If-Not-Installed $
+        -program chrome `
+        -providesPath "C:\Program Files\Google\Chrome\Application\chrome.exe" `
+        -installScript {
+            scoop install googlechrome
+        }
 }
 
 # VSCode
 Do-Program -program "vscode" -block {
-    Install-If-Not-Installed -provides code -installScript {
+    Install-If-Not-Installed -provides code -program vscode -installScript {
         scoop install vscode
     }
 }
 
 Do-Program -program "windows-terminal" -block {
     Install-If-Not-Installed `
+    -program "windows-terminal"
     -providesPath "$env:USERPROFILE\windows-store-shortcuts\Windows Terminal.lnk" `
     -installScript {
         scoop install windows-terminal
@@ -222,4 +249,15 @@ Do-Program -program "windows-terminal" -block {
 #Startup
 Do-Program -program "startup" -block {
     Update-Config-Or-Print-Error -sourcePath .\startup\startup.ahk -configPath $startup\startup.ahk
+}
+
+#ssh
+Do-Program -program "ssh" -block {
+    Install-If-Not-Installed -capability "OpenSSH.Client" -admin -program "ssh" -installScript {
+        Add-WindowsCapability -CapabilityName "OpenSSH.Client"
+    }
+    Install-If-Not-Installed -capability "OpenSSH.Server" -admin -program "ssh" -installScript {
+        Add-WindowsCapability -CapabilityName "OpenSSH.Server"
+        Set-Service -Name sshd -StartupType Automatic
+    }
 }
