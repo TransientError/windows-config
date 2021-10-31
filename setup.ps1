@@ -244,6 +244,10 @@ Do-Program -program "windows-terminal" -block {
     -installScript {
         scoop install windows-terminal
     }
+
+    Update-Config-Or-Print-Error `
+        -sourcePath windows-terminal\settings.json `
+        -configPath $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 }
 
 #Startup
