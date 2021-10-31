@@ -1,12 +1,14 @@
-param([switch]$update = $false, [switch]$work = $false, [string[]]$programs=@())
+param([switch]$update = $false, [switch]$work = $false, [string[]]$programs = @())
 
 function Install-If-Not-Installed {
     param(
         [string]$provides,
+        [string]$providesPath,
         [scriptblock]$installScript
     )
 
-    if (-not (Get-Command $provides -ErrorAction SilentlyContinue)) {
+    if (($provides -and -not (Get-Command $provides -ErrorAction SilentlyContinue)) -or `
+        ($providesPath -and -not (Test-Path $providesPath -ErrorAction SilentlyContinue))) {
         $installScript.Invoke()
     }
 }
@@ -65,10 +67,12 @@ function Set-Registry {
         if ($update -or !(Test-Path -LiteralPath $key)) {
             Write-Output "Setting registry keys for $program context menu"
             New-Item $key -Value $value -Force
-        } else {
+        }
+        else {
             Write-Error "$program registry keys already set"
         }
-    } else {
+    }
+    else {
         Write-Output "Run as adminstrator to install $program context menu"
     }
 }
@@ -170,15 +174,15 @@ Do-Program -program "neovim" -block {
 
 # neovide
 Do-Program -program "neovide" -block {
-Install-If-Not-Installed -provides neovide -installScript {
-    scoop install neovide
-}
+    Install-If-Not-Installed -provides neovide -installScript {
+        scoop install neovide
+    }
 
 
-Set-Registry -root HKEY_CLASSES_ROOT `
-    -program neovide `
-    -key HKCR:`*\shell\"Open With Neovide"\command `
-    -value "$env:USERPROFILE\scoop\shims\neovide.exe `"%1`""
+    Set-Registry -root HKEY_CLASSES_ROOT `
+        -program neovide `
+        -key HKCR:`*\shell\"Open With Neovide"\command `
+        -value "$env:USERPROFILE\scoop\shims\neovide.exe `"%1`""
 }
 
 # less
@@ -191,4 +195,11 @@ Do-Program -program "less" -block {
         -program less `
         -key HKCR:`*\shell\"Open with less"\command `
         -value "$env:USERPROFILE\scoop\shims\less.exe `"%1`""
+}
+
+# Chrome
+Do-Program -program "chrome" -block {
+    Install-If-Not-Installed -providesPath "C:\Program Files\Google\Chrome\Application\chrome.exe" -installScript {
+        scoop install googlechrome
+    }
 }
