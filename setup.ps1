@@ -190,7 +190,7 @@ Do-Program -program "neovim" -block {
         scoop install neovim
     }
 
-    Update-Config-Or-Print-Error -content .\neovim\init.vim -configPath $env:USERPROFILE\AppData\Local\nvim\init.vim
+    Update-Config-Or-Print-Error -sourcePath .\neovim\init.vim -configPath $env:USERPROFILE\AppData\Local\nvim\init.vim
 }
 
 Do-Program -program "neovide" -block {
