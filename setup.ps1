@@ -38,6 +38,29 @@ function Install-If-Not-Installed {
     }
 }
 
+function Backup-File-And-Write {
+    param(
+        [string]$ext, 
+        [ValidateSet($null, $true, $false)]
+        [object] $exists,
+        [string] $configPath,
+        [block] $writeBlock
+    )
+
+    if ($null -eq $exists) {
+        $exists = Test-Path $configPath -ErrorAction SilentlyContinue
+    }
+
+    if ($exists) {
+        $backupPath = Join-Path $configPath "." $ext
+        Write-Output "Backing up $configPath to $backupPath"
+        Move-Item -path $configPath -destination $backupPath -force
+    }
+
+    $writeBlock.Invoke()
+}
+
+
 function Update-Config-Or-Print-Error {
     param(
         [string]$sourcePath,
@@ -47,16 +70,21 @@ function Update-Config-Or-Print-Error {
     )
     $sourcePathName = (split-path $configPath -Leaf)
     
-    if ($update -or -not (Test-Path $configPath)) {
+    $configExists = Test-Path $configPath -ErrorAction SilentlyContinue
+    if ($update -or -not $configExists) {
         Write-Output "Updating $sourcePathName..."
 
         if ($sourcePath) {
             Write-Output "copying $sourcePath to $configPath..."
-            Copy-Item $sourcePath $configPath -Force
+            Backup-File-And-Write -ext "bck" -exists $configExists -writeBlock {
+                Copy-Item -path $sourcePath -destination $configPath -force
+            }
         }
         elseif ($content) {
             Write-Output "writing $content to $configPath"
-            Out-File -InputObject $content -FilePath $configPath -Encoding UTF8            
+            Backup-File-And-Write -ext "bck" -exists $configExists -writeBlock {
+                Out-File -InputObject $content -FilePath $configPath -Encoding UTF8            
+            }
         }
         else {
             Write-Error "No source file or content specified"
@@ -105,7 +133,7 @@ function Do-Program {
         [string]$program
     )
     if (($programs.Count -eq 0) -or ($programs -Contains $program)) {
-        Write-Output "Installing $program"
+        Write-Output "Checking $program"
         $block.Invoke()
         Write-Output "$program installed"
     }
