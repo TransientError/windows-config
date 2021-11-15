@@ -124,16 +124,16 @@ return
 
 ; Switch to an equal-width, max-height column layout on the main workspace, Alt + Shift + C
 !+s::
-Run, komorebic.exe change-layout columns
+Run, komorebic.exe change-layout columns, Hide
 return
 
 ; Switch to the default bsp tiling layout on the main workspace, Alt + Shift + T
 !+a::
-Run, komorebic.exe change-layout bsp
+Run, komorebic.exe change-layout bsp, Hide
 return
 
 !+f::
-Run, komorebic.exe change-layout rows
+Run, komorebic.exe change-layout rows, Hide
 return
 
 ; Toggle the Monocle layout for the focused window, Alt + Shift + F
