@@ -136,10 +136,6 @@ return
 Run, komorebic.exe change-layout rows
 return
 
-!+s::
-Run, komorebic.exe change-layout columns
-return
-
 ; Toggle the Monocle layout for the focused window, Alt + Shift + F
 !+d::
 Run, komorebic.exe toggle-monocle, , Hide

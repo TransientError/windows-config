@@ -13,7 +13,7 @@ Run, C:\Program Files\Microsoft VS Code\code.exe
 return
 ; terminal
 #t:: 
-Run, C:\Users\kgqw5\windows-store-shortcuts\Windows Terminal
+Run % C:\Users\ A_UserName \windows-store-shortcuts\Windows Terminal
 return
 
 #f::
