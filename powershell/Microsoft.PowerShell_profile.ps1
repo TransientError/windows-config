@@ -25,3 +25,7 @@ if (Test-Path($ChocolateyProfile)) {
 
 $env:startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
+$solutionPackagerPath = 'C:\Program Files\PackageManagement\NuGet\Packages\Microsoft.CrmSdk.CoreTools.9.1.0.92\content\bin\coretools\SolutionPackager.exe'
+if (Test-Path($solutionPackagerPath)) {
+  Set-Alias -Name SolutionPackager -Value $solutionPackagerPath
+}

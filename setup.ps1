@@ -44,7 +44,7 @@ function Backup-File-And-Write {
         [ValidateSet($null, $true, $false)]
         [object] $exists,
         [string] $configPath,
-        [block] $writeBlock
+        [scriptblock] $writeBlock
     )
 
     if ($null -eq $exists) {
@@ -52,7 +52,7 @@ function Backup-File-And-Write {
     }
 
     if ($exists) {
-        $backupPath = Join-Path $configPath "." $ext
+        $backupPath = $configPath + "." + $ext
         Write-Output "Backing up $configPath to $backupPath"
         Move-Item -path $configPath -destination $backupPath -force
     }
@@ -76,7 +76,7 @@ function Update-Config-Or-Print-Error {
 
         if ($sourcePath) {
             Write-Output "copying $sourcePath to $configPath..."
-            Backup-File-And-Write -ext "bck" -exists $configExists -writeBlock {
+            Backup-File-And-Write -ext "bck" -exists $configExists -configPath $configPath -writeBlock {
                 Copy-Item -path $sourcePath -destination $configPath -force
             }
         }
@@ -129,12 +129,12 @@ function Set-Registry {
 Write-Output $programs
 function Do-Program {
     param(
-        [scriptblock]$block,
-        [string]$program
+        [string]$program,
+        [scriptblock]$block
     )
     if (($programs.Count -eq 0) -or ($programs -Contains $program)) {
         Write-Output "Checking $program"
-        $block.Invoke()
+        Invoke-Command -ScriptBlock $block
         Write-Output "$program installed"
     }
 }
