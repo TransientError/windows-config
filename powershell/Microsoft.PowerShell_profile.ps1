@@ -29,3 +29,13 @@ $solutionPackagerPath = 'C:\Program Files\PackageManagement\NuGet\Packages\Micro
 if (Test-Path($solutionPackagerPath)) {
   Set-Alias -Name SolutionPackager -Value $solutionPackagerPath
 }
+
+Set-Alias -Name start-komorebi -Value 'C:\Users\wukevin\utils\komorebic-scripts\start-komorebic.ps1'
+
+Set-PSReadLineKeyHandler -Chord Ctrl+r -ScriptBlock {
+  cat (Get-PSReadlineoption).HistorySavePath | fzf | Invoke-expression
+}
+
+Invoke-Expression (& { $hook = if ($PSVersionTable.PSVersion.Major -ge 6) { 'pwd' } else { 'prompt' } (zoxide init powershell --hook $hook | Out-String) })
+
+$env:Path += ';~/.dotnet/tools'
