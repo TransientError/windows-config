@@ -38,4 +38,11 @@ Set-Alias -Name start-komorebi -Value 'C:\Users\wukevin\utils\komorebic-scripts\
 
 Invoke-Expression (& { $hook = if ($PSVersionTable.PSVersion.Major -ge 6) { 'pwd' } else { 'prompt' } (zoxide init powershell --hook $hook | Out-String) })
 
-$env:Path += ';~/.dotnet/tools'
+$env:Path += (
+  ";${env:userprofile}/.dotnet/tools" +
+  ";/Program Files/dotnet/" +
+  ";${env:userprofile}/AppData/Local/Programs/Python/Python39/" +
+  ";C:\Program Files\Microsoft\Azure Functions Core Tools" +
+  ";C:\Program Files\GitHub CLI"
+)
+

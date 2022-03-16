@@ -56,7 +56,6 @@ function Backup-File-And-Write {
         Write-Output "Backing up $configPath to $backupPath"
         Move-Item -path $configPath -destination $backupPath -force
     }
-
     $writeBlock.Invoke()
 }
 
@@ -77,13 +76,13 @@ function Update-Config-Or-Print-Error {
         if ($sourcePath) {
             Write-Output "copying $sourcePath to $configPath..."
             Backup-File-And-Write -ext "bck" -exists $configExists -configPath $configPath -writeBlock {
-                Copy-Item -path $sourcePath -destination $configPath -force
+                Copy-Item -path $sourcePath -destination $configPath -recurse -force
             }
         }
         elseif ($content) {
             Write-Output "writing $content to $configPath"
             Backup-File-And-Write -ext "bck" -exists $configExists -writeBlock {
-                Out-File -InputObject $content -FilePath $configPath -Encoding UTF8            
+                Out-File -InputObject $content -FilePath (New-Item -Path $configPath -force) -Encoding UTF8            
             }
         }
         else {
@@ -165,13 +164,7 @@ Do-Program -program "scoop" -block {
     Install-If-Not-Installed -program scoop -provides scoop -installScript {
         Invoke-WebRequest -useb get.scoop.sh | Invoke-Expression
         scoop bucket add extras
-        scoop config kiennq
-    }
-}
-
-Do-Program -program "zlocation" -block {
-    Install-If-Not-Installed -program zlocation -provides Invoke-ZLocation -installScript {
-        Install-Module -Name ZLocation -Force
+        scoop config shim kiennq
     }
 }
 
@@ -216,6 +209,8 @@ Do-Program -program "komorebi" -block {
 Do-Program -program "neovim" -block {
     Install-If-Not-Installed -program neovim -provides nvim -installScript {
         scoop install neovim
+        iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
+          ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
     }
 
     Update-Config-Or-Print-Error -sourcePath .\neovim\init.vim -configPath $env:USERPROFILE\AppData\Local\nvim\init.vim
@@ -261,7 +256,7 @@ Do-Program -program "vscode" -block {
 
 Do-Program -program "windows-terminal" -block {
     Install-If-Not-Installed `
-    -program "windows-terminal"
+    -program "windows-terminal" `
     -providesPath "$env:USERPROFILE\windows-store-shortcuts\Windows Terminal.lnk" `
     -installScript {
         scoop install windows-terminal
