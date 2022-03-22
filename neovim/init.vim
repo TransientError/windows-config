@@ -3,6 +3,7 @@ Plug 'kaicataldo/material.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'lambdalisue/suda.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 set colorcolumn=120
