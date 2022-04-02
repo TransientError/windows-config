@@ -43,6 +43,9 @@ $env:Path += Join-String -Separator ";" -InputObject @(
   "/Program Files/dotnet/",
   "${env:userprofile}/AppData/Local/Programs/Python/Python39/",
   "C:\Program Files\Microsoft\Azure Functions Core Tools",
-  "C:\Program Files\GitHub CLI"
+  "C:\Program Files\GitHub CLI",
+  "${env:ALLUSERSPROFILE}\chocolatey\bin",
+  "C:\Program Files\nodejs\",
+  "${env:appdata}\npm\"
 )
 
