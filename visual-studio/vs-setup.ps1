@@ -7,8 +7,8 @@ if ($extensions) {
     $installations = (Get-ChildItem $vsRootLegacy) + (Get-ChildItem $vsRoot)
 
     $versionsToExtensions = @{
-        2019 = @("VsVim", "PeasyMotion", "ToggleComment", "Csharpier2019");
-        2022 = @("VsVim2022Preview", "PeasyMotion2022", "ToggleComment", "Csharpier2019");
+        2019 = @("VsVim", "PeasyMotion", "ToggleComment", "Csharpier2019", "StyleCop");
+        2022 = @("VsVim2022Preview", "PeasyMotion2022", "ToggleComment", "Csharpier2019", "StyleCop");
     };
 
     $extensionsToPublisher = @{
@@ -18,6 +18,7 @@ if ($extensions) {
         "PeasyMotion" = "maksim-vorobiev";
         "PeasyMotion2022" = "maksim-vorobiev";
         "ToggleComment" = "munyabe";
+        "StyleCop" = "ChrisDahlberg";
     }
 
     function Build-Url($extension) {
