@@ -7,8 +7,16 @@ if ($extensions) {
     $installations = (Get-ChildItem $vsRootLegacy) + (Get-ChildItem $vsRoot)
 
     $versionsToExtensions = @{
-        2019 = @("VsVim", "PeasyMotion", "ToggleComment", "Csharpier2019", "StyleCop", "ProjectFilter1");
-        2022 = @("VsVim2022Preview", "PeasyMotion2022", "ToggleComment", "Csharpier2019", "StyleCop", "ProjectFilter");
+        2019 = @("VsVim", "PeasyMotion", "ToggleComment", "Csharpier2019", "StyleCop", "ProjectFilter1", "GitWebLinks");
+        2022 = @(
+            "VsVim2022Preview", 
+            "PeasyMotion2022", 
+            "ToggleComment", 
+            "Csharpier2019", 
+            "StyleCop", 
+            "ProjectFilter", 
+            "GitWebLinksForVisualStudio"
+        );
     };
 
     $extensionsToPublisher = @{
@@ -20,6 +28,8 @@ if ($extensions) {
         "ToggleComment" = "munyabe";
         "StyleCop" = "ChrisDahlberg";
         "ProjectFilter" = "reduckted";
+        "GitWebLinks" = "reduckted";
+        "GitWebLinksForVisualStudio" = "reduckted";
     }
 
     $extensionsToUrl = @{
