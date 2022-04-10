@@ -7,8 +7,8 @@ if ($extensions) {
     $installations = (Get-ChildItem $vsRootLegacy) + (Get-ChildItem $vsRoot)
 
     $versionsToExtensions = @{
-        2019 = @("VsVim", "PeasyMotion", "ToggleComment", "Csharpier2019", "StyleCop");
-        2022 = @("VsVim2022Preview", "PeasyMotion2022", "ToggleComment", "Csharpier2019", "StyleCop");
+        2019 = @("VsVim", "PeasyMotion", "ToggleComment", "Csharpier2019", "StyleCop", "ProjectFilter1");
+        2022 = @("VsVim2022Preview", "PeasyMotion2022", "ToggleComment", "Csharpier2019", "StyleCop", "ProjectFilter");
     };
 
     $extensionsToPublisher = @{
@@ -19,6 +19,11 @@ if ($extensions) {
         "PeasyMotion2022" = "maksim-vorobiev";
         "ToggleComment" = "munyabe";
         "StyleCop" = "ChrisDahlberg";
+        "ProjectFilter" = "reduckted";
+    }
+
+    $extensionsToUrl = @{
+        "ProjectFilter1" = "https://github.com/reduckted/ProjectFilter/releases/download/1.1.1/ProjectFilter.vsix";
     }
 
     function Build-Url($extension) {
@@ -40,7 +45,12 @@ if ($extensions) {
         foreach ($extension in $extensions) {
             $vsixPath = $extension.vsix
             if (!(Test-Path $vsixPath)) {
-                $url = Build-Url $extension
+                $url = if ($extensionsToUrl[$extension]) {
+                    $extensionsToUrl[$extension]
+                } else {
+                    Build-Url $extension
+                }
+                Build-Url $extension
                 Write-Output "Downloading $extension from $url"
                 Invoke-WebRequest -Uri $url -OutFile $vsixPath
             } else {
