@@ -5,6 +5,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'sbdchd/neoformat'
+Plug 'jparise/vim-graphql'
 call plug#end()
 
 set colorcolumn=120
@@ -13,6 +14,7 @@ set mouse=a
 set number relativenumber
 set list listchars=tab:▸▸,trail:·
 set smartcase
+set autochdir
 
 let g:closetag_filenames = '*.html,*.xml,*.plist'
 
