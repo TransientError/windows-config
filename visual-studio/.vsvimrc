@@ -1,5 +1,6 @@
 set ignorecase
 set clipboard=unnamed
+set number
 set relativenumber
 
 nnoremap <C-O> :vsc View.NavigateBackward<CR>
