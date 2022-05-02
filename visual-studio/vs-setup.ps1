@@ -15,7 +15,8 @@ if ($extensions) {
             "Csharpier2019", 
             "StyleCop", 
             "ProjectFilter", 
-            "GitWebLinksForVisualStudio"
+            "GitWebLinksForVisualStudio",
+            "copilotvs",
         );
     };
 
@@ -30,6 +31,7 @@ if ($extensions) {
         "ProjectFilter" = "reduckted";
         "GitWebLinks" = "reduckted";
         "GitWebLinksForVisualStudio" = "reduckted";
+        "copilotvs" = "GitHub";
     }
 
     $extensionsToUrl = @{
