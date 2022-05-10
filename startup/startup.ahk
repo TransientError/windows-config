@@ -5,7 +5,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; browser
 #b::
-Run, C:\Program Files\Google\Chrome\Application\chrome.exe --profile-directory="Profile 1"
+Run, C:\Program Files\Mozilla Firefox\firefox.exe
 return
 ; editor
 #e::

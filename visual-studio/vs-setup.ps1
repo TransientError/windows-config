@@ -7,7 +7,15 @@ if ($extensions) {
     $installations = (Get-ChildItem $vsRootLegacy) + (Get-ChildItem $vsRoot)
 
     $versionsToExtensions = @{
-        2019 = @("VsVim", "PeasyMotion", "ToggleComment", "Csharpier2019", "StyleCop", "ProjectFilter1", "GitWebLinks");
+        2019 = @(
+            "VsVim",
+            "PeasyMotion",
+            "ToggleComment",
+            "Csharpier2019",
+            "StyleCop",
+            "ProjectFilter1",
+            "GitWebLinks",
+            "Viasfora4.3");
         2022 = @(
             "VsVim2022Preview", 
             "PeasyMotion2022", 
@@ -15,7 +23,9 @@ if ($extensions) {
             "Csharpier2019", 
             "StyleCop", 
             "ProjectFilter", 
-            "GitWebLinksForVisualStudio"
+            "GitWebLinksForVisualStudio",
+            "copilotvs",
+            "Viasfora",
         );
     };
 
@@ -30,10 +40,13 @@ if ($extensions) {
         "ProjectFilter" = "reduckted";
         "GitWebLinks" = "reduckted";
         "GitWebLinksForVisualStudio" = "reduckted";
+        "copilotvs" = "GitHub";
+        "Viasfora" = "TomasRestrepo";
     }
 
     $extensionsToUrl = @{
         "ProjectFilter1" = "https://github.com/reduckted/ProjectFilter/releases/download/1.1.1/ProjectFilter.vsix";
+        "Viasfora4.3" = "https://github.com/tomasr/viasfora/releases/download/v4.3/Viasfora.vsix";
     }
 
     function Build-Url($extension) {
