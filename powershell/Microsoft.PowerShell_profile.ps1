@@ -41,7 +41,7 @@ Invoke-Expression (& { $hook = if ($PSVersionTable.PSVersion.Major -ge 6) { 'pwd
 $env:Path += Join-String -Separator ";" -InputObject @(
   "${env:userprofile}/.dotnet/tools",
   "/Program Files/dotnet/",
-  "${env:userprofile}/AppData/Local/Programs/Python/Python39/",
+  "${env:userprofile}/AppData/Roaming/Programs/Python/Python39/",
   "C:\Program Files\Microsoft\Azure Functions Core Tools",
   "C:\Program Files\GitHub CLI",
   "${env:ALLUSERSPROFILE}\chocolatey\bin",
