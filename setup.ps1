@@ -222,7 +222,7 @@ Do-Program -program "neovim" -block {
           ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
     }
 
-    if (-not Test-Path $env:USERPROFILE\AppData\Local\nvim -ErrorAction SilentlyContinue) {
+    if (-not (Test-Path $env:USERPROFILE\AppData\Local\nvim -ErrorAction SilentlyContinue)) {
         New-Item -Path $env:USERPROFILE\AppData\Local\nvim -ItemType Directory
     }
     Update-Config-Or-Print-Error -sourcePath .\neovim\init.vim -configPath $env:USERPROFILE\AppData\Local\nvim\init.vim
