@@ -34,7 +34,16 @@ function Install-If-Not-Installed {
             Write-Error "Can't install $program without admin"
             return
         }
-        $installScript.Invoke()
+        Invoke-Command -ScriptBlock $installScript
+    } else {
+        if ($provides) {
+            Write-Host "$provides is already installed"
+            Write-Host (Get-Command $provides)
+        } elseif ($providesPath) {
+            Write-Host "$providesPath is already installed"
+        } elseif ($capability) {
+            Write-Host "$capability is already installed"
+        }
     }
 }
 
@@ -56,7 +65,7 @@ function Backup-File-And-Write {
         Write-Output "Backing up $configPath to $backupPath"
         Move-Item -path $configPath -destination $backupPath -force
     }
-    $writeBlock.Invoke()
+    Invoke-Command -ScriptBlock $writeBlock
 }
 
 
@@ -143,6 +152,18 @@ $startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Progra
 
 Write-Output "Running with flags update=$update and work=$work..."
 
+Do-Program -program "scoop" -block {
+    if ((Get-ExecutionPolicy) -ne "RemoteSigned") {
+        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+    }
+
+    Install-If-Not-Installed -program scoop -provides scoop -installScript {
+        Invoke-WebRequest -useb get.scoop.sh | Invoke-Expression
+        scoop bucket add extras
+        scoop config shim kiennq
+    }
+}
+
 Do-Program -program "powershell" -block {
     Install-If-Not-Installed -program "powershell 7" -provides pwsh -installScript {
         scoop install pwsh
@@ -153,18 +174,6 @@ Do-Program -program "powershell" -block {
     # Setup PSGallery if needed
     if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne "Trusted") {
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted 
-    }
-}
-
-Do-Program -program "scoop" -block {
-    if ((Get-ExecutionPolicy).ToLower -ne "RemoteSigned") {
-        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-    }
-
-    Install-If-Not-Installed -program scoop -provides scoop -installScript {
-        Invoke-WebRequest -useb get.scoop.sh | Invoke-Expression
-        scoop bucket add extras
-        scoop config shim kiennq
     }
 }
 
