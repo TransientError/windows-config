@@ -186,6 +186,12 @@ Do-Program -program "starship" -block {
     Update-Config-Or-Print-Error -sourcePath .\starship\starship.toml -configPath  "$env:USERPROFILE\.config\starship.toml"
 }
 
+Do-Program -program "zoxide" -block {
+    Install-If-Not-Installed -program zoxide -provides zoxide -installScript {
+        scoop install zoxide
+    }
+}
+
 Do-Program -program "git" -block {
     $gitConfigUser = if ($work) {
         Get-Content -Path .\git\gitconfig-work -Encoding UTF8
