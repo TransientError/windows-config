@@ -85,6 +85,7 @@ function Update-Config-Or-Print-Error {
         if ($sourcePath) {
             Write-Output "copying $sourcePath to $configPath..."
             Backup-File-And-Write -ext "bck" -exists $configExists -configPath $configPath -writeBlock {
+                New-Item -path $configPath -type file -force
                 Copy-Item -path $sourcePath -destination $configPath -recurse -force
             }
         }
@@ -269,14 +270,16 @@ Do-Program -program "vscode" -block {
 Do-Program -program "windows-terminal" -block {
     Install-If-Not-Installed `
     -program "windows-terminal" `
-    -providesPath "$env:USERPROFILE\windows-store-shortcuts\Windows Terminal.lnk" `
+    -providesPath wt
     -installScript {
-        scoop install windows-terminal
+        if (Test-Administrator) {
+            scoop install -g windows-terminal
+        }
     }
 
     Update-Config-Or-Print-Error `
         -sourcePath windows-terminal\settings.json `
-        -configPath $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+        -configPath $env:LOCALAPPDATA\Microsoft\Windows Terminal\settings.json
 }
 
 Do-Program -program "startup" -block {
