@@ -90,7 +90,7 @@ function Update-Config-Or-Print-Error {
         }
         elseif ($content) {
             Write-Output "writing $content to $configPath"
-            Backup-File-And-Write -ext "bck" -exists $configExists -writeBlock {
+            Backup-File-And-Write -ext "bck" -exists $configExists -configPath $configPath -writeBlock {
                 Out-File -InputObject $content -FilePath (New-Item -Path $configPath -force) -Encoding UTF8            
             }
         }
