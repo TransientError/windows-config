@@ -283,9 +283,9 @@ Do-Program -program "windows-terminal" -block {
         }
     }
 
-    Update-Config-Or-Print-Error `
-        -sourcePath windows-terminal\settings.json `
-        -configPath "$env:LOCALAPPDATA\Microsoft\Windows Terminal\settings.json"
+    # Update-Config-Or-Print-Error `
+    #     -sourcePath windows-terminal\settings.json `
+    #     -configPath "$env:LOCALAPPDATA\Microsoft\Windows Terminal\settings.json"
 }
 
 Do-Program -program "startup" -block {
