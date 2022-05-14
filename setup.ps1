@@ -259,7 +259,7 @@ Do-Program -program "less" -block {
 }
 
 Do-Program -program "chrome" -block {
-    Install-If-Not-Installed $
+    Install-If-Not-Installed `
         -program chrome `
         -providesPath "C:\Program Files\Google\Chrome\Application\chrome.exe" `
         -installScript {
