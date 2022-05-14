@@ -267,6 +267,15 @@ Do-Program -program "chrome" -block {
         }
 }
 
+Do-Program -program "firefox" -block {
+    Install-If-Not-Installed `
+        -program firefox `
+        -providesPath "C:\Program Files\Mozilla Firefox\firefox.exe" `
+        -installScript {
+            scoop install firefox
+        }
+}
+
 Do-Program -program "vscode" -block {
     Install-If-Not-Installed -provides code -program vscode -installScript {
         scoop install vscode
