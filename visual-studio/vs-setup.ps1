@@ -26,6 +26,7 @@ if ($extensions) {
             "GitWebLinksForVisualStudio",
             "copilotvs",
             "Viasfora",
+            "MaterialTheme"
         );
     };
 
@@ -42,6 +43,7 @@ if ($extensions) {
         "GitWebLinksForVisualStudio" = "reduckted";
         "copilotvs" = "GitHub";
         "Viasfora" = "TomasRestrepo";
+        "MaterialTheme" = "Equinusocio.vsc-material-theme";
     }
 
     $extensionsToUrl = @{
@@ -51,7 +53,7 @@ if ($extensions) {
 
     function Build-Url($extension) {
         Write-Output "Getting download url for $extension"
-        $webPage = (Invoke-WebRequest 
+        $webPage = (Invoke-WebRequest `
             -Uri "https://marketplace.visualstudio.com/items?itemName=$($extensionsToPublisher[$extension]).$extension") 
 
         return ($webPage.Links |
@@ -91,4 +93,4 @@ if (Test-Path $targetPath) {
     Write-Output "Found existing vsvimrc, backing up to vsvimrc.bak"
     Rename-Item $targetPath $targetPath.bak
 }
-Move-Item .vsvimrc $targetPath -Force
+Copy-Item .vsvimrc $targetPath -Force
