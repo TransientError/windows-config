@@ -40,7 +40,7 @@ else
 	nnoremap gs<Space>i :vsc Tools.InvokePeasyMotion<CR>
 endif
 nnoremap gcc :vsc Edit.ToggleComment<CR>
-vnoremap gcc :vsc Edit.ToggleComment<CR>
+vnoremap gc :vsc Edit.ToggleComment<CR>
 nnoremap gi :vsc Edit.GoToImplementation<CR>
 nnoremap gu :vsc Edit.FindAllReferences<CR>
 
