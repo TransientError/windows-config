@@ -24,7 +24,9 @@ Run, komorebic.exe workspace-padding 0 3 0, , Hide
 Run, komorebic.exe container-padding 0 3 0, , Hide
 
 ; Set the layouts of different workspaces
-Run, komorebic.exe workspace-layout 0 1 columns, , Hide
+Run, komorebic.exe workspace-layout 0 0 rows, , Hide
+Run, komorebic.exe workspace-layout 1 0 rows, , Hide
+Run, komorebic.exe workspace-layout 2 0 rows, , Hide
 
 ; Set the floaty layout to not tile any windows
 Run, komorebic.exe workspace-tiling 0 4 disable, , Hide
@@ -45,6 +47,12 @@ Run, komorebic.exe float-rule exe wincompose.exe, , Hide
 ; Always float Calculator app, matching on window title
 Run, komorebic.exe float-rule title Calculator, , Hide
 Run, komorebic.exe float-rule exe 1Password.exe, , Hide
+Run, komorebic.exe float-rule title "Microsoft Teams Notification", , Hide
+; PowerToys
+; Target color picker dialog
+Run, komorebic.exe float-rule exe "PowerToys.ColorPickerUI.exe", , Hide
+; Target image resizer dialog
+Run, komorebic.exe float-rule exe "PowerToys.ImageResizer.exe", , Hide
 
 ; Always manage forcibly these applications that don't automatically get picked up by komorebi
 Run, komorebic.exe manage-rule exe TIM.exe, , Hide
@@ -52,6 +60,10 @@ Run, komorebic.exe manage-rule exe TIM.exe, , Hide
 ; Identify applications that close to the tray
 Run, komorebic.exe identify-tray-application exe Discord.exe, , Hide
 Run, komorebic.exe identify-tray-application exe NordVPN.exe, , Hide
+
+Run, komorebic.exe active-window-border true, , Hide
+Run, komorebic.exe active-window-border-colour 142 140 216 --window-kind single, , Hide
+Run, komorebic.exe toggle-cross-monitor-move-behaviour
 
 ; Change the focused window, Alt + Vim direction keys
 !h::
@@ -124,16 +136,16 @@ return
 
 ; Switch to an equal-width, max-height column layout on the main workspace, Alt + Shift + C
 !+s::
-Run, komorebic.exe change-layout columns, Hide
+Run, komorebic.exe change-layout columns, , Hide
 return
 
 ; Switch to the default bsp tiling layout on the main workspace, Alt + Shift + T
 !+a::
-Run, komorebic.exe change-layout bsp, Hide
+Run, komorebic.exe change-layout bsp, , Hide
 return
 
 !+f::
-Run, komorebic.exe change-layout rows, Hide
+Run, komorebic.exe change-layout rows, , Hide
 return
 
 ; Toggle the Monocle layout for the focused window, Alt + Shift + F
@@ -236,3 +248,20 @@ return
 !m::
 Run, komorebic.exe manage, , Hide
 return
+
+; resize windows
+!+^#h::
+Run, komorebic.exe resize-edge left increase, , Hide
+!+^#l::
+Run, komorebic.exe resize-edge left decrease, , Hide
+!+^#j::
+Run, komorebic.exe resize-edge down increase, , Hide
+!+^#k::
+Run, komorebic.exe resize-edge down decrease, , Hide
+
+!c::
+Run, komorebic.exe cycle-focus next, , Hide
+
+!s::
+Run, komorebic-exe unstack, , Hide
+
