@@ -26,7 +26,8 @@ if ($extensions) {
             "GitWebLinksForVisualStudio",
             "copilotvs",
             "Viasfora",
-            "MaterialTheme"
+            "MaterialTheme",
+            "EditorGuidelinesPreview"
         );
     };
 
@@ -44,6 +45,7 @@ if ($extensions) {
         "copilotvs" = "GitHub";
         "Viasfora" = "TomasRestrepo";
         "MaterialTheme" = "Equinusocio.vsc-material-theme";
+        "EditorGuidelinesPreview" = "PaulHarrington";
     }
 
     $extensionsToUrl = @{
