@@ -252,16 +252,22 @@ return
 ; resize windows
 !+^#h::
 Run, komorebic.exe resize-edge left increase, , Hide
+return
 !+^#l::
 Run, komorebic.exe resize-edge left decrease, , Hide
+return
 !+^#j::
 Run, komorebic.exe resize-edge down increase, , Hide
+return
 !+^#k::
 Run, komorebic.exe resize-edge down decrease, , Hide
+return
 
 !c::
 Run, komorebic.exe cycle-focus next, , Hide
+return
 
 !s::
 Run, komorebic-exe unstack, , Hide
+return
 
