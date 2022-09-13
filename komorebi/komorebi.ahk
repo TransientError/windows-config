@@ -61,7 +61,7 @@ Run, komorebic.exe manage-rule exe TIM.exe, , Hide
 Run, komorebic.exe identify-tray-application exe Discord.exe, , Hide
 Run, komorebic.exe identify-tray-application exe NordVPN.exe, , Hide
 
-Run, komorebic.exe active-window-border true, , Hide
+Run, komorebic.exe active-window-border enable, , Hide
 Run, komorebic.exe active-window-border-colour 142 140 216 --window-kind single, , Hide
 Run, komorebic.exe toggle-cross-monitor-move-behaviour
 
