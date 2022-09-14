@@ -1,3 +1,4 @@
+nd
 #SingleInstance Force
 
 ; Enable hot reloading of changes to this file
@@ -62,7 +63,7 @@ Run, komorebic.exe identify-tray-application exe Discord.exe, , Hide
 Run, komorebic.exe identify-tray-application exe NordVPN.exe, , Hide
 
 Run, komorebic.exe active-window-border enable, , Hide
-Run, komorebic.exe active-window-border-colour 142 140 216 --window-kind single, , Hide
+Run, komorebic.exe active-window-border-colour 142 140 216, , Hide
 Run, komorebic.exe toggle-cross-monitor-move-behaviour
 
 ; Change the focused window, Alt + Vim direction keys
