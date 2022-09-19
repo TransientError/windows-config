@@ -1,4 +1,3 @@
-nd
 #SingleInstance Force
 
 ; Enable hot reloading of changes to this file
@@ -62,9 +61,10 @@ Run, komorebic.exe manage-rule exe TIM.exe, , Hide
 Run, komorebic.exe identify-tray-application exe Discord.exe, , Hide
 Run, komorebic.exe identify-tray-application exe NordVPN.exe, , Hide
 
+; misc
 Run, komorebic.exe active-window-border enable, , Hide
 Run, komorebic.exe active-window-border-colour 142 140 216, , Hide
-Run, komorebic.exe toggle-cross-monitor-move-behaviour
+Run, komorebic.exe toggle-cross-monitor-move-behaviour , , Hide
 
 ; Change the focused window, Alt + Vim direction keys
 !h::
@@ -179,16 +179,6 @@ return
 Run, komorebic.exe toggle-float, , Hide
 return
 
-; Reload ~/komorebi.ahk, Alt + O
-!o::
-Run, komorebic.exe reload-configuration, , Hide
-return
-
-; Pause responding to any window events or komorebic commands, Alt + P
-!p::
-Run, komorebic.exe toggle-pause, , Hide
-return
-
 ; Switch to workspace
 !1::
 Send !
@@ -251,23 +241,22 @@ Run, komorebic.exe manage, , Hide
 return
 
 ; resize windows
-!+^#h::
+!u::
 Run, komorebic.exe resize-edge left increase, , Hide
 return
-!+^#l::
+!i::
 Run, komorebic.exe resize-edge left decrease, , Hide
 return
-!+^#j::
+!o::
 Run, komorebic.exe resize-edge down increase, , Hide
 return
-!+^#k::
+!p::
 Run, komorebic.exe resize-edge down decrease, , Hide
 return
-
+; misc
 !c::
 Run, komorebic.exe cycle-focus next, , Hide
 return
-
 !s::
 Run, komorebic-exe unstack, , Hide
 return
