@@ -23,11 +23,6 @@ Run, komorebic.exe workspace-padding 0 2 200, , Hide
 Run, komorebic.exe workspace-padding 0 3 0, , Hide
 Run, komorebic.exe container-padding 0 3 0, , Hide
 
-; Set the layouts of different workspaces
-Run, komorebic.exe workspace-layout 0 0 rows, , Hide
-Run, komorebic.exe workspace-layout 1 0 rows, , Hide
-Run, komorebic.exe workspace-layout 2 0 rows, , Hide
-
 ; Set the floaty layout to not tile any windows
 Run, komorebic.exe workspace-tiling 0 4 disable, , Hide
 
