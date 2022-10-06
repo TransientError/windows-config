@@ -17,3 +17,4 @@
 
 [core]
     editor = "nvim"
+    autocrlf = true
