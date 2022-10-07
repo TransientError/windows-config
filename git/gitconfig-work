@@ -5,3 +5,4 @@
 
 [credential]
     helper=manager-core
+    dev.azure.com.useHttpPath = true
