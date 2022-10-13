@@ -2,7 +2,6 @@
 # https://gist.github.com/shanselman/25f5550ad186189e0e68916c6d7f44c3?WT.mc_id=-blog-scottha
 
 Invoke-Expression (&starship init powershell)
-Set-PsReadlineOption -predictionsource history
 Set-PsReadlineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
@@ -19,6 +18,11 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
   dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
     [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
   }
+}
+
+$completionPredictorModulePath = "$env:USERPROFILE\utils\CompletionPredictor\bin\CompletionPredictor\CompletionPredictor.psd1"
+if (Test-Path($completionPredictorModulePath)) {
+  Import-Module $completionPredictorModulePath
 }
 
 # Chocolatey profile
