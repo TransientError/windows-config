@@ -227,14 +227,7 @@ Do-Program -program "komorebi" -block {
 Do-Program -program "neovim" -block {
     Install-If-Not-Installed -program neovim -provides nvim -installScript {
         scoop install neovim
-        iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
-          ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
     }
-
-    if (-not (Test-Path $env:USERPROFILE\AppData\Local\nvim -ErrorAction SilentlyContinue)) {
-        New-Item -Path $env:USERPROFILE\AppData\Local\nvim -ItemType Directory
-    }
-    Update-Config-Or-Print-Error -sourcePath .\neovim\init.vim -configPath $env:USERPROFILE\AppData\Local\nvim\init.vim
 }
 
 Do-Program -program "neovide" -block {
