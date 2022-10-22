@@ -104,6 +104,21 @@ function Update-Config-Or-Print-Error {
     }
 }
 
+function Recursive-Update-Config {
+    param(
+        [string]$sourcePath,
+        [string]$targetPath
+    )
+
+    foreach ($file in (Get-ChildItem -Path $sourcePath -Recurse)) {
+        $targetFile = join-path -path $targetPath -childpath $file
+        $targetDir = split-path -path $targetFile 
+        if (-not test-path $targetDir) {
+            mkdir $targetDir
+        }
+        Update-Config-Or-Print-Error -sourcePath $file -configPath $targetFile
+    }
+}
 
 $REGISTRY_ROOTS = @{
     HKEY_CLASSES_ROOT = "HKCR";
@@ -228,6 +243,7 @@ Do-Program -program "neovim" -block {
     Install-If-Not-Installed -program neovim -provides nvim -installScript {
         scoop install neovim
     }
+    Recursive-Update-Config -sourcePath "neovim" -targetPath "$env:USERPROFILE\AppData\Local\nvim"
 }
 
 Do-Program -program "neovide" -block {
