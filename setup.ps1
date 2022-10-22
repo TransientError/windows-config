@@ -109,15 +109,17 @@ function Recursive-Update-Config {
         [string]$sourcePath,
         [string]$targetPath
     )
-
-    foreach ($file in (Get-ChildItem -Path $sourcePath -Recurse)) {
-        $targetFile = join-path -path $targetPath -childpath $file
+    Push-Location $sourcePath
+    foreach ($file in (Get-ChildItem -Recurse -Attributes !Directory)) {
+        $relativeFile = Resolve-Path -path $file -Relative
+        $targetFile = join-path -path $targetPath -childpath $relativeFile
         $targetDir = split-path -path $targetFile 
-        if (-not test-path $targetDir) {
+        if (-not (test-path $targetDir)) {
             mkdir $targetDir
         }
         Update-Config-Or-Print-Error -sourcePath $file -configPath $targetFile
     }
+    Pop-Location
 }
 
 $REGISTRY_ROOTS = @{
