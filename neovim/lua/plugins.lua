@@ -31,13 +31,21 @@ return require("packer").startup(function()
       vim.g.closetag_filenames = "*.html,*.xml,*.plist,*.*proj"
     end,
   }
-  use 'tpope/vim-commentary'
-  use { 'dag/vim-fish', ft = "fish" }
-  use 'junegunn/fzf.vim'
-  use 'mattn/emmet-vim'
-  use { 'cespare/vim-toml', ft = "toml" }
-  use 'vim-scripts/ReplaceWithRegister'
-  use { 'jparise/vim-graphql', ft = "graphql" }
-  use 'wellle/targets.vim'
-  use 'ggandor/lightspeed.nvim'
+  use "tpope/vim-commentary"
+  use { "dag/vim-fish", ft = "fish" }
+  use "junegunn/fzf.vim"
+  use "mattn/emmet-vim"
+  use { "cespare/vim-toml", ft = "toml" }
+  use "vim-scripts/ReplaceWithRegister"
+  use { "jparise/vim-graphql", ft = "graphql" }
+  use "wellle/targets.vim"
+  use "ggandor/lightspeed.nvim"
+  use "michaeljsmith/vim-indent-object"
+  use {
+    "nvim-tree/nvim-tree.lua",
+    config = function()
+      require("nvim-tree").setup()
+    end,
+    cmd = {'NvimTreeToggle', 'NvimTreeOpen'}
+  }
 end)
