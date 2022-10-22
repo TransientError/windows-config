@@ -32,6 +32,8 @@ if (Test-Path($ChocolateyProfile)) {
 }
 
 $env:startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+# for some app compatibility...
+$env:home = $env:USERPROFILE
 
 $solutionPackagerPath = 'C:\Program Files\PackageManagement\NuGet\Packages\Microsoft.CrmSdk.CoreTools.9.1.0.92\content\bin\coretools\SolutionPackager.exe'
 if (Test-Path($solutionPackagerPath)) {
