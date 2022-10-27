@@ -1,4 +1,4 @@
-return require("packer").startup(function()
+return require("packer").startup(function(use)
   use {
     "kaicataldo/material.vim",
     config = function()
@@ -42,10 +42,68 @@ return require("packer").startup(function()
   use "ggandor/lightspeed.nvim"
   use "michaeljsmith/vim-indent-object"
   use {
-    "nvim-tree/nvim-tree.lua",
-    config = function()
-      require("nvim-tree").setup()
+    "folke/which-key.nvim",
+    cond = function()
+      return vim.fn.exists "g:vscode" == 0
     end,
-    cmd = {'NvimTreeToggle', 'NvimTreeOpen'}
+    config = function()
+      require("which-key").setup {}
+    end,
+  }
+  use {
+    "nvim-tree/nvim-tree.lua",
+    cond = function()
+      return vim.fn.exists "g:vscode" == 0
+    end,
+    config = function()
+      require("nvim-tree").setup {
+        update_focused_file = {
+          enable = true,
+        },
+      }
+      vim.keymap.set({ "n", "v" }, "<leader>op", ":NvimTreeToggle<CR>")
+    end,
+    cmd = { "NvimTreeToggle" },
+    keys = "<leader>op",
+  }
+  use {
+    "hrsh7th/nvim-cmp",
+    opt = true,
+    cond = function()
+      return vim.fn.exists "g:vscode" == 0
+    end,
+    config = function()
+      require("kvwu-cmp").setup()
+    end,
+    requires = {
+      { "hrsh7th/cmp-path", opt = true },
+      { "hrsh7th/cmp-cmdline", opt = true },
+      { "ray-x/cmp-treesitter", opt = true },
+      { "hrsh7th/cmp-buffer", opt = true },
+      { "hrsh7th/cmp-vsnip", opt = true },
+      { "hrsh7th/vim-vsnip", opt = true },
+      { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
+      { "neovim/nvim-lspconfig", module = "lspconfig" },
+    },
+  }
+  use {
+    "tpope/vim-fugitive",
+    config = function()
+      return vim.fn.exists "g:vscode" == 0
+    end,
+  }
+  use {
+    "cedarbaum/fugitive-azure-devops.vim",
+    cond = function ()
+      return require("kvwu-config").profiles.work
+    end,
+    config = function ()
+      vim.g.fugitive_azure_devops_ssh_user = "microsoft"
+      vim.cmd "let g:fugitive_azure_devops_ssh_user = 'microsoft'"
+    end,
+    requires = {
+      "tpope/vim-rhubarb",
+      "tpope/vim-fugitive",
+    }
   }
 end)
