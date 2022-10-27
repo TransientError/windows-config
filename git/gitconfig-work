@@ -1,8 +1,10 @@
 [user]
-    name = Kevin Wu
-    email = wukevin@microsoft.com
-    username = wukevin
+   name = Kevin Wu
+   email = wukevin@microsoft.com
+   username = wukevin
 
 [credential]
-    helper=manager-core
-    dev.azure.com.useHttpPath = true
+   helper=manager-core
+
+[credential "dev.azure.com"]
+   useHttpPath = true
