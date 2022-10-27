@@ -88,9 +88,12 @@ return require("packer").startup(function(use)
   }
   use {
     "tpope/vim-fugitive",
-    config = function()
+    cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
+    config = function ()
+      vim.keymap.set("n", "<leader>gg", ":Git<CR>")
+    end
   }
   use {
     "cedarbaum/fugitive-azure-devops.vim",
