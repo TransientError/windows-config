@@ -25,11 +25,11 @@ return require("packer").startup(function(use)
       vim.g.lightline = { colorscheme = "material_vim" }
     end,
   }
-  use { 
-    "airblade/vim-gitgutter", 
+  use {
+    "airblade/vim-gitgutter",
     cond = function()
       return vim.fn.glob('.git') ~= nil
-    end 
+    end
   }
   use {
     "alvan/vim-closetag",
@@ -113,5 +113,23 @@ return require("packer").startup(function(use)
       "tpope/vim-rhubarb",
       "tpope/vim-fugitive",
     }
+  }
+  use {
+    "nvim-telescope/telescope.nvim",
+    cond = function()
+      return vim.fn.exists "g:vscode" == 0
+    end,
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      local builtin = require "telescope.builtin"
+      vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
+      vim.keymap.set("n", "<leader>/", builtin.live_grep, {})
+      vim.keymap.set("n", "<leader><", builtin.buffers, {})
+      vim.keymap.set("n", "<leader>ha", builtin.help_tags, {})
+    end,
   }
 end)
