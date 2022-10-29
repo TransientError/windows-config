@@ -25,7 +25,12 @@ return require("packer").startup(function(use)
       vim.g.lightline = { colorscheme = "material_vim" }
     end,
   }
-  use "airblade/vim-gitgutter"
+  use { 
+    "airblade/vim-gitgutter", 
+    cond = function()
+      return vim.fn.glob('.git') ~= nil
+    end 
+  }
   use {
     "alvan/vim-closetag",
     config = function()
@@ -34,8 +39,7 @@ return require("packer").startup(function(use)
   }
   use "tpope/vim-commentary"
   use { "dag/vim-fish", ft = "fish" }
-  use "junegunn/fzf.vim"
-  use {"mattn/emmet-vim", ft = {"html", "xml"}}
+  use { "mattn/emmet-vim", ft = { "html", "xml" } }
   use { "cespare/vim-toml", ft = "toml" }
   use "vim-scripts/ReplaceWithRegister"
   use { "jparise/vim-graphql", ft = "graphql" }
@@ -94,15 +98,15 @@ return require("packer").startup(function(use)
   use {
     "tpope/vim-fugitive",
     cond = function()
-      return vim.fn.exists "g:vscode" == 0
+      return vim.fn.exists "g:vscode" == 0 and vim.fn.glob('.git') ~= nil
     end,
-    config = function ()
+    config = function()
       vim.keymap.set("n", "<leader>gg", ":Git<CR>")
     end
   }
   use {
     "cedarbaum/fugitive-azure-devops.vim",
-    cond = function ()
+    cond = function()
       return require("kvwu-config").profiles.work
     end,
     requires = {
