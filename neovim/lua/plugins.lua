@@ -105,10 +105,6 @@ return require("packer").startup(function(use)
     cond = function ()
       return require("kvwu-config").profiles.work
     end,
-    config = function ()
-      vim.g.fugitive_azure_devops_ssh_user = "microsoft"
-      vim.cmd "let g:fugitive_azure_devops_ssh_user = 'microsoft'"
-    end,
     requires = {
       "tpope/vim-rhubarb",
       "tpope/vim-fugitive",
