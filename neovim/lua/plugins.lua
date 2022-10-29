@@ -1,4 +1,6 @@
 return require("packer").startup(function(use)
+  -- Have packer manage itself on windows or it always tries to clean itself
+  use 'wbthomason/packer.nvim'
   use {
     "kaicataldo/material.vim",
     config = function()
@@ -23,7 +25,6 @@ return require("packer").startup(function(use)
       vim.g.lightline = { colorscheme = "material_vim" }
     end,
   }
-  use "lambdalisue/suda.vim"
   use "airblade/vim-gitgutter"
   use {
     "alvan/vim-closetag",
@@ -34,7 +35,7 @@ return require("packer").startup(function(use)
   use "tpope/vim-commentary"
   use { "dag/vim-fish", ft = "fish" }
   use "junegunn/fzf.vim"
-  use "mattn/emmet-vim"
+  use {"mattn/emmet-vim", ft = {"html", "xml"}}
   use { "cespare/vim-toml", ft = "toml" }
   use "vim-scripts/ReplaceWithRegister"
   use { "jparise/vim-graphql", ft = "graphql" }
@@ -60,11 +61,15 @@ return require("packer").startup(function(use)
         update_focused_file = {
           enable = true,
         },
+        sync_root_with_cwd = true,
+        respect_buf_cwd = true,
       }
       vim.keymap.set({ "n", "v" }, "<leader>op", ":NvimTreeToggle<CR>")
     end,
     cmd = { "NvimTreeToggle" },
     keys = "<leader>op",
+    module = "nvim-tree",
+    ft = ""
   }
   use {
     "hrsh7th/nvim-cmp",
