@@ -28,18 +28,19 @@ return require("packer").startup(function(use)
   use {
     "airblade/vim-gitgutter",
     cond = function()
-      return vim.fn.glob('.git') ~= nil
-    end
+      return vim.fn.glob ".git" ~= nil
+    end,
   }
   use {
     "alvan/vim-closetag",
     config = function()
       vim.g.closetag_filenames = "*.html,*.xml,*.plist,*.*proj"
     end,
+    ft = { "html", "xml", "jsx" },
   }
   use "tpope/vim-commentary"
   use { "dag/vim-fish", ft = "fish" }
-  use { "mattn/emmet-vim", ft = { "html", "xml" } }
+  use { "mattn/emmet-vim", ft = { "html", "jsx" } }
   use { "cespare/vim-toml", ft = "toml" }
   use "vim-scripts/ReplaceWithRegister"
   use { "jparise/vim-graphql", ft = "graphql" }
@@ -67,13 +68,19 @@ return require("packer").startup(function(use)
         },
         sync_root_with_cwd = true,
         respect_buf_cwd = true,
+        view = {
+          mappings = {
+            custom_only = false,
+            list = {
+              { key = "l", action = "cd" },
+            },
+          },
+        },
       }
       vim.keymap.set({ "n", "v" }, "<leader>op", ":NvimTreeToggle<CR>")
     end,
     cmd = { "NvimTreeToggle" },
     keys = "<leader>op",
-    module = "nvim-tree",
-    ft = ""
   }
   use {
     "hrsh7th/nvim-cmp",
@@ -122,14 +129,51 @@ return require("packer").startup(function(use)
     requires = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
-      "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       local builtin = require "telescope.builtin"
       vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
       vim.keymap.set("n", "<leader>/", builtin.live_grep, {})
-      vim.keymap.set("n", "<leader><", builtin.buffers, {})
+      vim.keymap.set("n", "<leader>,", builtin.buffers, {})
       vim.keymap.set("n", "<leader>ha", builtin.help_tags, {})
+    end,
+  }
+  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+  use {
+    "p00f/nvim-ts-rainbow",
+    after = { "nvim-treesitter" },
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = { "python" },
+        highlight = {
+          enable = true,
+        },
+        rainbow = {
+          enable = true,
+          colors = { "#fac15e", "#9b64d0", "#406cf1" },
+        },
+      }
+    end,
+  }
+  use {
+    "luochen1990/rainbow",
+    config = function()
+      vim.g.rainbow_active = 1
+      vim.g.rainbow_conf = {
+        guifgs = { "#fac15e", "#9b64d0", "#406cf1" },
+      }
+    end,
+  }
+  use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup {}
+    end,
+  }
+  use {
+    "chentoast/marks.nvim",
+    config = function()
+      require("marks").setup {}
     end,
   }
 end)
