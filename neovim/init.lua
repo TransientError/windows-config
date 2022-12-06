@@ -50,5 +50,4 @@ else
   map.set("", "<leader>ot", ":split term://fish<CR>")
 
   map.set("", "<leader>fp", ":cd ~/.config/nvim<CR>:e ~/.config/nvim/init.lua<CR>")
-  map.set("", "<leader>qq", ":q!<CR>")
 end
