@@ -22,9 +22,7 @@ if g.vscode then
   require "vscode"
 else
   if g.neovide then
-    if vim.fn.hostname() == "apollo" then
-      opt.guifont = "Liga Hack:h8"
-    end
+    opt.guifont = "Liga Hack:h12"
   end
   utils.process_settings {
     opt = {
@@ -32,6 +30,9 @@ else
       relativenumber = true,
       listchars = { tab = "▸▸", trail = "·" },
       colorcolumn = "120",
+    },
+    g = {
+      neoformat_enabled_cs = { "csharpier" },
     },
     g = {
       neoformat_enabled_cs = { "csharpier" },
@@ -48,6 +49,8 @@ else
   map.set("", "<leader>wd", ":q<CR>")
   map.set("", "<leader>qq", ":qa!<CR>")
   map.set("", "<leader>ot", ":split term://fish<CR>")
+  map.set("", "<leader>bl", "<C-o>")
+  map.set("", "<leader>hr", ":source ~/.config/nvim/init.lua<CR>:PackerCompile<CR>")
 
   map.set("", "<leader>fp", ":cd ~/.config/nvim<CR>:e ~/.config/nvim/init.lua<CR>")
 end

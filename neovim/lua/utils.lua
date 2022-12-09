@@ -6,9 +6,15 @@ local cmd = vim.cmd
 local utils = {}
 
 function utils.process_settings(settings_table)
-	for k, v in pairs(settings_table.opt) do
-		opt[k] = v
-	end
+  for k, v in pairs(settings_table.opt) do
+    opt[k] = v
+  end
+
+  if settings_table.g ~= nil then
+    for k, v in pairs(settings_table.g) do
+      g[k] = v
+    end
+  end
 end
 
 return utils

@@ -1,16 +1,28 @@
+local function not_vscode()
+  return vim.fn.exists "g:vscode" == 0
+end
+
 return require("packer").startup(function(use)
   -- Have packer manage itself on windows or it always tries to clean itself
-  use 'wbthomason/packer.nvim'
+  use "wbthomason/packer.nvim"
   use {
-    "kaicataldo/material.vim",
+    "marko-cerovac/material.nvim",
+    cond = not_vscode,
+    config = require("kvwu-material").setup,
+    after = "lualine.nvim",
+    module = "material",
+  }
+  use {
+    "nvim-lualine/lualine.nvim",
+    config = require("kvwu-lualine").setup,
+    cond = not_vscode,
+  }
+  use {
+    "lewis6991/gitsigns.nvim",
     config = function()
-      vim.g.material_theme_style = "dark"
-      vim.cmd "colorscheme material"
-      vim.opt.background = "dark"
-      if vim.fn.has "termguicolors" == 1 then
-        vim.opt.termguicolors = true
-      end
+      require("gitsigns").setup()
     end,
+    cond = not_vscode,
   }
   use {
     "sbdchd/neoformat",
@@ -19,18 +31,6 @@ return require("packer").startup(function(use)
     end,
   }
   use "tpope/vim-surround"
-  use {
-    "itchyny/lightline.vim",
-    config = function()
-      vim.g.lightline = { colorscheme = "material_vim" }
-    end,
-  }
-  use {
-    "airblade/vim-gitgutter",
-    cond = function()
-      return vim.fn.glob ".git" ~= nil
-    end,
-  }
   use {
     "alvan/vim-closetag",
     config = function()
@@ -44,7 +44,16 @@ return require("packer").startup(function(use)
   use { "cespare/vim-toml", ft = "toml" }
   use "vim-scripts/ReplaceWithRegister"
   use { "jparise/vim-graphql", ft = "graphql" }
-  use "wellle/targets.vim"
+  use {
+    "wellle/targets.vim",
+    config = function()
+      vim.cmd [[
+         autocmd User targets#mappings#user call targets#mappings#extend({
+            \ 'a': {'argument': [{'o':'[({<[]', 'c':'[]}>)]', 's': ','}]}
+            \ })
+      ]]
+    end,
+  }
   use "ggandor/lightspeed.nvim"
   use "michaeljsmith/vim-indent-object"
   use {
@@ -58,9 +67,7 @@ return require("packer").startup(function(use)
   }
   use {
     "nvim-tree/nvim-tree.lua",
-    cond = function()
-      return vim.fn.exists "g:vscode" == 0
-    end,
+    cond = not_vscode,
     config = function()
       require("nvim-tree").setup {
         update_focused_file = {
@@ -81,6 +88,8 @@ return require("packer").startup(function(use)
     end,
     cmd = { "NvimTreeToggle" },
     keys = "<leader>op",
+    module = "nvim-tree",
+    ft = ""
   }
   use {
     "hrsh7th/nvim-cmp",
@@ -105,11 +114,11 @@ return require("packer").startup(function(use)
   use {
     "tpope/vim-fugitive",
     cond = function()
-      return vim.fn.exists "g:vscode" == 0 and vim.fn.glob('.git') ~= nil
+      return vim.fn.exists "g:vscode" == 0 and vim.fn.glob ".git" ~= nil
     end,
     config = function()
       vim.keymap.set("n", "<leader>gg", ":Git<CR>")
-    end
+    end,
   }
   use {
     "cedarbaum/fugitive-azure-devops.vim",
@@ -119,13 +128,11 @@ return require("packer").startup(function(use)
     requires = {
       "tpope/vim-rhubarb",
       "tpope/vim-fugitive",
-    }
+    },
   }
   use {
     "nvim-telescope/telescope.nvim",
-    cond = function()
-      return vim.fn.exists "g:vscode" == 0
-    end,
+    cond = not_vscode,
     requires = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -138,29 +145,38 @@ return require("packer").startup(function(use)
       vim.keymap.set("n", "<leader>ha", builtin.help_tags, {})
     end,
   }
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+  use {
+    "nvim-telescope/telescope-project.nvim",
+    config = function()
+      local telescope = require "telescope"
+      telescope.load_extension "project"
+      vim.keymap.set("n", "<leader>pp", telescope.extensions.project.project)
+    end,
+    after = { "telescope.nvim" },
+  }
+  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", cond = not_vscode }
   use {
     "p00f/nvim-ts-rainbow",
-    after = { "nvim-treesitter" },
+    cond = not_vscode,
     config = function()
+      local colors = require "material.colors"
       require("nvim-treesitter.configs").setup {
-        ensure_installed = { "python" },
+        ensure_installed = { "python", "lua", "typescript" },
         highlight = {
           enable = true,
         },
         rainbow = {
           enable = true,
-          colors = { "#fac15e", "#9b64d0", "#406cf1" },
+          colors = {
+            colors.main.purple,
+            colors.main.yellow,
+            colors.main.blue,
+            colors.main.cyan,
+            colors.main.green,
+            colors.main.orange,
+            colors.main.red,
+          },
         },
-      }
-    end,
-  }
-  use {
-    "luochen1990/rainbow",
-    config = function()
-      vim.g.rainbow_active = 1
-      vim.g.rainbow_conf = {
-        guifgs = { "#fac15e", "#9b64d0", "#406cf1" },
       }
     end,
   }
@@ -177,15 +193,60 @@ return require("packer").startup(function(use)
     end,
   }
   use {
-    "nvim-telescope/telescope-project.nvim",
+    "petobens/poet-v",
+    cond = function()
+      return vim.fn.exists "g:vscode" == 0
+    end,
+    ft = "python",
+    setup = function()
+      vim.g.poetv_executables = { "poetry" }
+    end,
+  }
+  use {
+    "mfussenegger/nvim-dap",
     cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
     config = function()
-      local telescope = require "telescope"
-      telescope.load_extension "project"
-      vim.keymap.set("n", "<leader>pp", telescope.extensions.project.project)
+      require("kvwu-nvim-dap").setup()
     end,
-    after = 'telescope.nvim'
+    requires = { "anuvyklack/hydra.nvim" },
+    module = "dap",
+  }
+  use {
+    "mxsdev/nvim-dap-vscode-js",
+    cond = function()
+      return vim.fn.exists "g:vscode" == 0
+    end,
+    ft = "typescript",
+    requires = {
+      "mfussenegger/nvim-dap",
+      { "microsoft/vscode-js-debug", opt = true, run = "npm install --legacy-peer-deps && npm run compile" },
+    },
+    config = function()
+      require("dap-vscode-js").setup {
+        adapters = { "pwa-node" },
+      }
+
+      require("dap").configurations["typescript"] = {
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch file",
+          runtimeArgs = { "--nolazy", "-r", "ts-node/register", "--loader", "ts-node/esm.mjs" },
+          cwd = "${fileDirname}",
+          args = "${file}",
+          sourceMaps = true,
+        },
+      }
+    end,
+  }
+  use {
+    "rcarriga/nvim-dap-ui",
+    cond = function()
+      return vim.fn.exists "g:vscode" == 0
+    end,
+    after = { "nvim-dap" },
+    config = require("kvwu-dap-ui").setup,
   }
 end)
