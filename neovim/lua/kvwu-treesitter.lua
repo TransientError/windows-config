@@ -1,7 +1,7 @@
 local kvwu_treesitter = {}
 
 function kvwu_treesitter.setup(use, not_vscode)
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", cond = not_vscode }
+  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", cond = not_vscode, module = "nvim-treesitter.query" }
   use {
     "p00f/nvim-ts-rainbow",
     cond = not_vscode,
