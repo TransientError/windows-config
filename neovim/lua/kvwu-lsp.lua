@@ -82,17 +82,16 @@ function kvwu_lsp.setup(use)
         vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
         vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, bufopts)
         vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+        vim.keymap.set("n", "gu", vim.lsp.buf.references, bufopts)
       end
 
       vim.keymap.set("n", "<C-k>", vim.diagnostic.open_float)
 
-      lspconfig["pyright"].setup { capabilities = capabilities, on_attach = on_attach }
       lspconfig["sumneko_lua"].setup {
         settings = {
           Lua = {
             runtime = { version = "LuaJIT" },
-            diagnostics = { globals = { "vim", "use" } },
+            diagnostics = { globals = { "vim", "use", "require" } },
             workspace = { library = vim.api.nvim_get_runtime_file("", true) },
             telemetry = { enable = false },
           },
@@ -109,42 +108,49 @@ function kvwu_lsp.setup(use)
         capabilities = capabilities,
         on_attach = on_attach,
       }
-      lspconfig["rust_analyzer"].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-          ["rust_analyzer"] = {
-            procMacro = {
-              enable = true,
-            },
-            imports = {
-              granularity = {
-                group = "module",
+      require("rust-tools").setup {
+        tools = {
+          inlay_hints = {
+            auto = true,
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+          },
+        },
+        server = {
+          on_attach = on_attach,
+          settings = {
+            ["rust_analyzer"] = {
+              procMacro = {
+                enable = true,
               },
-              prefix = "self",
+              imports = {
+                granularity = {
+                  group = "module",
+                },
+                prefix = "self",
+              },
             },
           },
         },
       }
-      -- idk I'm not that into deno
-      -- lspconfig["denols"].setup {
-      --   on_attach = on_attach,
-      --   capabilities = capabilities,
-      -- }
-      lspconfig["tsserver"].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      }
 
-      lspconfig["gopls"].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      }
 
-      lspconfig["kotlin_language_server"].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      }
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "qf",
+        callback = function()
+          vim.keymap.set("n", "q", ":close<CR>", { buffer = true, noremap = true })
+          vim.keymap.set("n", "<Esc>", ":close<CR>", { buffer = true, noremap = true })
+        end,
+      })
+
+      for _, server in ipairs { "pyright", "tsserver", "gopls", "kotlin_language_server", "hls", "julials" } do
+        lspconfig[server].setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        }
+      end
+
     end,
     requires = {
       { "hrsh7th/cmp-path", opt = true },

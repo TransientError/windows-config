@@ -10,6 +10,14 @@ function kvwu_python.setup(use, not_vscode)
     setup = function()
       vim.g.poetv_executables = { "poetry" }
     end,
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "python",
+        callback = function()
+          vim.keymap.set("n", "<leader>mp", ":PoetvActivate | LspRestart<CR>")
+        end,
+      })
+    end,
   }
   use {
     "lukas-reineke/indent-blankline.nvim",

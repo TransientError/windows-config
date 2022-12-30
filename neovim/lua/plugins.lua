@@ -8,7 +8,10 @@ return require("packer").startup(function(use)
   use {
     "sbdchd/neoformat",
     config = function()
-      vim.keymap.set("", "<leader>cf", ":Neoformat<CR>")
+      vim.keymap.set("", "<leader>cf", ":Neoformat<CR>", { noremap = true })
+      vim.g.neoformat_enabled_cs = { "csharpier" }
+      vim.g.neoformat_enabled_python = { "black" }
+      vim.g.neoformat_enabled_ocaml = { "ocamlformat" }
     end,
   }
   use "tpope/vim-surround"
@@ -56,6 +59,7 @@ return require("packer").startup(function(use)
       require("marks").setup {}
     end,
   }
+  use "Pocco81/auto-save.nvim"
   require('kvwu-lsp').setup(use)
   require('kvwu-theme').setup(use, not_vscode)
   require('kvwu-debuggers').setup(use, not_vscode)
@@ -65,4 +69,21 @@ return require("packer").startup(function(use)
   require('kvwu-python').setup(use, not_vscode)
   require('kvwu-misc-old-crap').setup(use, not_vscode)
   require('kvwu-version-control').setup(use, not_vscode)
+  use {
+    "akinsho/toggleterm.nvim",
+    config = function()
+      require("toggleterm").setup {
+        -- this is buggy for me
+        shade_terminals = false,
+        hide_numbers = false,
+      }
+      vim.keymap.set("", "<leader>ot", ":ToggleTerm<CR>")
+    end,
+  }
+  use {
+    "airblade/vim-rooter",
+    config = function()
+      vim.g.rooter_patterns = { ".git", "=nvim" }
+    end,
+  }
 end)
