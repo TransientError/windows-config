@@ -108,33 +108,6 @@ function kvwu_lsp.setup(use)
         capabilities = capabilities,
         on_attach = on_attach,
       }
-      require("rust-tools").setup {
-        tools = {
-          inlay_hints = {
-            auto = true,
-            show_parameter_hints = false,
-            parameter_hints_prefix = "",
-            other_hints_prefix = "",
-          },
-        },
-        server = {
-          on_attach = on_attach,
-          settings = {
-            ["rust_analyzer"] = {
-              procMacro = {
-                enable = true,
-              },
-              imports = {
-                granularity = {
-                  group = "module",
-                },
-                prefix = "self",
-              },
-            },
-          },
-        },
-      }
-
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "qf",

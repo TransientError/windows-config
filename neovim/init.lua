@@ -11,6 +11,7 @@ local map = vim.keymap
 utils.process_settings {
   opt = {
     expandtab = true,
+    ignorecase = true,
     smartcase = true,
     shiftwidth = 2,
   },
