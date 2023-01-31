@@ -25,7 +25,6 @@ return require("packer").startup(function(use)
   use "tpope/vim-commentary"
   use { "dag/vim-fish", ft = "fish" }
   use { "mattn/emmet-vim", ft = { "html", "xml" } }
-  use { "cespare/vim-toml", ft = "toml" }
   use "vim-scripts/ReplaceWithRegister"
   use {
     "wellle/targets.vim",
