@@ -91,7 +91,7 @@ function kvwu_lsp.setup(use)
 
       vim.keymap.set("n", "<C-k>", vim.diagnostic.open_float)
 
-      lspconfig["sumneko_lua"].setup {
+      lspconfig["lua_ls"].setup {
         settings = {
           Lua = {
             runtime = { version = "LuaJIT" },
@@ -121,7 +121,7 @@ function kvwu_lsp.setup(use)
         end,
       })
 
-      for _, server in ipairs { "pyright", "tsserver", "gopls", "kotlin_language_server", "hls", "julials" } do
+      for _, server in ipairs { "pyright", "tsserver", "gopls", "kotlin_language_server", "hls", "julials", "jsonls" } do
         lspconfig[server].setup {
           on_attach = on_attach,
           capabilities = capabilities,
