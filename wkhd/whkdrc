@@ -1,4 +1,4 @@
-.shell pwsh
+.shell powershell
 
 # focus windows
 alt + h : komorebic focus left
