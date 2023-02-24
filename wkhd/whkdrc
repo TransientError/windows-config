@@ -1,0 +1,45 @@
+.shell pwsh
+
+# focus windows
+alt + h : komorebic focus left
+alt + l : komorebic focus right
+alt + j : komorebic focus down
+alt + k : komorebic focus up
+
+# move windows
+alt + shift + h : komorebic move left
+alt + shift + l : komorebic move right
+alt + shift + j : komorebic move down
+alt + shift + k : komorebic move up
+alt + shift + return : komorebic promote
+
+# stack windows
+alt + left : komorebic stack left
+alt + right : komorebic stack right
+alt + up : komorebic stack up
+alt + down : komorebic stack down
+alt + oem_1 : komorebic unstack # ;
+alt + oem_4 : komorebic cycle-stack previous # [
+alt + oem_6 : komorebic cycle-stack next # ]
+
+# resize
+alt + oem_plus : komorebic resize-axis horizontal increase
+alt + oem_minus : komorebic resize-axis horizontal decrease
+alt + shift + oem_plus : komorebic resize-axis vertical increase
+alt + shift + oem_minus : komorebic resize-axis vertical decrease
+
+# manipulate windows
+alt + t : komorebic toggle-float
+
+# layouts
+alt + a : komorebic change-layout bsp
+alt + s : komorebic change-layout columns
+alt + f : komorebic change-layout rows
+alt + d : komorebic change-layout monocle
+
+# meta
+alt + shift + r : komorebic retile
+alt + p : komorebic toggle-pause
+alt + 0 : komorebic toggle-focus-follows-mouse
+alt + m : komorebic manage
+
