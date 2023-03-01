@@ -238,7 +238,7 @@ Do-Program -program "komorebi" -block {
         scoop install komorebi
     }
 
-    Update-Config-Or-Print-Error -sourcePath komorebi\komorebi.ahk -configPath $startup\komorebi.ahk
+    Update-Config-Or-Print-Error -sourcePath komorebi\komorebi.ps1 -configPath $env:USERPROFILE\komorebi.ps1
 }
 
 Do-Program -program "neovim" -block {
@@ -323,4 +323,12 @@ Do-Program -program "ssh" -block {
         Add-WindowsCapability -CapabilityName "OpenSSH.Server"
         Set-Service -Name sshd -StartupType Automatic
     }
+}
+
+Do-Program -program "whkd" -block {
+  Install-If-Not_installed -program "whkd" -providesPath whkd -installScript {
+      scoop install whkd
+  }
+
+  Update-Config-Or-Print-Error -sourcePath whkd\whkdrc -configPath $env:USERPROFILE\.config\whkdrc
 }
