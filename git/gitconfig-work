@@ -4,7 +4,7 @@
    username = wukevin
 
 [credential]
-   helper=manager-core
+   helper=manager
 
 [credential "dev.azure.com"]
    useHttpPath = true
