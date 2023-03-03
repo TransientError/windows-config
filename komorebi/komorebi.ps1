@@ -15,7 +15,7 @@ komorebic float-rule title "Microsoft Teams Notification"
 
 # Visual studio
 komorebic identify-object-name-change-application exe "devenv.exe"
-komorebic float-rule class "WindowsForms10.Window.8.app.0.2b7bf41_r21_ad1"
+komorebic float-rule title "WindowsFormsParkingWindow"
 
 # preview teams
 komorebic identify-object-name-change-application exe "ms-teams.exe"
