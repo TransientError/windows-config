@@ -26,7 +26,7 @@ function kvwu_python.setup(use, not_vscode)
         show_current_context = true,
       }
     end,
-    ft = "python",
+    ft = {"python", "yaml"},
     cond = not_vscode,
   }
   use "michaeljsmith/vim-indent-object"

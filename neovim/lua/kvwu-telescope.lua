@@ -7,14 +7,32 @@ function kvwu_telescope.setup(use, not_vscode)
     requires = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim",
     },
     config = function()
       local builtin = require "telescope.builtin"
-      vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
+      local telescope = require("telescope")
+      telescope.load_extension("live_grep_args")
+
+      vim.keymap.set("n", "<leader>pf", telescope.extensions.live_grep_args.live_grep_args, {})
       vim.keymap.set("n", "<leader>fr", builtin.oldfiles, {})
-      vim.keymap.set("n", "<leader>/", builtin.live_grep, {})
       vim.keymap.set("n", "<leader>,", builtin.buffers, {})
       vim.keymap.set("n", "<leader>ha", builtin.help_tags, {})
+
+      telescope.setup {
+        extensions = {
+          live_grep_args = {
+            mappings = {
+              i = {
+                ["<C-k>"] = require("telescope-live-grep-args.actions").quote_prompt()
+              }
+            }
+          }
+        }
+      }
+
+      vim.keymap.set("n", "<leader>/", telescope.extensions.live_grep_args.live_grep_args, {})
+
     end,
   }
   use {

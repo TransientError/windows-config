@@ -45,7 +45,7 @@ else
   map.set("", "<leader>ws", ":wincmd s<CR>")
   map.set("", "<leader>wv", ":wincmd v<CR>")
   map.set("", "<leader>w=", ":wincmd =<CR>")
-  map.set("", "<leader>wd", ":q<CR>")
+  map.set("", "<leader>wd", ":close<CR>")
   map.set("", "<leader>qq", ":qa!<CR>")
   map.set("", "<leader>ot", ":split term://fish<CR>")
   map.set("", "<leader>bl", "<C-o>")

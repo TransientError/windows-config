@@ -61,8 +61,7 @@ function kvwu_lsp.setup(use)
 
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources { { name = "path" } },
-        { name = "cmdline" },
+        sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
       })
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -84,7 +83,7 @@ function kvwu_lsp.setup(use)
         vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
         vim.keymap.set("n", "gu", vim.lsp.buf.references, bufopts)
 
-        local builtin = require("telescope.builtin")
+        local builtin = require "telescope.builtin"
         vim.keymap.set("n", "<leader>si", builtin.lsp_document_symbols, bufopts)
         vim.keymap.set("n", "<leader>sI", builtin.lsp_workspace_symbols, bufopts)
       end
@@ -113,6 +112,13 @@ function kvwu_lsp.setup(use)
         on_attach = on_attach,
       }
 
+      local json_capabilities = vim.lsp.protocol.make_client_capabilities()
+      json_capabilities.textDocument.completion.completionItem.snippetSupport = true
+      lspconfig["jsonls"].setup {
+        on_attach = on_attach,
+        capabilities = json_capabilities,
+      }
+
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "qf",
         callback = function()
@@ -121,13 +127,12 @@ function kvwu_lsp.setup(use)
         end,
       })
 
-      for _, server in ipairs { "pyright", "tsserver", "gopls", "kotlin_language_server", "hls", "julials", "jsonls" } do
+      for _, server in ipairs { "pyright", "tsserver", "gopls", "kotlin_language_server", "hls", "julials" } do
         lspconfig[server].setup {
           on_attach = on_attach,
           capabilities = capabilities,
         }
       end
-
     end,
     requires = {
       { "hrsh7th/cmp-path", opt = true },
