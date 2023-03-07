@@ -225,7 +225,7 @@ Do-Program -program "git" -block {
         -content ($gitConfigContent -join "`r`n") `
         -configPath "$env:USERPROFILE\.gitconfig"
 
-    Update-Config-Or-Print-Error -sourcePath .\git\ignore -configPath "$env:USERPROFILE\git\ignore"
+    Update-Config-Or-Print-Error -sourcePath .\git\ignore -configPath "$env:USERPROFILE\gitignore_global"
 
     Install-If-Not-Installed -program git -provides git -installScript {
         scoop install git
