@@ -1,7 +1,12 @@
 local kvwu_treesitter = {}
 
 function kvwu_treesitter.setup(use, not_vscode)
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate", cond = not_vscode, module = "nvim-treesitter.query" }
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    cond = not_vscode,
+    module = { "nvim-treesitter.query", "nvim-treesitter.configs" },
+  }
   use {
     "p00f/nvim-ts-rainbow",
     cond = not_vscode,
@@ -22,6 +27,23 @@ function kvwu_treesitter.setup(use, not_vscode)
             colors.main.green,
             colors.main.orange,
             colors.main.red,
+          },
+        },
+      }
+
+      local parser_mapping = require("nvim-treesitter.parsers").filetype_to_parsername
+      parser_mapping.xml = "html"
+    end,
+  }
+  use {
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        autotag = {
+          enable = true,
+          filetypes = {
+            "html",
+            "xml",
           },
         },
       }

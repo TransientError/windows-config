@@ -15,13 +15,6 @@ return require("packer").startup(function(use)
     end,
   }
   use "tpope/vim-surround"
-  use {
-    "alvan/vim-closetag",
-    config = function()
-      vim.g.closetag_filenames = "*.html,*.xml,*.plist,*.*proj"
-    end,
-    ft = { "html", "xml", "jsx" },
-  }
   use "tpope/vim-commentary"
   use { "dag/vim-fish", ft = "fish" }
   use { "mattn/emmet-vim", ft = { "html", "xml" } }

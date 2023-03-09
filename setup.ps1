@@ -326,9 +326,17 @@ Do-Program -program "ssh" -block {
 }
 
 Do-Program -program "whkd" -block {
-  Install-If-Not_installed -program "whkd" -providesPath whkd -installScript {
+  Install-If-Not-Installed -program "whkd" -providesPath whkd -installScript {
       scoop install whkd
   }
 
   Update-Config-Or-Print-Error -sourcePath whkd\whkdrc -configPath $env:USERPROFILE\.config\whkdrc
+}
+
+Do-Program -program "stylua" -block {
+  Install-If-Not-Installed -program "stylua" -providesPath stylua -installScript {
+    scoop install stylua
+  }
+
+  Update-Config-Or-Print-Error -sourcePath stylua\stylua.toml -configPath $env:USERPROFILE\.config\stylua.toml
 }
