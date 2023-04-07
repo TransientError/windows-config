@@ -32,10 +32,10 @@ alt + shift + oem_minus : komorebic resize-axis vertical decrease
 alt + t : komorebic toggle-float
 
 # layouts
-alt + a : komorebic change-layout bsp
-alt + s : komorebic change-layout columns
-alt + f : komorebic change-layout rows
-alt + d : komorebic change-layout monocle
+alt + shift + a : komorebic change-layout bsp
+alt + shift + s : komorebic change-layout columns
+alt + shift + f : komorebic change-layout rows
+alt + shift + d : komorebic change-layout monocle
 
 # meta
 alt + shift + r : komorebic retile
