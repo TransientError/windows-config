@@ -31,8 +31,7 @@ function kvwu_treesitter.setup(use, not_vscode)
         },
       }
 
-      local parser_mapping = require("nvim-treesitter.parsers").filetype_to_parsername
-      parser_mapping.xml = "html"
+      vim.treesitter.language.register('xml', 'html')
     end,
   }
   use {

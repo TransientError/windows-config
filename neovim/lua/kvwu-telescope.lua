@@ -14,7 +14,7 @@ function kvwu_telescope.setup(use, not_vscode)
       local telescope = require("telescope")
       telescope.load_extension("live_grep_args")
 
-      vim.keymap.set("n", "<leader>pf", telescope.extensions.live_grep_args.live_grep_args, {})
+      vim.keymap.set("n", "<leader>pf", builtin.find_files, {})
       vim.keymap.set("n", "<leader>fr", builtin.oldfiles, {})
       vim.keymap.set("n", "<leader>,", builtin.buffers, {})
       vim.keymap.set("n", "<leader>ha", builtin.help_tags, {})
