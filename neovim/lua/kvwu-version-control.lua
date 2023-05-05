@@ -18,7 +18,7 @@ function kvwu_version_control.setup(use, not_vscode)
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fugitive",
         callback = function()
-          vim.keymap.set("n", "pu", ":Git push<CR", { noremap = true, buffer = true })
+          vim.keymap.set("n", "pu", ":Git push<CR>", { noremap = true, buffer = true })
         end,
       })
     end,
