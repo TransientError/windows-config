@@ -103,7 +103,7 @@ function kvwu_lsp.setup(use)
         on_attach = on_attach,
       }
       lspconfig["omnisharp"].setup {
-        cmd = { "dotnet", "/usr/lib/omnisharp-roslyn/OmniSharp.dll" },
+        cmd = { "omnisharp" },
         enable_roslyn_analyzers = true,
         organize_imports_on_format = true,
         enable_import_completion = true,
