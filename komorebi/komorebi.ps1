@@ -21,6 +21,7 @@ komorebic float-rule title "Search everywhere"
 # preview teams
 komorebic identify-object-name-change-application exe "ms-teams.exe"
 komorebic identify-tray-application exe ms-teams.exe
+komorebic float-rule class "TeamsNrc"
 
 # If my particular ultrawide monitor prefer columns
 if (((Get-WmiObject WmiMonitorID -namespace root\wmi).InstanceName) -like "*VTK*") {
