@@ -27,7 +27,8 @@ if ($extensions) {
             "copilotvs",
             "Viasfora",
             "MaterialTheme",
-            "EditorGuidelinesPreview"
+            "EditorGuidelinesPreview",
+            "NavigateTabGroups"
         );
     };
 
@@ -51,6 +52,7 @@ if ($extensions) {
     $extensionsToUrl = @{
         "ProjectFilter1" = "https://github.com/reduckted/ProjectFilter/releases/download/1.1.1/ProjectFilter.vsix";
         "Viasfora4.3"    = "https://github.com/tomasr/viasfora/releases/download/v4.3/Viasfora.vsix";
+        "NavigateTabGroups" = "https://github.com/jagt/vs-NavigateTabGroups/releases/download/vs2022/TabGroupJump.vsix"
     }
     
     $versionsToPath = @{

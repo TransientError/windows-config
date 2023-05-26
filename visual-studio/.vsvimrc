@@ -23,7 +23,11 @@ nnoremap <Space>mtd :vsc TestExplorer.DebugAllTestsInContext<CR>
 " window
 nnoremap <Space>ws :vsc Window.NewHorizontalTabGroup<CR>
 nnoremap <Space>wv :vsc Window.NewVerticalTabGroup<CR>
-nnoremap <Space>wj :vsc Window.NextDocumentWindow<CR>
+nnoremap <Space>wS :vsc Window.Split<CR>
+nnoremap <Space>wk :vsc Tools.NavigateTabGroups.Up<CR>
+nnoremap <Space>wj :vsc Tools.NavigateTabGroups.Down<CR>
+nnoremap <Space>wl :vsc Tools.NavigateTabGroups.Right<CR>
+nnoremap <Space>wh :vsc Tools.NavigateTabGroups.Left<CR>
 nnoremap <Space>wd :vsc Window.CloseDocumentWindow<CR>
 
 " project
