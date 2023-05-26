@@ -5,6 +5,7 @@ set relativenumber
 
 nnoremap <C-O> :vsc View.NavigateBackward<CR>
 nnoremap <C-I> :vsc View.NavigateForward<CR>
+nnoremap K :vsc Edit.QuickInfo<CR>
 
 " shorcuts
 nnoremap <Space>/ :vsc Edit.FindInFiles<CR>
