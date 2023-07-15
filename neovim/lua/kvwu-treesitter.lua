@@ -13,7 +13,7 @@ function kvwu_treesitter.setup(use, not_vscode)
     config = function()
       local colors = require "material.colors"
       require("nvim-treesitter.configs").setup {
-        ensure_installed = { "python", "lua", "typescript" },
+        ensure_installed = { "lua" },
         highlight = {
           enable = true,
         },
@@ -32,20 +32,6 @@ function kvwu_treesitter.setup(use, not_vscode)
       }
 
       vim.treesitter.language.register('xml', 'html')
-    end,
-  }
-  use {
-    "windwp/nvim-ts-autotag",
-    config = function()
-      require("nvim-treesitter.configs").setup {
-        autotag = {
-          enable = true,
-          filetypes = {
-            "html",
-            "xml",
-          },
-        },
-      }
     end,
   }
 end

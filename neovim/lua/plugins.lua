@@ -52,15 +52,15 @@ return require("packer").startup(function(use)
     end,
   }
   use "Pocco81/auto-save.nvim"
-  require('kvwu-lsp').setup(use)
-  require('kvwu-theme').setup(use, not_vscode)
-  require('kvwu-debuggers').setup(use, not_vscode)
-  require('kvwu-telescope').setup(use, not_vscode)
-  require('kvwu-treesitter').setup(use, not_vscode)
-  require('kvwu-navigation').setup(use, not_vscode)
-  require('kvwu-python').setup(use, not_vscode)
-  require('kvwu-misc-old-crap').setup(use, not_vscode)
-  require('kvwu-version-control').setup(use, not_vscode)
+  require("kvwu-lsp").setup(use)
+  require("kvwu-theme").setup(use, not_vscode)
+  require("kvwu-debuggers").setup(use, not_vscode)
+  require("kvwu-telescope").setup(use, not_vscode)
+  require("kvwu-treesitter").setup(use, not_vscode)
+  require("kvwu-navigation").setup(use, not_vscode)
+  require("kvwu-python").setup(use, not_vscode)
+  require("kvwu-misc-old-crap").setup(use, not_vscode)
+  require("kvwu-version-control").setup(use, not_vscode)
   use {
     "akinsho/toggleterm.nvim",
     config = function()
@@ -78,4 +78,11 @@ return require("packer").startup(function(use)
       vim.g.rooter_patterns = { ".git", "=nvim" }
     end,
   }
+  use {
+    "alvan/vim-closetag",
+    config = function()
+      vim.g.closetag_filenames = "*.html,*.xml,*.*proj"
+    end,
+  }
+  use "AndrewRadev/tagalong.vim"
 end)
