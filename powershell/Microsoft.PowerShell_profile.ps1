@@ -10,6 +10,9 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Chord Ctrl+r -ScriptBlock {
   Get-Content (Get-PSReadlineoption).HistorySavePath | fzf | Invoke-expression
 }
+Set-PSReadLineKeyHandler -Chord Ctrl+Alt+Shift+f -Function SelectForwardWord
+Set-PSReadLineKeyHandler -Chord Ctrl+Alt+Shift+a -Function SelectCommandArgument
+Set-PSReadLineKeyHandler -Chord Ctrl+Alt+Shift+x -Function ViEditVisually
 
 
 # PowerShell parameter completion shim for the dotnet CLI
@@ -40,7 +43,6 @@ if (Test-Path($solutionPackagerPath)) {
   Set-Alias -Name SolutionPackager -Value $solutionPackagerPath
 }
 
-Set-Alias -Name start-komorebi -Value 'C:\Users\wukevin\utils\komorebic-scripts\start-komorebic.ps1'
 Set-Alias -Name devenv -Value 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\Launch-VsDevShell'
 Set-Alias -Name trash -Value Remove-ItemSafely
 
@@ -57,3 +59,5 @@ $env:Path += Join-String -Separator ";" -InputObject @(
   "${env:appdata}\npm\"
 )
 
+# https://github.com/PowerShell/PowerShell/issues/7853
+$PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
