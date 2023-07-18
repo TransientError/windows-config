@@ -6,7 +6,7 @@
 ;= Add aliases below here
 e.=explorer .
 gl=git log --oneline --all --graph --decorate  $*
-ls=ls --show-control-chars -F --color $*
+ls=dir
 pwd=cd
 clear=cls
 unalias=alias /d $1
