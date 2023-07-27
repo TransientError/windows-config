@@ -26,6 +26,9 @@ komorebic float-rule class "TeamsNrc"
 # remote desktop
 komorebic float-rule exe "msrdc.exe"
 
+# outlook reminders
+komorebic float-rule class "PopoutWebviewFrame"
+
 # If my particular ultrawide monitor prefer columns
 if (((Get-WmiObject WmiMonitorID -namespace root\wmi).InstanceName) -like "*VTK*") {
    # try ultrawide-vertical-stack
