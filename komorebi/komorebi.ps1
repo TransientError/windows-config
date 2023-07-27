@@ -23,6 +23,9 @@ komorebic identify-object-name-change-application exe "ms-teams.exe"
 komorebic identify-tray-application exe ms-teams.exe
 komorebic float-rule class "TeamsNrc"
 
+# remote desktop
+komorebic float-rule exe "msrdc.exe"
+
 # If my particular ultrawide monitor prefer columns
 if (((Get-WmiObject WmiMonitorID -namespace root\wmi).InstanceName) -like "*VTK*") {
    # try ultrawide-vertical-stack
