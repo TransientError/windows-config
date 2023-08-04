@@ -234,7 +234,6 @@ Do-Program -program "git" -block {
 
 Do-Program -program "komorebi" -block {
     Install-If-Not-Installed -program komorebi -provides komorebi -installScript {
-        scoop bucket add komorebi https://github.com/LGUG2Z/komorebi-bucket
         scoop install komorebi
     }
 
@@ -251,7 +250,7 @@ Do-Program -program "neovim" -block {
 
 Do-Program -program "neovide" -block {
     Install-If-Not-Installed -program neovide -provides neovide -installScript {
-        scoop install neovide
+        winget install neovide
     }
 
 
@@ -277,7 +276,7 @@ Do-Program -program "chrome" -block {
         -program chrome `
         -providesPath "C:\Program Files\Google\Chrome\Application\chrome.exe" `
         -installScript {
-            scoop install googlechrome
+            winget install Google.Chrome
         }
 }
 
@@ -286,13 +285,13 @@ Do-Program -program "firefox" -block {
         -program firefox `
         -providesPath "C:\Program Files\Mozilla Firefox\firefox.exe" `
         -installScript {
-            scoop install firefox
+            winget install Mozilla.Firefox
         }
 }
 
 Do-Program -program "vscode" -block {
     Install-If-Not-Installed -provides code -program vscode -installScript {
-        scoop install vscode
+        winget install Microsoft.VisualStudioCode
     }
 }
 
@@ -302,7 +301,7 @@ Do-Program -program "windows-terminal" -block {
     -providesPath wt
     -installScript {
         if (Test-Administrator) {
-            scoop install -g windows-terminal
+            winget install Microsoft.WindowsTerminal
         }
     }
 
