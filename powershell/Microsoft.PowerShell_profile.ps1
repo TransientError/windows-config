@@ -59,5 +59,10 @@ $env:Path += Join-String -Separator ";" -InputObject @(
   "${env:appdata}\npm\"
 )
 
+<<<<<<< Updated upstream
 # https://github.com/PowerShell/PowerShell/issues/7853
 $PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
+||||||| Stash base
+=======
+Import-Module posh-git
+>>>>>>> Stashed changes
