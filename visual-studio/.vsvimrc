@@ -33,6 +33,9 @@ nnoremap <Space>wd :vsc Window.CloseDocumentWindow<CR>
 " project
 nnoremap <Space>pf :vsc Edit.GoToFile<CR>
 
+" git
+nnoremap <Space>gb :vsc Team.Git.Annotate<CR>
+
 " symbol
 nnoremap <Space>si :vsc Edit.GoToMember<CR>
 nnoremap <Space>sI :vsc Edit.GoToSymbol<CR>
