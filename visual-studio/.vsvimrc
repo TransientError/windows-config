@@ -14,6 +14,7 @@ nnoremap <Space>/ :vsc Edit.FindInFiles<CR>
 nnoremap <Space>cr :vsc Refactor.Rename<CR>
 nnoremap <Space>cf :vsc EditorContextMenus.CodeWindow.ReformatWithCSharpier<CR>
 nnoremap <Space>ca :vsc EditorContextMenus.CodeWindow.QuickActionsForPosition<CR>
+nnoremap <Space>cs :vsc Editor.RemoveAndSort<CR>
 
 " mode
 nnoremap <Space>mb :vsc Build.BuildSolution<CR>
@@ -30,11 +31,11 @@ nnoremap <Space>wl :vsc Tools.NavigateTabGroups.Right<CR>
 nnoremap <Space>wh :vsc Tools.NavigateTabGroups.Left<CR>
 nnoremap <Space>wd :vsc Window.CloseDocumentWindow<CR>
 
-" project
-nnoremap <Space>pf :vsc Edit.GoToFile<CR>
-
 " git
 nnoremap <Space>gb :vsc Team.Git.Annotate<CR>
+
+" project
+nnoremap <Space>pf :vsc Edit.GoToFile<CR>
 
 " symbol
 nnoremap <Space>si :vsc Edit.GoToMember<CR>
