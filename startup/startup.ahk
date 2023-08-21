@@ -1,21 +1,20 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+﻿#SingleInstance
 
 ; browser
-#b::
-Run, C:\Program Files\Mozilla Firefox\firefox.exe
-return
+#b::Run "C:\Program Files (x86)\Microsoft\Edge\Application\msedge"
 ; editor
-#e::
-Run, C:\Program Files\Microsoft VS Code\code.exe
-return
+#e::Run "C:\Program Files\Microsoft VS Code\code.exe"
 ; terminal
-#t:: 
-Run wt
-return
+#t::Run "wt"
 
-#f::
-Run, explorer.exe
-return
+#f::Run "explorer.exe"
+
+; shrug
+::\shrug::¯\_(ツ)_/¯
+
+; capslock to esc
+CapsLock::Esc
+
+; copy paste
+XButton1::^v
+XButton2::^c
