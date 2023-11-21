@@ -214,7 +214,7 @@ Do-Program -program "git" -block {
         Get-Content -Path .\git\gitconfig-work -Encoding UTF8
     }
     else {
-        @()
+        Get-Content -Path .\git\gitconfig-personal -Encoding UTF8
     }
 
     $gitConfigCommon = Get-Content -Path .\git\gitconfig-common -Encoding UTF8
