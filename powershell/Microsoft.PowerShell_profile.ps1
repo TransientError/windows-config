@@ -59,10 +59,43 @@ $env:Path += Join-String -Separator ";" -InputObject @(
   "${env:appdata}\npm\"
 )
 
-<<<<<<< Updated upstream
 # https://github.com/PowerShell/PowerShell/issues/7853
 $PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
-||||||| Stash base
-=======
+
 Import-Module posh-git
->>>>>>> Stashed changes
+
+function winget-install {
+    $preDesktop = [Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('CommonDesktop') |
+        Get-ChildItem -Filter '*.lnk'
+    
+    # install WinGet
+    winget install $args 
+
+    $postDesktop = [Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('CommonDesktop') |
+        Get-ChildItem -Filter '*.lnk'    
+
+    # Cleaning up new unwhanted desktop icons
+    Write-Host "Cleaning up WinGet created desktop icons..."
+    $postDesktop | Where-Object FullName -notin $preDesktop.FullName | Foreach-Object {
+        Remove-Item -LiteralPath $_.FullName
+        Write-Host "Cleaned up $($_.Name)" -ForegroundColor DarkGray
+    }
+}
+
+function winget-upgrade {
+    $preDesktop = [Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('CommonDesktop') |
+        Get-ChildItem -Filter '*.lnk'
+    
+    # Update WinGet
+    winget upgrade $args
+
+    $postDesktop = [Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('CommonDesktop') |
+        Get-ChildItem -Filter '*.lnk'    
+
+    # Cleaning up new unwhanted desktop icons
+    Write-Host "Cleaning up WinGet created desktop icons..."
+    $postDesktop | Where-Object FullName -notin $preDesktop.FullName | Foreach-Object {
+        Remove-Item -LiteralPath $_.FullName
+        Write-Host "Cleaned up $($_.Name)" -ForegroundColor DarkGray
+    }
+}
