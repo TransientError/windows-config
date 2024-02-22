@@ -29,6 +29,12 @@ komorebic float-rule exe "msrdc.exe"
 # outlook reminders
 komorebic float-rule class "PopoutWebviewFrame"
 
+#powertoys
+komorebic float-rule exe "PowerToys.PowerLauncher.exe"
+
+# SSMS
+komorebic float-rule title 'SSMS AAD Dialog Owner'
+
 # If my particular ultrawide monitor prefer columns
 if (((Get-WmiObject WmiMonitorID -namespace root\wmi).InstanceName) -like "*VTK*") {
    # try ultrawide-vertical-stack
