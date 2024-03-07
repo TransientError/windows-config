@@ -58,3 +58,5 @@ nnoremap <leader>b[ :bprevious<CR>
 
 " autocmd
 autocmd VimResized * :wincmd =
+
+set backspace=indent,eol,start
