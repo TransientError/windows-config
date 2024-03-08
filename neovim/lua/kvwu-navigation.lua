@@ -5,20 +5,24 @@ function kvwu_navigation.setup(use, not_vscode)
     "nvim-tree/nvim-tree.lua",
     cond = not_vscode,
     config = function()
+      local function on_attach(bufnr)
+        local api = require "nvim-tree.api"
+        api.config.mappings.default_on_attach(bufnr)
+
+        local function opts(desc)
+          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+
+        vim.keymap.set("n", "l", api.tree.change_root_to_node, opts "cd")
+      end
+
       require("nvim-tree").setup {
         update_focused_file = {
           enable = true,
         },
         sync_root_with_cwd = true,
         respect_buf_cwd = true,
-        view = {
-          mappings = {
-            custom_only = false,
-            list = {
-              { key = "l", action = "cd" },
-            },
-          },
-        },
+        on_attach = on_attach,
       }
       vim.keymap.set({ "n", "v" }, "<leader>op", ":NvimTreeToggle<CR>")
     end,
