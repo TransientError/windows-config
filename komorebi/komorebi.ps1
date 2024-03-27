@@ -32,8 +32,11 @@ komorebic float-rule class "PopoutWebviewFrame"
 #powertoys
 komorebic float-rule exe "PowerToys.PowerLauncher.exe"
 
-# SSMS
+#SSMS
 komorebic float-rule title 'SSMS AAD Dialog Owner'
+
+# snipping tool
+komorebic float-rule exe "SnippingTool.exe"
 
 # If my particular ultrawide monitor prefer columns
 if (((Get-WmiObject WmiMonitorID -namespace root\wmi).InstanceName) -like "*VTK*") {
