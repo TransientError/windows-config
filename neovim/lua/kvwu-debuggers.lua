@@ -147,6 +147,7 @@ function kvwu_debuggers.setup(use, not_vscode)
         },
       }
     end,
+    requires = { "nvim-neotest/nvim-nio" }
   }
 end
 
