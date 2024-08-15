@@ -35,7 +35,7 @@ alt + t : komorebic toggle-float
 alt + shift + a : komorebic change-layout bsp
 alt + shift + s : komorebic change-layout columns
 alt + shift + f : komorebic change-layout rows
-alt + shift + d : komorebic change-layout monocle
+alt + shift + d : komorebic toggle-monocle
 
 # meta
 alt + shift + r : komorebic retile
@@ -43,3 +43,17 @@ alt + p : komorebic toggle-pause
 alt + 0 : komorebic toggle-focus-follows-mouse
 alt + m : komorebic manage
 
+# Workspaces
+alt + 1                 : komorebic focus-workspace 0
+alt + 2                 : komorebic focus-workspace 1
+alt + 3                 : komorebic focus-named-workspace 2
+
+# Move windows across workspaces
+alt + shift + 1         : komorebic move-to-workspace 0
+alt + shift + 2         : komorebic move-to-workspace 1
+alt + shift + 3         : komorebic move-to-workspace 2
+
+# Move windows across monitors
+alt + shift + ctrl + 1  : komorebic move-to-monitor 0
+alt + shift + ctrl + 2  : komorebic move-to-monitor 1
+alt + shift + ctrl + 3  : komorebic move-to-monitor 2

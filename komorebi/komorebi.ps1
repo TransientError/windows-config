@@ -7,6 +7,7 @@ komorebic focus-follows-mouse enable
 
 komorebic active-window-border-colour 142 140 216
 komorebic active-window-border enable
+komorebic border-implementation komorebi
 komorebic toggle-cross-monitor-move-behaviour
 
 # rules
@@ -23,12 +24,6 @@ komorebic identify-object-name-change-application exe "ms-teams.exe"
 komorebic identify-tray-application exe ms-teams.exe
 komorebic float-rule class "TeamsNrc"
 
-# remote desktop
-komorebic float-rule exe "msrdc.exe"
-
-# outlook reminders
-komorebic float-rule class "PopoutWebviewFrame"
-
 #powertoys
 komorebic float-rule exe "PowerToys.PowerLauncher.exe"
 
@@ -37,6 +32,12 @@ komorebic float-rule title 'SSMS AAD Dialog Owner'
 
 # snipping tool
 komorebic float-rule exe "SnippingTool.exe"
+
+# zebar
+komorebic float-rule exe "zebar.exe"
+
+# yasb
+Start-Process $env:userprofile\utils\yasb\.venv\Scripts\python.exe -ArgumentList $env:userprofile\utils\yasb\src\main.py -WindowStyle Hidden
 
 # If my particular ultrawide monitor prefer columns
 if (((Get-WmiObject WmiMonitorID -namespace root\wmi).InstanceName) -like "*VTK*") {
