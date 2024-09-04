@@ -57,3 +57,8 @@ alt + shift + 3         : komorebic move-to-workspace 2
 alt + shift + ctrl + 1  : komorebic move-to-monitor 0
 alt + shift + ctrl + 2  : komorebic move-to-monitor 1
 alt + shift + ctrl + 3  : komorebic move-to-monitor 2
+
+# hap
+ctrl + oem_1 : C:\Users\wukevin\utils\hap\hap.exe /tray
+ctrl + alt + shift + win + oem_1 : C:\Users\wukevin\utils\hap\hap.exe /hint
+
