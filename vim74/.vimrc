@@ -7,6 +7,11 @@ execute pathogen#infect()
 " material-theme
 " nerdtree
 " vim-over
+" vim-whichkey
+" emmet-vim
+" vim-easymotion
+" vim-closetag
+" vim-ps1
 
 syntax on
 filetype plugin indent on
@@ -26,9 +31,6 @@ set shiftwidth=2
 set tabstop=2
 set number
 set relativenumber
-
-let &t_SI = "\<Esc>[6 q"
-let &t_EI = "\<Esc>[2 q"
 
 let mapleader="\<space>"
 
