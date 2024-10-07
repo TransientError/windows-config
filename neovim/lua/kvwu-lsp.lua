@@ -202,7 +202,7 @@ function kvwu_lsp.setup(use)
         end,
       })
 
-      for _, server in ipairs { "pyright", "tsserver", "gopls", "kotlin_language_server", "hls", "julials" } do
+      for _, server in ipairs { "pyright", "ts_ls", "gopls", "kotlin_language_server", "hls", "julials" } do
         lspconfig[server].setup {
           on_attach = on_attach,
           capabilities = capabilities,
