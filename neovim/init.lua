@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-require "plugins"
 local utils = require "utils"
 
 local g = vim.g
@@ -19,7 +18,6 @@ utils.process_settings {
 
 
 if g.vscode then
-
   require "vscode"
 else
   if g.neovide then
@@ -55,3 +53,5 @@ else
 
   vim.api.nvim_create_autocmd("VimResized", { pattern = '*', command = "wincmd ="})
 end
+
+require "config.lazy"

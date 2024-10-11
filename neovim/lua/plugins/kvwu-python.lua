@@ -1,13 +1,11 @@
-local kvwu_python = {}
-
-function kvwu_python.setup(use, not_vscode)
-  use {
+return {
+  {
     "petobens/poet-v",
     cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
     ft = "python",
-    setup = function()
+    init = function()
       vim.g.poetv_executables = { "poetry" }
     end,
     config = function()
@@ -18,8 +16,8 @@ function kvwu_python.setup(use, not_vscode)
         end,
       })
     end,
-  }
-  use {
+  },
+  {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       local highlight = {
@@ -43,9 +41,7 @@ function kvwu_python.setup(use, not_vscode)
       require("ibl").setup { indent = { highlight = highlight } }
     end,
     ft = { "python", "yaml" },
-    cond = not_vscode,
-  }
-  use "michaeljsmith/vim-indent-object"
-end
+  },
+  "michaeljsmith/vim-indent-object"
+}
 
-return kvwu_python

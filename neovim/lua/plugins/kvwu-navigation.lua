@@ -1,9 +1,6 @@
-local kvwu_navigation = {}
-
-function kvwu_navigation.setup(use, not_vscode)
-  use {
+return {
+  {
     "nvim-tree/nvim-tree.lua",
-    cond = not_vscode,
     config = function()
       local function on_attach(bufnr)
         local api = require "nvim-tree.api"
@@ -30,6 +27,5 @@ function kvwu_navigation.setup(use, not_vscode)
     keys = "<leader>op",
     ft = ""
   }
-end
+}
 
-return kvwu_navigation

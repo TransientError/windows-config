@@ -1,12 +1,7 @@
-local kvwu_lsp = {}
-
-function kvwu_lsp.setup(use)
-  use {
+return {
+  {
     "hrsh7th/nvim-cmp",
-    opt = true,
-    cond = function()
-      return vim.fn.exists "g:vscode" == 0
-    end,
+    lazy = true,
     config = function()
       local cmp = require "cmp"
 
@@ -209,18 +204,16 @@ function kvwu_lsp.setup(use)
         }
       end
     end,
-    requires = {
-      { "hrsh7th/cmp-path", opt = true },
-      { "hrsh7th/cmp-cmdline", opt = true },
-      { "ray-x/cmp-treesitter", opt = true },
-      { "hrsh7th/cmp-buffer", opt = true },
-      { "hrsh7th/cmp-vsnip", opt = true },
-      { "hrsh7th/vim-vsnip", opt = true },
+    dependencies = {
+      { "hrsh7th/cmp-path", lazy = true },
+      { "hrsh7th/cmp-cmdline", lazy = true },
+      { "ray-x/cmp-treesitter", lazy = true },
+      { "hrsh7th/cmp-buffer", lazy = true },
+      { "hrsh7th/cmp-vsnip", lazy = true },
+      { "hrsh7th/vim-vsnip", lazy = true },
       { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
       { "neovim/nvim-lspconfig", module = "lspconfig" },
       { "Hoffs/omnisharp-extended-lsp.nvim", module = "omnisharp_extended" },
     },
   }
-end
-
-return kvwu_lsp
+}

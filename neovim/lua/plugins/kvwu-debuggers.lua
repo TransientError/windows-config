@@ -1,7 +1,5 @@
-local kvwu_debuggers = {}
-
-function kvwu_debuggers.setup(use, not_vscode)
-  use {
+return {
+  {
     "mfussenegger/nvim-dap",
     cond = function()
       return vim.fn.exists "g:vscode" == 0
@@ -14,39 +12,37 @@ function kvwu_debuggers.setup(use, not_vscode)
 
       vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
     end,
-    requires = { "anuvyklack/hydra.nvim" },
+    dependencies = { "anuvyklack/hydra.nvim" },
     module = "dap",
-  }
-  use {
+  },
+  {
     "mfussenegger/nvim-dap-python",
     ft = "python",
-    cond = not_vscode,
     config = function()
       require("dap-python").setup "/home/kvwu/.venvs/debugpy/bin/python"
     end,
-  }
-  use {
+  },
+  {
     "leoluz/nvim-dap-go",
-    cond = not_vscode,
     ft = "go",
-    requires = "mfussenegger/nvim-dap",
+    dependencies = "mfussenegger/nvim-dap",
     config = function()
       require("dap-go").setup()
     end,
-  }
-  use {
+  },
+  {
     "mxsdev/nvim-dap-vscode-js",
     cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
     ft = "typescript",
-    requires = {
+    dependencies = {
       "mfussenegger/nvim-dap",
       {
         "microsoft/vscode-js-debug",
-        opt = true,
-        run = "npm install --legacy-peer-deps && npm run compile",
-        lock = true,
+        lazy = true,
+        build = "npm install --legacy-peer-deps && npm run compile",
+        pin = true,
       },
     },
     config = function()
@@ -66,8 +62,8 @@ function kvwu_debuggers.setup(use, not_vscode)
         },
       }
     end,
-  }
-  use {
+  },
+  {
     "rcarriga/nvim-dap-ui",
     cond = function()
       return vim.fn.exists "g:vscode" == 0
@@ -147,8 +143,7 @@ function kvwu_debuggers.setup(use, not_vscode)
         },
       }
     end,
-    requires = { "nvim-neotest/nvim-nio" }
+    dependencies = { "nvim-neotest/nvim-nio" }
   }
-end
+}
 
-return kvwu_debuggers
