@@ -41,7 +41,7 @@ return {
       {
         "microsoft/vscode-js-debug",
         lazy = true,
-        build = "npm install --legacy-peer-deps && npm run compile",
+        build = "npm install --legacy-peer-deps && npm run compile && rm package-lock.json",
         pin = true,
       },
     },

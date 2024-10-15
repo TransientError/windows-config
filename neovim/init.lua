@@ -20,8 +20,8 @@ utils.process_settings {
 if g.vscode then
   require "vscode"
 else
-  if g.neovide then
-    opt.guifont = "Liga Hack:h12"
+  if g.neovide or g.nvy then
+    opt.guifont = "LigaHack Nerd Font:h12"
   end
   utils.process_settings {
     opt = {
