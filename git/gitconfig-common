@@ -21,7 +21,6 @@
 [core]
    editor = "nvim"
    autocrlf = true
-   excludesFile = "C:\\Users\\kvwu\\gitignore_global"
 
 [push]
    autoSetupRemote = true

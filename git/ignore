@@ -2,3 +2,4 @@
 *.iml
 dir-locals.el
 *.patch
+*.vs

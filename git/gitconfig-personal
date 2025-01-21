@@ -2,3 +2,5 @@
    name = Kevin Wu
    email = kvwu@transienterror.com
    username = kvwu
+[core]
+   excludesFile = "C:\\Users\\kvwu\\gitignore_global"

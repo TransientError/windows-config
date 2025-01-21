@@ -8,3 +8,6 @@
 
 [credential "dev.azure.com"]
    useHttpPath = true
+
+[core]
+   excludesFile = "C:\\Users\\wukevin\\gitignore_global"
