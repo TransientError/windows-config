@@ -12,7 +12,7 @@ return {
 
       vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
     end,
-    dependencies = { "anuvyklack/hydra.nvim" },
+    dependencies = { "nvimtools/hydra.nvim" },
     module = "dap",
   },
   {
