@@ -1,7 +1,6 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    lazy = true,
     config = function()
       local cmp = require "cmp"
 
@@ -211,6 +210,7 @@ return {
       { "hrsh7th/cmp-buffer", lazy = true },
       { "hrsh7th/cmp-vsnip", lazy = true },
       { "hrsh7th/vim-vsnip", lazy = true },
+      { "rafamadriz/friendly-snippets", lazy = true },
       { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
       { "neovim/nvim-lspconfig", module = "lspconfig" },
       { "Hoffs/omnisharp-extended-lsp.nvim", module = "omnisharp_extended" },
