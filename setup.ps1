@@ -243,7 +243,6 @@ Do-Program -program "komorebi" -block {
 Do-Program -program "neovim" -block {
     Install-If-Not-Installed -program neovim -provides nvim -installScript {
         scoop install neovim
-	git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
     }
     Recursive-Update-Config -sourcePath "neovim" -targetPath "$env:USERPROFILE\AppData\Local\nvim"
 }
@@ -338,4 +337,8 @@ Do-Program -program "stylua" -block {
   }
 
   Update-Config-Or-Print-Error -sourcePath stylua\stylua.toml -configPath $env:USERPROFILE\.config\stylua.toml
+}
+
+Do-Program -program "vsnip" -block {
+  Recursive-Update-Config -sourcePath vsnip -targetPath $env:USERPROFILE\.vsnip
 }
