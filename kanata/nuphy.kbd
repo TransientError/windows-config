@@ -17,6 +17,8 @@
   l (tap-hold 200 200 l ralt)
   m (tap-hold 200 200 m (layer-while-held normal))
   / (tap-hold 200 200 / (layer-while-held symbols))
+  esc (tap-hold 200 200 esc lmet)
+  ' (tap-hold 200 200 ' rmet)
   z (tap-hold 200 200 z (layer-while-held symbols))
   ins (layer-switch symbols)
 )
