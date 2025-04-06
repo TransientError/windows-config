@@ -40,18 +40,32 @@ alt + shift + d : komorebic toggle-monocle
 # meta
 alt + shift + r : komorebic retile
 alt + p : komorebic toggle-pause
-alt + 0 : komorebic toggle-focus-follows-mouse
 alt + m : komorebic manage
+alt + shift + p : komorebic toggle-transparency
 
 # Workspaces
 alt + 1                 : komorebic focus-workspace 0
 alt + 2                 : komorebic focus-workspace 1
-alt + 3                 : komorebic focus-named-workspace 2
+alt + 3                 : komorebic focus-workspace 2
+alt + 4                 : komorebic focus-workspace 3
+alt + 5                 : komorebic focus-workspace 4
+alt + 6                 : komorebic focus-workspace 5
+alt + 7                 : komorebic focus-workspace 6
+alt + 8                 : komorebic focus-workspace 7
+alt + 9                 : komorebic focus-workspace 8
+alt + 0                 : komorebic focus-workspace 9
 
 # Move windows across workspaces
 alt + shift + 1         : komorebic move-to-workspace 0
 alt + shift + 2         : komorebic move-to-workspace 1
 alt + shift + 3         : komorebic move-to-workspace 2
+alt + shift + 4         : komorebic move-to-workspace 3
+alt + shift + 5         : komorebic move-to-workspace 4
+alt + shift + 6         : komorebic move-to-workspace 5
+alt + shift + 7         : komorebic move-to-workspace 6
+alt + shift + 8         : komorebic move-to-workspace 7
+alt + shift + 9         : komorebic move-to-workspace 8
+alt + shift + 0         : komorebic move-to-workspace 9
 
 # Move windows across monitors
 alt + shift + ctrl + 1  : komorebic move-to-monitor 0
@@ -59,6 +73,5 @@ alt + shift + ctrl + 2  : komorebic move-to-monitor 1
 alt + shift + ctrl + 3  : komorebic move-to-monitor 2
 
 # hap
-ctrl + oem_1 : & ${env:userprofile}\utils\hap\hap.exe /tray
-ctrl + alt + shift + win + oem_1 : & $env:userprofile\utils\hap\hap.exe /hint
-
+ctrl + oem_1 : C:\Users\kvwu\utils\hap\hap.exe /hint # ;
+ctrl + shift + oem_1 : C:\Users\kvwu\utils\hap\hap.exe /tray # ;
