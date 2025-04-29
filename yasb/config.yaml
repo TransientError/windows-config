@@ -1,71 +1,71 @@
+watch_stylesheet: true
+watch_config: true
 
+komorebi:
+  start_command: "komorebic start --whkd"
+  stop_command: "komorebic stop --whkd"
+  reload_command: "komorebic stop --whkd && komorebic start --whkd"
 
 bars:
   status-bar:
     enabled: true
-    screens: ['*'] 
+    screens: ["*"]
     class_name: "yasb-bar"
     alignment:
       position: "top"
       center: false
     blur_effect:
       enabled: false
-      acrylic: false
-      dark: false
+      dark_mode: false
+      round_corners: false
+      border_color: None
     window_flags:
       always_on_top: false
       windows_app_bar: true
     dimensions:
       width: "100%"
-      height: 36
+      height: 34
     padding:
-      top: 4
-      left: 0
-      bottom: 4
-      right: 0
+      top: 6
+      left: 8
+      bottom: 2
+      right: 8
     widgets:
       left:
         [
-          "win_button",
+          "home",
+          "whkd",
           "komorebi_workspaces",
           "komorebi_active_layout",
-          "active_window"
-        ] 
-      center: [
-         "clock",
-         "apps"
+          "active_window",
         ]
+      center:
+        - "clock"
       right:
-        [
-          "media",
-          "traffic",
-          "cpu",
-          "weather",
-          "memory",
-          "volume",
-          "power_menu"
-        ]
+        ["media", "traffic", "cpu", "weather", "memory", "volume", "power_menu"]
 widgets:
   media:
     type: "yasb.media.MediaWidget"
     options:
-      label: "{title} - {artist}"
-      label_alt: "{title}"
+      label: "{title}"
+      label_alt: "{title} - {artist}"
       max_field_size:
-        label: 20
-        label_alt: 30
+        label: 40
+        label_alt: 24
       show_thumbnail: true
       controls_only: false
       controls_left: true
       hide_empty: true
-      thumbnail_alpha: 80
+      thumbnail_alpha: 100
       thumbnail_padding: 8
       thumbnail_corner_radius: 16 # Set to 0 for square corners
       icons:
-        prev_track: "\ue892"
-        next_track: "\ue893"
-        play: "\ue768"
-        pause: "\ue769"
+        prev_track: "<span>\ue892</span>"
+        next_track: "<span>\ue893</span>"
+        play: "<span>\uead3</span>"
+        pause: "<span>\uead1</span>"
+      callbacks:
+        on_left: "toggle_label"
 
   active_window:
     type: "yasb.active_window.ActiveWindowWidget"
@@ -91,10 +91,18 @@ widgets:
     type: "yasb.clock.ClockWidget"
     options:
       label: "{%a %d, %b %H:%M}"
-      label_alt: "{%A %d %B %Y, %H:%M}"
       #locale: 'en_EN' # Langugae for date, you can set your own, example fr_FR
       timezones: [] #Looking up time zone info from registry
       #timezones: ["America/Montreal"]
+    callbacks:
+      on_left: "toggle_calendar"
+    calendar:
+      blur: True
+      round_corners: True
+      border_color: None
+      alignment: "center"
+      direction: "down"
+      offset_left: 0
 
   cpu:
     type: "yasb.cpu.CpuWidget"
@@ -128,20 +136,30 @@ widgets:
   komorebi_workspaces:
     type: "komorebi.workspaces.WorkspaceWidget"
     options:
-        label_offline: "Komorebi Offline"
-        label_workspace_btn: "\udb81\udc3d"
-        label_workspace_active_btn: "\udb81\udc3e"
-        label_default_name: "{index}"
-        label_zero_index: false
-        hide_empty_workspaces: false
-        hide_if_offline: false
+      label_offline: "Komorebi Offline"
+      label_workspace_btn: "\udb81\udc3d"
+      label_workspace_active_btn: "\udb81\udc3e"
+      label_default_name: "{index}"
+      label_zero_index: false
+      hide_empty_workspaces: false
+      hide_if_offline: false
 
   komorebi_active_layout:
     type: "komorebi.active_layout.ActiveLayoutWidget"
     options:
       hide_if_offline: true
       label: "{icon}"
-      layouts: ['bsp', 'columns', 'rows', 'grid', 'vertical_stack', 'horizontal_stack', 'ultrawide_vertical_stack','right_main_vertical_stack']
+      layouts:
+        [
+          "bsp",
+          "columns",
+          "rows",
+          "grid",
+          "vertical_stack",
+          "horizontal_stack",
+          "ultrawide_vertical_stack",
+          "right_main_vertical_stack",
+        ]
       layout_icons:
         bsp: "BSP"
         columns: "COLS"
@@ -156,9 +174,9 @@ widgets:
         floating: "FLOATING"
         paused: "PAUSED"
       callbacks:
-        on_left: 'next_layout'
-        on_middle: 'toggle_monocle'
-        on_right: 'prev_layout'
+        on_left: "next_layout"
+        on_middle: "toggle_monocle"
+        on_right: "prev_layout"
 
   wifi:
     type: "yasb.wifi.WifiWidget"
@@ -195,7 +213,7 @@ widgets:
       class_name: "ip-info-widget"
       exec_options:
         run_cmd: "curl.exe https://ipinfo.io"
-        run_interval: 120000  # every 5 minutes
+        run_interval: 120000 # every 5 minutes
         return_format: "json"
       callbacks:
         on_left: "toggle_label"
@@ -205,15 +223,17 @@ widgets:
   weather:
     type: "yasb.weather.WeatherWidget"
     options:
-      label: "<span>{icon}</span> {temp_f}"
-      label_alt: "{location}: Min {min_temp_f}, Max {max_temp_f}, Humidity {humidity}"
-      api_key: '3bf4cf9a7c3f40d6b31174128242807' # Get your free API key from https://www.weatherapi.com/
+      label: "<span>{icon}</span> {temp}"
+      label_alt: "{location}: Min {min_temp}, Max {max_temp}, Humidity {humidity}"
+      api_key: "" # Get your free API key from https://www.weatherapi.com/
       update_interval: 600 # Update interval in seconds, Min 600 seconds
       hide_decimal: true
-      location: 'Seattle, WA, USA' # You can use "USA Los Angeles 90006" {COUNTRY CITY ZIP_CODE}, or just city.
+      units: "imperial"
+      location: "" # You can use "USA Los Angeles 90006" {COUNTRY CITY ZIP_CODE}, or just city.
       callbacks:
-        on_left: "toggle_label"
-      icons: 
+        on_left: "toggle_card"
+        on_right: "toggle_label"
+      icons:
         sunnyDay: "\ue30d"
         clearNight: "\ue32b"
         cloudyDay: "\udb81\udd99"
@@ -224,8 +244,6 @@ widgets:
         snowyIcyNight: "\udb81\udd98"
         blizzard: "\uebaa"
         default: "\uebaa"
-        # https://www.weatherapi.com/docs/
-        # Usage {temp_c}, {min_temp_c}, {max_temp_c}, {temp_f}, {min_temp_f}, {max_temp_f}, {location}, {humidity}, {icon}, {conditions}
 
   volume:
     type: "yasb.volume.VolumeWidget"
@@ -233,11 +251,11 @@ widgets:
       label: "<span>{icon}</span> {level}"
       label_alt: "{volume}"
       volume_icons:
-        - "\ueee8"  # Icon for muted
-        - "\uf026"  # Icon for 0-10% volume
-        - "\uf027"  # Icon for 11-30% volume
-        - "\uf027"  # Icon for 31-60% volume
-        - "\uf028"  # Icon for 61-100% volume
+        - "\ueee8" # Icon for muted
+        - "\uf026" # Icon for 0-10% volume
+        - "\uf027" # Icon for 11-30% volume
+        - "\uf027" # Icon for 31-60% volume
+        - "\uf028" # Icon for 61-100% volume
       callbacks:
         on_right: "exec cmd.exe /c start ms-settings:sound"
 
@@ -248,38 +266,18 @@ widgets:
       uptime: True
       blur: False
       blur_background: True
-      animation_duration: 300 # Milisecond 
+      animation_duration: 300 # Milisecond
       button_row: 3 # Number of buttons in row, min 1 max 5
       buttons:
-        lock: ["\uea75","Lock"]
-        signout: ["\udb80\udf43","Sign out"]
+        lock: ["\uea75", "Lock"]
+        signout: ["\udb80\udf43", "Sign out"]
         #sleep: ["\u23fe","Sleep"]
-        shutdown: ["\uf011","Shut Down"]
-        restart: ["\uead2","Restart"]
-        hibernate: ["\uf28e","Hibernate"]
-        cancel: ["\udb81\udf3a","Cancel"]
+        shutdown: ["\uf011", "Shut Down"]
+        restart: ["\uead2", "Restart"]
+        hibernate: ["\uf28e", "Hibernate"]
+        cancel: ["\udb81\udf3a", "Cancel"]
         #force_shutdown: ["\uf011","Force Shut Down"]
         #force_restart: ["\uead2","Force Restart"]
- 
-
-  apps:
-    type: "yasb.applications.ApplicationsWidget"
-    options:
-      label: "{data}"
-      app_list:
-        #- {icon: "\uf489", launch: "wt"}
-        #- {icon: "\uf413", launch: "explorer c:\\Users\\amn"}
-        #- {icon: "\udb82\ude1e", launch: "C:\\Users\\amn\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"}
-        #- {icon: "\udb80\ude39", launch: "C:\\Program Files\\Mozilla Firefox\\firefox.exe"}
-        #- {icon: "\uf1ff", launch: "C:\\Users\\amn\\AppData\\Local\\Discord\\Update.exe --processStart Discord.exe"}
-        #- {icon: "\ue217", launch: "C:\\Users\\amn\\AppData\\Roaming\\Telegram Desktop\\Telegram.exe"}
-        - {icon: "\uf0a2", launch: "notification_center"}
-        - {icon: "\ueb51", launch: "quick_settings"}
-        #- {icon: "\uf46a", launch: "cmd.exe /c start ms-settings:windowsupdate"}
-        - {icon: "\uf422", launch: "search"}
-        #- {icon: "\udb84\udf55", launch: "widget"}
-        # Currently available to use quick_settings, notification_center, search, widget, launcher (launcher will trigger ALT+A)
- 
 
   github:
     type: "yasb.github.GithubWidget"
@@ -295,9 +293,42 @@ widgets:
       menu_offset: 240
       update_interval: 300 # Check for new notification in seconds
 
-  win_button:
-    type: "yasb.custom.CustomWidget"
+  home:
+    type: "yasb.home.HomeWidget"
     options:
-      label: "\ue62a"
-      label_alt: "\ue62a"
-      class_name: "system-widget"
+      label: "<span>\udb81\udf17</span>"
+      menu_list:
+        - { title: "User Home", path: "~" }
+        - { title: "Download", path: "~\\Downloads" }
+        - { title: "Documents", path: "~\\Documents" }
+        - { title: "Pictures", path: "~\\Pictures" }
+      system_menu: true
+      power_menu: true
+      blur: false
+
+  whkd:
+    type: "yasb.whkd.WhkdWidget"
+    options:
+      label: "<span>\uf11c</span>"
+      special_keys:
+        - key: "win"
+          key_replace: "\ue70f"
+        - key: "ctrl"
+          key_replace: "Ctrl"
+        - key: "alt"
+          key_replace: "Alt"
+        - key: "shift"
+          key_replace: "Shift"
+        - key: "left"
+          key_replace: "\u2190"
+        - key: "right"
+          key_replace: "\u2192"
+        - key: "up"
+          key_replace: "\u2191"
+        - key: "down"
+          key_replace: "\u2193"
+      label_shadow:
+        enabled: true
+        color: "black"
+        radius: 3
+        offset: [1, 1]
