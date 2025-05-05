@@ -1,0 +1,1 @@
+These are my Windows configuration and a script I use to install them.

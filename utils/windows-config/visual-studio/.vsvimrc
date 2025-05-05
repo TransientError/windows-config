@@ -1,0 +1,100 @@
+set ignorecase
+set clipboard=unnamed
+set number
+set relativenumber
+
+nnoremap <C-O> :vsc View.NavigateBackward<CR>
+nnoremap <C-I> :vsc View.NavigateForward<CR>
+nnoremap K :vsc Edit.QuickInfo<CR>
+
+" shorcuts
+nnoremap <Space>/ :vsc Edit.FindInFiles<CR>
+
+" code
+nnoremap <Space>cr :vsc Refactor.Rename<CR>
+nnoremap <Space>cf :vsc EditorContextMenus.CodeWindow.ReformatWithCSharpier<CR>
+nnoremap <Space>ca :vsc EditorContextMenus.CodeWindow.QuickActionsForPosition<CR>
+nnoremap <Space>cs :vsc Editor.RemoveAndSort<CR>
+
+" mode
+nnoremap <Space>mb :vsc Build.BuildSolution<CR>
+nnoremap <Space>mtt :vsc TestExplorer.RunAllTestsInContext<CR>
+nnoremap <Space>mtd :vsc TestExplorer.DebugAllTestsInContext<CR>
+
+" window
+nnoremap <Space>ws :vsc Window.NewHorizontalTabGroup<CR>
+nnoremap <Space>wv :vsc Window.NewVerticalTabGroup<CR>
+nnoremap <Space>wS :vsc Window.Split<CR>
+nnoremap <Space>wk :vsc Tools.NavigateTabGroups.Up<CR>
+nnoremap <Space>wj :vsc Tools.NavigateTabGroups.Down<CR>
+nnoremap <Space>wl :vsc Tools.NavigateTabGroups.Right<CR>
+nnoremap <Space>wh :vsc Tools.NavigateTabGroups.Left<CR>
+nnoremap <Space>wd :vsc Window.CloseDocumentWindow<CR>
+
+" git
+nnoremap <Space>gb :vsc Team.Git.Annotate<CR>
+
+" project
+nnoremap <Space>pf :vsc Edit.GoToFile<CR>
+
+" symbol
+nnoremap <Space>si :vsc Edit.GoToMember<CR>
+nnoremap <Space>sI :vsc Edit.GoToSymbol<CR>
+
+" misc
+nnoremap s :vsc Tools.InvokePeasyMotionTwoCharJump<CR>
+if $VisualStudioVersion == "15.0"
+	nnoremap gs<Space>i :vsc Tools.InvokeAceJumpCommand<CR>
+else
+	nnoremap gs<Space>i :vsc Tools.InvokePeasyMotion<CR>
+endif
+nnoremap gcc :vsc Edit.ToggleComment<CR>
+vnoremap gc :vsc Edit.ToggleComment<CR>
+nnoremap gi :vsc Edit.GoToImplementation<CR>
+nnoremap gu :vsc Edit.FindAllReferences<CR>
+
+" reload
+nnoremap <Space>hrr :so ~/.vsvimrc<CR>
+
+" buffer
+nnoremap <Space>bl :vsc View.NavigateBackward<CR>
+nnoremap <Space>bw :vsc File.SaveSelectedItems<CR>
+
+
+" Surround simulating bindings
+nnoremap s) ciw(<C-r>")<Esc>
+nnoremap s] ciw[<C-r>"]<Esc>
+nnoremap s} ciw{<C-r>"}<Esc>
+nnoremap s> ciw<lt><C-r>"><Esc>
+nnoremap s" ciw"<C-r>""<Esc>
+nnoremap s' ciw'<C-r>"'<Esc>
+nnoremap sw) ciW(<C-r>")<Esc>
+nnoremap sw] ciW[<C-r>"]<Esc>
+nnoremap sw} ciW{<C-r>"}<Esc>
+nnoremap sw> ciW<lt><C-r>"><Esc>
+nnoremap sw" ciW"<C-r>""<Esc>
+nnoremap sw' ciW'<C-r>"'<Esc>
+
+" Surround delete bindings
+nnoremap ds) vi(dvhp
+nnoremap ds] vi[dvhp
+nnoremap ds} vi{dvhp
+nnoremap ds> vi<dvhp
+nnoremap ds" vi"dvhp
+nnoremap ds' vi'dvhp
+
+" Surround change bindings
+nnoremap cs"' vi"oh<Esc>msvi"l<Esc>cl'<Esc>`scl'<Esc>
+nnoremap cs'" vi'oh<Esc>msvi'l<Esc>cl"<Esc>`scl"<Esc>
+
+" Surround visual selected text
+vnoremap S" c"<C-r>""<Esc>
+vnoremap S' c"<C-r>"'<Esc>
+vnoremap S) c(<C-r>")<Esc>
+vnoremap S] c[<C-r>"]<Esc>
+vnoremap S} c{<C-r>"}<Esc>
+vnoremap S> c<lt><C-r>"><Esc>
+vnoremap S* c/*<C-r>"*/<Esc>
+"vnoremap St c<lt>div><CR><C-r>"<Esc>
+" Surround in div tag and edit tag
+vnoremap St c<lt>div><CR><C-r>"<Esc>`<lt>lcw

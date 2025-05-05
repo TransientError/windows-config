@@ -1,0 +1,13 @@
+{
+  "copyright": {
+    "prefix": ["copyright"],
+    "body": [
+      "//-----------------------------------------------------------------------",
+      "// <copyright file=\"$TM_FILENAME\" company=\"MicrosoftCorporation\">",
+      "//   Copyright (c) 2025 Microsoft Corporation.  All rights reserved.",
+      "// </copyright>",
+      "//-----------------------------------------------------------------------"
+    ],
+    "description": "copyright"
+  }
+}
