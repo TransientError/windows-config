@@ -70,4 +70,7 @@ return {
     end,
   },
   "AndrewRadev/tagalong.vim",
+  "b0o/SchemaStore.nvim",
+  "carlsmedstad/vim-bicep",
+  "williamboman/mason.nvim"
 }
