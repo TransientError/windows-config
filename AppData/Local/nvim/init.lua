@@ -16,7 +16,6 @@ utils.process_settings {
   },
 }
 
-
 if g.vscode then
   require "vscode"
 else
@@ -35,24 +34,23 @@ else
     },
   }
 
-  map.set("t", "<Esc>", "<C-\\><C-n>")
-  map.set("", "<leader>wh", ":wincmd h<CR>")
-  map.set("", "<leader>wj", ":wincmd j<CR>")
-  map.set("", "<leader>wk", ":wincmd k<CR>")
-  map.set("", "<leader>wl", ":wincmd l<CR>")
-  map.set("", "<leader>ws", ":wincmd s<CR>")
-  map.set("", "<leader>wv", ":wincmd v<CR>")
-  map.set("", "<leader>w=", ":wincmd =<CR>")
-  map.set("", "<leader>wd", ":close<CR>")
-  map.set("", "<leader>qq", ":qa!<CR>")
-  map.set("", "<leader>ot", ":split term://fish<CR>")
-  map.set("", "<leader>bl", "<C-o>")
-  map.set("", "<leader>hr", ":source ~/AppData/Local/nvim/init.lua<CR>:PackerCompile<CR>")
+  map.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
+  map.set("n", "<leader>wh", ":wincmd h<CR>", { noremap = true })
+  map.set("n", "<leader>wj", ":wincmd j<CR>", { noremap = true })
+  map.set("n", "<leader>wk", ":wincmd k<CR>", { noremap = true })
+  map.set("n", "<leader>wl", ":wincmd l<CR>", { noremap = true })
+  map.set("n", "<leader>ws", ":wincmd s<CR>", { noremap = true })
+  map.set("n", "<leader>wv", ":wincmd v<CR>", { noremap = true })
+  map.set("n", "<leader>w=", ":wincmd =<CR>", { noremap = true })
+  map.set("n", "<leader>wd", ":close<CR>", { noremap = true })
+  map.set("n", "<leader>qq", ":qa!<CR>", { noremap = true })
+  map.set("n", "<leader>ot", ":split term://fish<CR>", { noremap = true })
+  map.set("n", "<leader>bl", "<C-o>", { noremap = true })
+  map.set("n", "<leader>fp", ":cd ~/AppData/Local/nvim<CR>:e ~/AppData/Local/nvim/init.lua<CR>", { noremap = true })
+  map.set("n", "<leader>l", ":Lazy<CR>", { noremap = true })
+  map.set("n", "<ldeader>m", ":Mason<CR>", { noremap = true })
 
-  map.set("", "<leader>fp", ":cd ~/AppData/Local/nvim<CR>:e ~/AppData/Local/nvim/init.lua<CR>")
-  map.set("", "<leader>l", ":Lazy<CR>")
-
-  vim.api.nvim_create_autocmd("VimResized", { pattern = '*', command = "wincmd ="})
+  vim.api.nvim_create_autocmd("VimResized", { pattern = "*", command = "wincmd =" })
 end
 
 require "config.lazy"

@@ -1,77 +1,78 @@
 return {
   {
     "sbdchd/neoformat",
-    config = function()
-      vim.keymap.set("", "<leader>cf", ":Neoformat<CR>", { noremap = true })
+    init = function()
       vim.g.neoformat_enabled_cs = { "csharpier" }
       vim.g.neoformat_enabled_python = { "black" }
       vim.g.neoformat_enabled_ocaml = { "ocamlformat" }
     end,
+    keys = {
+      { "<leader>cf", ":Neoformat<CR>" },
+    },
+    cmd = "Neoformat",
   },
-  "tpope/vim-surround",
-  "tpope/vim-commentary",
+  { "tpope/vim-surround", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
+  { "tpope/vim-commentary", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
   { "dag/vim-fish", ft = "fish" },
   { "mattn/emmet-vim", ft = { "html", "xml" } },
-  "vim-scripts/ReplaceWithRegister",
+  { "vim-scripts/ReplaceWithRegister", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
   {
-   "wellle/targets.vim",
-   config = function()
-     vim.cmd [[
+    "wellle/targets.vim",
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    init = function()
+      vim.cmd [[
         autocmd User targets#mappings#user call targets#mappings#extend({
            \ 'a': {'argument': [{'o':'[({<[]', 'c':'[]}>)]', 's': ','}]}
            \ })
      ]]
-   end,
+    end,
   },
-  "ggandor/lightspeed.nvim",
+  { "ggandor/lightspeed.nvim", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
   {
     "folke/which-key.nvim",
     cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
-    config = function()
-      require("which-key").setup {}
-    end,
+    opts = {},
   },
   {
     "windwp/nvim-autopairs",
-    config = function()
-      require("nvim-autopairs").setup {}
-    end,
+    opts = {},
   },
   {
     "chentoast/marks.nvim",
-    config = function()
-      require("marks").setup {}
-    end,
+    opts = {},
   },
-  "Pocco81/auto-save.nvim",
+  { "Pocco81/auto-save.nvim", event = "VeryLazy" },
   {
     "akinsho/toggleterm.nvim",
-    config = function()
-      require("toggleterm").setup {
-        -- this is buggy for me
-        shade_terminals = false,
-        hide_numbers = false,
-      }
-      vim.keymap.set("", "<leader>ot", ":ToggleTerm<CR>")
-    end,
+    keys = {
+      "<leader>ot",
+      ":ToggleTerm<CR>",
+    },
+    opts = {
+      -- this is buggy for me
+      shade_terminals = false,
+      hide_numbers = false,
+    },
   },
   {
     "airblade/vim-rooter",
-    config = function()
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    init = function()
       vim.g.rooter_patterns = { ".git", "=nvim" }
     end,
   },
   {
     "alvan/vim-closetag",
-    config = function()
+    init = function()
       vim.g.closetag_filenames = "*.html,*.xml,*.*proj"
     end,
+    ft = { "html", "xml" },
   },
-  "AndrewRadev/tagalong.vim",
+  { "AndrewRadev/tagalong.vim", ft = { "html", "xml" } },
   {
     "williamboman/mason.nvim",
-    opts = {}
-  }
+    opts = {},
+  },
 }

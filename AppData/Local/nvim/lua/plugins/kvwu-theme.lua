@@ -1,45 +1,46 @@
-
 return {
   {
     "marko-cerovac/material.nvim",
-    config = function ()
+    lazy = false,
+    priority = 1000,
+    init = function()
       vim.g.material_style = "darker"
-      require("material").setup {
-        lualine_style = "default",
-        plugins = {
-          "dap",
-          "nvim-cmp",
-          "nvim-tree",
-          "telescope",
-          "which-key",
-          "gitsigns",
-        },
-        custom_colors =function(colors)
-          colors.editor.fg = "#eeffff"
-          colors.editor.fg_dark = colors.main.red
-          colors.syntax.colors = "#546e7a"
-          colors.editor.selection = "#2c2c2c"
-          colors.main.red = "#ff5370"
-          colors.editor.accent = colors.main.cyan
-          colors.syntax.type = colors.main.yellow
-        end,
-      }
+    end,
+    config = function()
       vim.cmd "colorscheme material"
     end,
-    after = "lualine.nvim",
-    module = "material",
+    opts = {
+      lualine_style = "default",
+      plugins = {
+        "dap",
+        "nvim-cmp",
+        "nvim-tree",
+        "telescope",
+        "which-key",
+        "gitsigns",
+      },
+      custom_colors = function(colors)
+        colors.editor.fg = "#eeffff"
+        colors.editor.fg_dark = colors.main.red
+        colors.syntax.colors = "#546e7a"
+        colors.editor.selection = "#2c2c2c"
+        colors.main.red = "#ff5370"
+        colors.editor.accent = colors.main.cyan
+        colors.syntax.type = colors.main.yellow
+      end,
+    },
   },
   {
     "nvim-lualine/lualine.nvim",
-    config = function ()
+    opts = function()
       local colors = require "material.colors"
-      require("lualine").setup {
+      return {
         options = {
           theme = {
             normal = {
               a = { fg = colors.editor.bg, bg = colors.main.cyan, gui = "bold" },
               b = { fg = colors.editor.fg, bg = colors.editor.line_numbers },
-             c = { fg = colors.editor.fg, bg = colors.editor.selection },
+              c = { fg = colors.editor.fg, bg = colors.editor.selection },
             },
             insert = {
               a = { fg = colors.editor.bg, bg = colors.main.purple, gui = "bold" },
@@ -66,11 +67,11 @@ return {
         },
       }
     end,
-    cond = not_vscode,
   },
   {
     url = "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git",
-    config = function ()
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    init = function()
       local colors = require "material.colors"
 
       vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = colors.main.red })
@@ -83,20 +84,17 @@ return {
 
       vim.g.rainbow_delimiters = {
         strategy = {
-          [''] = 'rainbow-delimiters.strategy.global',
+          [""] = "rainbow-delimiters.strategy.global",
         },
         query = {
-          [''] = 'rainbow-delimiters',
-          lua = 'rainbow-blocks',
+          [""] = "rainbow-delimiters",
+          lua = "rainbow-blocks",
         },
         priority = {
-          [''] = 110,
-          lua = 210
+          [""] = 110,
+          lua = 210,
         },
       }
     end,
-    dependencies = {
-      "marko-cerovac/material.nvim"
-    }
-  }
+  },
 }

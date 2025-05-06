@@ -4,31 +4,31 @@ return {
     cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
-    config = function()
+    lazy = true,
+    keys = function()
       local dap = require "dap"
-      vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
-      vim.keymap.set("n", "<leader>dc", dap.continue)
-      vim.keymap.set("n", "<leader>dx", dap.repl.open)
-
+      return {
+        { "<leader>db", dap.toggle_breakpoint() },
+        { "<leader>dc", dap.continue() },
+        { "<leader>dx", dap.repl.toggle() },
+      }
+    end,
+    init = function()
       vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
     end,
-    dependencies = { "nvimtools/hydra.nvim" },
-    module = "dap",
   },
   {
     "mfussenegger/nvim-dap-python",
     ft = "python",
-    config = function()
-      require("dap-python").setup "/home/kvwu/.venvs/debugpy/bin/python"
-    end,
+    opts = {
+      "/home/kvwu/.venvs/debugpy/bin/python",
+    },
   },
   {
     "leoluz/nvim-dap-go",
     ft = "go",
     dependencies = "mfussenegger/nvim-dap",
-    config = function()
-      require("dap-go").setup()
-    end,
+    opts = {},
   },
   {
     "mxsdev/nvim-dap-vscode-js",
@@ -68,7 +68,7 @@ return {
     cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
-    after = { "nvim-dap" },
+    keys = "<leader>dh",
     config = function()
       local dap, dapui = require "dap", require "dapui"
       dapui.setup {
@@ -142,7 +142,10 @@ return {
         },
       }
     end,
-    dependencies = { "nvim-neotest/nvim-nio" }
-  }
+    dependencies = { "nvim-neotest/nvim-nio" },
+  },
+  {
+    "nvimtools/hydra.nvim",
+    lazy = true,
+  },
 }
-

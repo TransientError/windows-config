@@ -1,6 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     init = function()
       vim.opt.completeopt = { "menuone", "noselect", "menu" }
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -67,8 +68,8 @@ return {
         enable_import_completion = true,
         analyze_open_documents_only = true,
         handlers = {
-          ["textDocument/definition"] = omnisharp_extended.handler
-        }
+          ["textDocument/definition"] = omnisharp_extended.handler,
+        },
       })
 
       vim.lsp.enable { "lua_ls", "powershell_es", "ts_ls", "pyright" }
@@ -76,6 +77,7 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     config = function()
       local cmp = require "cmp"
       cmp.setup {
@@ -139,14 +141,14 @@ return {
       })
     end,
     dependencies = {
-      { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
+      { "hrsh7th/cmp-nvim-lsp", lazy = true },
       { "hrsh7th/cmp-path", lazy = true },
       { "hrsh7th/cmp-cmdline", lazy = true },
       { "ray-x/cmp-treesitter", lazy = true },
       { "hrsh7th/cmp-buffer", lazy = true },
       { "hrsh7th/cmp-vsnip", lazy = true },
       { "hrsh7th/vim-vsnip", lazy = true },
-      { "Hoffs/omnisharp-extended-lsp.nvim", module = "omnisharp_extended" },
+      { "Hoffs/omnisharp-extended-lsp.nvim", lazy = true },
     },
   },
 }

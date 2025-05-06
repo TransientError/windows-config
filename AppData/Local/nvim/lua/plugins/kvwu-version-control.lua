@@ -1,10 +1,9 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    config = function()
-      require("gitsigns").setup()
-    end,
-    cond = function() 
+    opts = {},
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    cond = function()
       return vim.fn.exists "g:vscode" == 0
     end,
   },
@@ -13,8 +12,11 @@ return {
     cond = function()
       return vim.fn.exists "g:vscode" == 0 and vim.fn.glob ".git" ~= nil
     end,
-    config = function()
-      vim.keymap.set("n", "<leader>gg", ":Git<CR>")
+    keys = {
+      "<leader>gg",
+      ":Git<CR>",
+    },
+    init = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fugitive",
         callback = function()
@@ -25,11 +27,10 @@ return {
   },
   {
     "cedarbaum/fugitive-azure-devops.vim",
-    disable = not require("kvwu-config").profiles.work,
+    cond = require("kvwu-config").profiles.work,
     dependencies = {
       "tpope/vim-rhubarb",
       "tpope/vim-fugitive",
     },
-  }
+  },
 }
-
