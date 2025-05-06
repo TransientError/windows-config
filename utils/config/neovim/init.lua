@@ -48,6 +48,7 @@ else
   map.set("", "<leader>ot", ":split term://fish<CR>")
   map.set("", "<leader>bl", "<C-o>")
   map.set("", "<leader>hr", ":source ~/AppData/Local/nvim/init.lua<CR>:PackerCompile<CR>")
+
   map.set("", "<leader>fp", ":cd ~/AppData/Local/nvim<CR>:e ~/AppData/Local/nvim/init.lua<CR>")
   map.set("", "<leader>l", ":Lazy<CR>")
 
