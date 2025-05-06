@@ -27,7 +27,14 @@ return {
      ]]
     end,
   },
-  { "ggandor/lightspeed.nvim", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
+  {
+    "ggandor/leap.nvim",
+    keys = {
+      { "s", "<Plug>(leap-forward)" },
+      { "S", "<Plug>(leap-backward)" },
+      { "gs", "<Plug>(leap-from-window)" },
+    },
+  },
   {
     "folke/which-key.nvim",
     cond = function()
@@ -48,9 +55,9 @@ return {
     "akinsho/toggleterm.nvim",
     keys = {
       {
-      "<leader>ot",
-      ":ToggleTerm<CR>",
-    }
+        "<leader>ot",
+        ":ToggleTerm<CR>",
+      },
     },
     opts = {
       -- this is buggy for me
