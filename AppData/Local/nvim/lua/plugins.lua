@@ -47,8 +47,10 @@ return {
   {
     "akinsho/toggleterm.nvim",
     keys = {
+      {
       "<leader>ot",
       ":ToggleTerm<CR>",
+    }
     },
     opts = {
       -- this is buggy for me
@@ -58,7 +60,7 @@ return {
   },
   {
     "airblade/vim-rooter",
-    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    event = "VeryLazy",
     init = function()
       vim.g.rooter_patterns = { ".git", "=nvim" }
     end,

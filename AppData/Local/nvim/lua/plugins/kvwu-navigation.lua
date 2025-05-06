@@ -19,7 +19,7 @@ return {
       end,
     },
     cmd = { "NvimTreeToggle" },
-    keys = { "<leader>op", ":NvimTreeToggle<CR>", mode = { "n", "v" } },
+    keys = { { "<leader>op", ":NvimTreeToggle<CR>", mode = { "n", "v" } } },
   },
   {
     "brenton-leighton/multiple-cursors.nvim",

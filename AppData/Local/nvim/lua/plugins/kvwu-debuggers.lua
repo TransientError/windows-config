@@ -8,9 +8,9 @@ return {
     keys = function()
       local dap = require "dap"
       return {
-        { "<leader>db", dap.toggle_breakpoint() },
-        { "<leader>dc", dap.continue() },
-        { "<leader>dx", dap.repl.toggle() },
+        { "<leader>db", dap.toggle_breakpoint },
+        { "<leader>dc", dap.continue },
+        { "<leader>dx", dap.repl.toggle },
       }
     end,
     init = function()

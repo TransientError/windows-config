@@ -5,8 +5,6 @@ return {
     priority = 1000,
     init = function()
       vim.g.material_style = "darker"
-    end,
-    config = function()
       vim.cmd "colorscheme material"
     end,
     opts = {
