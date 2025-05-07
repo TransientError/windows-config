@@ -29,9 +29,6 @@ else
       listchars = { tab = "▸▸", trail = "·" },
       colorcolumn = "120",
     },
-    g = {
-      neoformat_enabled_cs = { "csharpier" },
-    },
   }
 
   map.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })

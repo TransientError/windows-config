@@ -1,10 +1,9 @@
+local utils = require "utils"
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    cond = function()
-      return vim.fn.exists "g:vscode" == 0
-    end,
+    cond = utils.vscode,
     opts = {
       ensure_installed = { "lua" },
       sync_install = false,

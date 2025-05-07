@@ -1,16 +1,17 @@
+local utils = require "utils"
+local config = require "kvwu-config"
+
 return {
   {
     "lewis6991/gitsigns.nvim",
     opts = {},
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
-    cond = function()
-      return vim.fn.exists "g:vscode" == 0
-    end,
+    cond = utils.vscode
   },
   {
     "tpope/vim-fugitive",
     cond = function()
-      return vim.fn.exists "g:vscode" == 0 and vim.fn.glob ".git" ~= nil
+      return utils.vscode() and vim.fn.glob ".git" ~= nil
     end,
     keys = {
       {
@@ -30,7 +31,7 @@ return {
   },
   {
     "cedarbaum/fugitive-azure-devops.vim",
-    cond = require("kvwu-config").profiles.work,
+    cond = config.profiles.work,
     dependencies = {
       "tpope/vim-rhubarb",
       "tpope/vim-fugitive",

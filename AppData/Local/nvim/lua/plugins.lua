@@ -1,3 +1,5 @@
+local utils = require "utils"
+
 return {
   {
     "sbdchd/neoformat",
@@ -37,20 +39,18 @@ return {
   },
   {
     "folke/which-key.nvim",
-    cond = function()
-      return vim.fn.exists "g:vscode" == 0
-    end,
+    cond = utils.vscode,
     opts = {},
   },
   {
     "windwp/nvim-autopairs",
     opts = {},
-    event = "LazyFile"
+    event = "LazyFile",
   },
   {
     "chentoast/marks.nvim",
     opts = {},
-    event = "VeryLazy"
+    event = "VeryLazy",
   },
   { "Pocco81/auto-save.nvim", event = "VeryLazy" },
   {
@@ -66,7 +66,7 @@ return {
       shade_terminals = false,
       hide_numbers = false,
     },
-    cmd = "ToggleTerm"
+    cmd = "ToggleTerm",
   },
   {
     "airblade/vim-rooter",
@@ -85,6 +85,6 @@ return {
   {
     "williamboman/mason.nvim",
     opts = {},
-    event = "VeryLazy"
+    event = "VeryLazy",
   },
 }
