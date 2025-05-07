@@ -97,7 +97,7 @@ return {
         cmd = { bicep_lsp_bin },
       })
 
-      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep" }
+      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep", "yamlls" }
     end,
   },
   {
