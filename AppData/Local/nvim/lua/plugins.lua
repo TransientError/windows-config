@@ -11,14 +11,14 @@ return {
     },
     cmd = "Neoformat",
   },
-  { "tpope/vim-surround", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
-  { "tpope/vim-commentary", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
+  { "tpope/vim-surround", event = "LazyFile" },
+  { "tpope/vim-commentary", event = "LazyFile" },
   { "dag/vim-fish", ft = "fish" },
   { "mattn/emmet-vim", ft = { "html", "xml" } },
-  { "vim-scripts/ReplaceWithRegister", event = { "BufReadPost", "BufWritePost", "BufNewFile" } },
+  { "vim-scripts/ReplaceWithRegister", event = "LazyFile" },
   {
     "wellle/targets.vim",
-    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    event = "LazyFile",
     init = function()
       vim.cmd [[
         autocmd User targets#mappings#user call targets#mappings#extend({
@@ -45,10 +45,12 @@ return {
   {
     "windwp/nvim-autopairs",
     opts = {},
+    event = "LazyFile"
   },
   {
     "chentoast/marks.nvim",
     opts = {},
+    event = "VeryLazy"
   },
   { "Pocco81/auto-save.nvim", event = "VeryLazy" },
   {
@@ -64,12 +66,12 @@ return {
       shade_terminals = false,
       hide_numbers = false,
     },
+    cmd = "ToggleTerm"
   },
   {
     "airblade/vim-rooter",
-    event = "VeryLazy",
     init = function()
-      vim.g.rooter_patterns = { ".git", "=nvim" }
+      vim.g.rooter_patterns = { ".git", "=nvim", "=work", "=utils" }
     end,
   },
   {
@@ -83,5 +85,6 @@ return {
   {
     "williamboman/mason.nvim",
     opts = {},
+    event = "VeryLazy"
   },
 }

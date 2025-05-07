@@ -62,7 +62,6 @@ return {
 
       local omnisharp_extended = require "omnisharp_extended"
       vim.lsp.config("omnisharp", {
-        cmd = { "omnisharp" },
         enable_roslyn_analyzers = true,
         organize_imports_on_format = true,
         enable_import_completion = true,
@@ -72,7 +71,7 @@ return {
         },
       })
 
-      vim.lsp.enable { "lua_ls", "powershell_es", "ts_ls", "pyright" }
+      vim.lsp.enable { "lua_ls", "powershell_es", "ts_ls", "pyright", "omnisharp", "jsonls" }
     end,
   },
   {
