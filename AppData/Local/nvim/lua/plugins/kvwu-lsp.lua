@@ -6,19 +6,34 @@ return {
       vim.opt.completeopt = { "menuone", "noselect", "menu" }
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
-          print "LSP Attached"
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          if client == nil then
+            error("client was nil", 1)
+            return
+          end
 
-          local bufopts = { noremap = true, silent = true, buffer = bufnr }
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+          local bufopts = { noremap = true, silent = true, buffer = ev.buf }
+
+          if client.name == "omnisharp" then
+            local omnisharp_extended = require "omnisharp_extended"
+
+            vim.keymap.set("n", "gD", omnisharp_extended.lsp_type_definition, bufopts)
+            vim.keymap.set("n", "gd", omnisharp_extended.lsp_definition, bufopts)
+            vim.keymap.set("n", "gu", omnisharp_extended.lsp_references, bufopts)
+            vim.keymap.set("n", "gi", omnisharp_extended.lsp_implementation, bufopts)
+          else
+            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+            vim.keymap.set("n", "gu", vim.lsp.buf.references, bufopts)
+            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+          end
+
           vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
           vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
           vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
           vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
           vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, bufopts)
           vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-          vim.keymap.set("n", "gu", vim.lsp.buf.references, bufopts)
 
           local builtin = require "telescope.builtin"
           vim.keymap.set("n", "<leader>si", builtin.lsp_document_symbols, bufopts)
@@ -51,7 +66,7 @@ return {
       })
 
       vim.lsp.config("powershell_es", {
-        bundle_path = os.getenv "USERPROFILE" .. "/utils/PowerShellEditorServices",
+        bundle_path = os.getenv "USERPROFILE" .. "/utils/",
       })
 
       local json_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -60,18 +75,29 @@ return {
         capabilities = json_capabilities,
       })
 
-      local omnisharp_extended = require "omnisharp_extended"
       vim.lsp.config("omnisharp", {
         enable_roslyn_analyzers = true,
         organize_imports_on_format = true,
         enable_import_completion = true,
         analyze_open_documents_only = true,
-        handlers = {
-          ["textDocument/definition"] = omnisharp_extended.handler,
+        root_markers = { "*.sln", "*.csproj", "omnisharp.json", "function.json" },
+        settings = {
+          RoslynExtensionsOptions = {
+            enableDecompilationSupport = true,
+          },
+          Sdk = {
+            IncludePrereleases = true,
+          },
         },
       })
 
-      vim.lsp.enable { "lua_ls", "powershell_es", "ts_ls", "pyright", "omnisharp", "jsonls" }
+      local bicep_lsp_bin = vim.fn.stdpath "data"
+        .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
+      vim.lsp.config("bicep", {
+        cmd = { bicep_lsp_bin },
+      })
+
+      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep" }
     end,
   },
   {
