@@ -3,7 +3,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    cond = utils.vscode,
+    cond = utils.not_vscode,
     opts = {
       ensure_installed = { "lua" },
       sync_install = false,

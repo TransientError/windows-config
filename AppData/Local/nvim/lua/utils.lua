@@ -17,8 +17,8 @@ function utils.process_settings(settings_table)
   end
 end
 
-function utils.vscode()
-  return fn.exists "g:vscode" ~= 0
+function utils.not_vscode()
+  return fn.exists "g:vscode" == 0
 end
 
 return utils

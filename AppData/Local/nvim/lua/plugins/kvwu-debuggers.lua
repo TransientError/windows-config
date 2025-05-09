@@ -3,7 +3,7 @@ local utils = require "utils"
 return {
   {
     "mfussenegger/nvim-dap",
-    cond = utils.vscode,
+    cond = utils.not_vscode,
     lazy = true,
     keys = function()
       local dap = require "dap"
@@ -16,6 +16,28 @@ return {
     init = function()
       vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
     end,
+    config = function()
+      local dap = require "dap"
+      dap.adapters["ngetcoredbg"] = {
+        type = "executable",
+        command = vim.fn.exepath("netcoredbg"),
+        args = {"--interpreter=vscode"},
+        options = {
+          detached = false
+        }
+      }
+      dap.configurations["cs"] = {
+        {
+          type = "netcoredbg",
+          name = "Launch file",
+          request = "launch",
+          program = function ()
+            return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}"
+        }
+      }
+    end
   },
   {
     "mfussenegger/nvim-dap-python",
@@ -32,7 +54,7 @@ return {
   },
   {
     "mxsdev/nvim-dap-vscode-js",
-    cond = utils.vscode,
+    cond = utils.not_vscode,
     ft = "typescript",
     dependencies = {
       "mfussenegger/nvim-dap",
@@ -63,7 +85,7 @@ return {
   },
   {
     "rcarriga/nvim-dap-ui",
-    cond = utils.vscode,
+    cond = utils.not_vscode,
     keys = "<leader>dh",
     config = function()
       local dap, dapui = require "dap", require "dapui"

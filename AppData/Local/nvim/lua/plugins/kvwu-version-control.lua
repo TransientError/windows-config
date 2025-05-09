@@ -6,12 +6,12 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = {},
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
-    cond = utils.vscode
+    cond = utils.not_vscode
   },
   {
     "tpope/vim-fugitive",
     cond = function()
-      return utils.vscode() and vim.fn.glob ".git" ~= nil
+      return utils.not_vscode() and vim.fn.glob ".git" ~= nil
     end,
     keys = {
       {
