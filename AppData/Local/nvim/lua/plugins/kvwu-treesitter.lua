@@ -14,8 +14,6 @@ return {
         enable = true,
       },
     },
-    config = function()
-      vim.treesitter.language.register("xml", "html")
-    end,
+    main = "nvim-treesitter.configs",
   },
 }

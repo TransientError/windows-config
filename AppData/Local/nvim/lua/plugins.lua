@@ -90,10 +90,6 @@ return {
     ft = { "json", "jsonc", "yaml" },
   },
   {
-    "vim-bicep",
-    ft = "bicep",
-  },
-  {
     "folke/trouble.nvim",
     opts = {},
     event = "VeryLazy",
