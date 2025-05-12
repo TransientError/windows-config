@@ -6,6 +6,7 @@ local tabline = wezterm.plugin.require "https://github.com/michaelbrusegard/tabl
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   config.default_prog = { "pwsh" }
   config.color_scheme = "Campbell (Gogh)"
+  config.prefer_egl = true
 end
 
 config.font = wezterm.font "LigaHack Nerd Font"
