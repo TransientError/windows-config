@@ -92,8 +92,7 @@ widgets:
     options:
       label: "{%a %d, %b %H:%M}"
       #locale: 'en_EN' # Langugae for date, you can set your own, example fr_FR
-      timezones: [] #Looking up time zone info from registry
-      #timezones: ["America/Montreal"]
+      timezones: ["America/Los_Angeles"] #Looking up time zone info from registry
     callbacks:
       on_left: "toggle_calendar"
     calendar:
