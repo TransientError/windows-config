@@ -2,7 +2,7 @@ local wezterm = require "wezterm" --[[@as Wezterm]]
 local config = wezterm.config_builder()
 
 local tabline = wezterm.plugin.require "https://github.com/michaelbrusegard/tabline.wez"
-tabline.setup { options = { theme = 'Tomorrow Night Bright' } }
+tabline.setup { options = { theme = "Tomorrow Night Bright" } }
 tabline.apply_to_config(config)
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
@@ -57,14 +57,19 @@ config.keys = {
     action = wezterm.action.ActivateCommandPalette,
   },
   {
-    key = "RightArrow",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action.ActivateTabRelative(1),
+    key = "v",
+    mods = "CTRL",
+    action = wezterm.action.PasteFrom "Clipboard",
   },
   {
-    key = "LeftArrow",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action.ActivateTabRelative(-1),
+    key = "w",
+    mods = "CTRL",
+    action = wezterm.action.CloseCurrentTab { confirm = true },
+  },
+  {
+    key = "t",
+    mods = "CTRL",
+    action = wezterm.action.SpawnTab "CurrentPaneDomain",
   },
 }
 
