@@ -1,13 +1,17 @@
 ﻿#SingleInstance
 
+UserProfile := EnvGet("USERPROFILE")
+
 ; browser
 #b::Run "C:\Program Files (x86)\Microsoft\Edge\Application\msedge"
 ; editor
 #e::Run "C:\Program Files\Microsoft VS Code\code.exe"
 ; terminal
-#t::Run "wt"
+#t::Run "wezterm-gui"
 
-#f::Run "explorer.exe"
+#f::Run UserProfile . "\utils\FPilot.exe"
+
+#q::!F4
 
 ; shrug
 ::\shrug::¯\_(ツ)_/¯
