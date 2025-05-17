@@ -42,7 +42,7 @@ bars:
       center:
         - "clock"
       right:
-        ["media", "traffic", "cpu", "weather", "memory", "volume", "power_menu"]
+        ["media", "cpu", "weather", "memory", "volume", "power_menu"]
 widgets:
   media:
     type: "yasb.media.MediaWidget"
