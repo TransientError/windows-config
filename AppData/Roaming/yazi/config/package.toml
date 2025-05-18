@@ -1,0 +1,12 @@
+[plugin]
+deps = []
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:dracula"
+rev = "02f3fc6"
+hash = "43df006a258a1f2971c3627f4e51e69d"
+
+[[flavor.deps]]
+use = "tkapias/nightfly"
+rev = "599b8ad"
+hash = "2c32a36c552fea0035a4e30e72698ea8"
