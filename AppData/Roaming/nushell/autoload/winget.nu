@@ -3,7 +3,7 @@ def --wrapped winget-install [...rest] {
   ls ~\Desktop | each {
     echo $'Cleaning up ($in)'
     rm $in
-  }
+  } | ignore
 }
 
 def --wrapped winget-upgrade [...rest] {
@@ -11,5 +11,5 @@ def --wrapped winget-upgrade [...rest] {
   ls ~\Desktop | each {
     echo $'Cleaning up ($in)'
     rm $in
-  }
+  } | ignore
 }
