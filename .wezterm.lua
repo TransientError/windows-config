@@ -19,6 +19,10 @@ config.launch_menu = {
     label = "Powershell",
     args = { "pwsh" },
   },
+  {
+    label = "Nushell",
+    args = { "nu" },
+  },
 }
 
 config.leader = { key = ",", mods = "CTRL" }
