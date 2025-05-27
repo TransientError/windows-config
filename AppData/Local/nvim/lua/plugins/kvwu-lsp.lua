@@ -66,7 +66,7 @@ return {
       })
 
       vim.lsp.config("powershell_es", {
-        bundle_path = os.getenv "USERPROFILE" .. "/utils/",
+        bundle_path = os.getenv "USERPROFILE" .. "/utils/PowerShellEditorServices/",
       })
 
       local json_capabilities = vim.lsp.protocol.make_client_capabilities()
