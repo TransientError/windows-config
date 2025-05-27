@@ -15,7 +15,6 @@ return {
   },
   { "tpope/vim-surround", event = "LazyFile" },
   { "tpope/vim-commentary", event = "LazyFile" },
-  { "dag/vim-fish", ft = "fish" },
   { "mattn/emmet-vim", ft = { "html", "xml" } },
   { "vim-scripts/ReplaceWithRegister", event = "LazyFile" },
   {
@@ -54,21 +53,6 @@ return {
   },
   { "Pocco81/auto-save.nvim", event = "VeryLazy" },
   {
-    "akinsho/toggleterm.nvim",
-    keys = {
-      {
-        "<leader>ot",
-        ":ToggleTerm<CR>",
-      },
-    },
-    opts = {
-      -- this is buggy for me
-      shade_terminals = false,
-      hide_numbers = false,
-    },
-    cmd = "ToggleTerm",
-  },
-  {
     "airblade/vim-rooter",
     init = function()
       vim.g.rooter_patterns = { ".git", "=nvim", "=work", "=utils", "*.sln", "*.csproj" }
@@ -89,44 +73,6 @@ return {
   {
     "b0o/SchemaStore",
     ft = { "json", "jsonc", "yaml" },
-  },
-  {
-    "folke/trouble.nvim",
-    opts = {},
-    event = "VeryLazy",
-    cmd = "Trouble",
-    keys = {
-      {
-        "<leader>xx",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
-      },
-      {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
-      {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>xL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>xQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
-      },
-    },
   },
   {
     "github/copilot.vim",
