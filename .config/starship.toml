@@ -1,1 +1,5 @@
 add_newline = false
+
+[env_var]
+variable = "STARSHIP_SHELL"
+style = "white"
