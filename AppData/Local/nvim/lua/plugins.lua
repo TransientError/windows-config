@@ -2,19 +2,30 @@ local utils = require "utils"
 
 return {
   {
-    "sbdchd/neoformat",
-    init = function()
-      vim.g.neoformat_enabled_cs = { "csharpier" }
-      vim.g.neoformat_enabled_python = { "black" }
-      vim.g.neoformat_enabled_ocaml = { "ocamlformat" }
-    end,
+    "stevearc/conform.nvim",
+    event = "LazyFile",
+    cmd = { "ConformInfo" },
     keys = {
-      { "<leader>cf", ":Neoformat<CR>" },
+      {
+        "<leader>cf",
+        function()
+          require("conform").format { async = true }
+        end,
+        desc = "Format with Conform",
+      },
     },
-    cmd = "Neoformat",
+    ---@module "conform"
+    ---@type conform.setupOpts
+    opts = {
+      formatters_by_ft = {
+        csharp = { "csharpier" },
+        python = { "black" },
+        ocaml = { "ocamlformat" },
+        lua = { "stylua" },
+      },
+    },
   },
   { "tpope/vim-surround", event = "LazyFile" },
-  { "tpope/vim-commentary", event = "LazyFile" },
   { "mattn/emmet-vim", ft = { "html", "xml" } },
   { "vim-scripts/ReplaceWithRegister", event = "LazyFile" },
   {
@@ -40,21 +51,25 @@ return {
     opts = {},
     event = "VeryLazy",
   },
-  { "Pocco81/auto-save.nvim", event = "VeryLazy" },
+  {
+    "Pocco81/auto-save.nvim",
+    event = "VeryLazy",
+    opts = {
+      condition = function(buf)
+        local path = vim.fn.expand "%:p"
+        local config = vim.fn.stdpath "config"
+        local is_in_config = string.find(path, "^" .. config) ~= nil
+        return vim.fn.getbufvar(buf, "&modifiable") == 1 and not is_in_config
+      end,
+    },
+  },
   {
     "airblade/vim-rooter",
     init = function()
       vim.g.rooter_patterns = { ".git", "=nvim", "=work", "=utils", "*.sln", "*.csproj" }
     end,
   },
-  {
-    "alvan/vim-closetag",
-    init = function()
-      vim.g.closetag_filenames = "*.html,*.xml,*.*proj"
-    end,
-    ft = { "html", "xml" },
-  },
-  { "AndrewRadev/tagalong.vim", ft = { "html", "xml" } },
+  { "windwp/nvim-ts-autotag", event = "LazyFile" },
   {
     "williamboman/mason.nvim",
     opts = {},
@@ -68,7 +83,7 @@ return {
     event = "LazyFile",
     cmd = { "Copilot" },
     keys = {
-      {"<right>", 'copilot#Accept("\\<right>")', mode = "i", expr = true, replace_keycodes = false }
-    }
+      { "<right>", 'copilot#Accept("\\<right>")', mode = "i", expr = true, replace_keycodes = false },
+    },
   },
 }
