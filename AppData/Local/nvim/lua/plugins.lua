@@ -18,17 +18,6 @@ return {
   { "mattn/emmet-vim", ft = { "html", "xml" } },
   { "vim-scripts/ReplaceWithRegister", event = "LazyFile" },
   {
-    "wellle/targets.vim",
-    event = "LazyFile",
-    init = function()
-      vim.cmd [[
-        autocmd User targets#mappings#user call targets#mappings#extend({
-           \ 'a': {'argument': [{'o':'[({<[]', 'c':'[]}>)]', 's': ','}]}
-           \ })
-     ]]
-    end,
-  },
-  {
     "ggandor/leap.nvim",
     keys = {
       { "s", "<Plug>(leap-forward)" },

@@ -33,6 +33,11 @@ return {
       move = {
         set_jumps = true,
       },
+      select = {
+        include_surrounding_whitespace = {
+          ["@parameter.outer"] = true,
+        }
+      }
     },
     keys = function()
       local move = require "nvim-treesitter-textobjects.move"
@@ -80,6 +85,40 @@ return {
         },
       }
 
+      local select = require "nvim-treesitter-textobjects.select"
+      local select_mappings = {
+        {
+          "af",
+          function()
+            select.select_textobject("@function.outer", "textobjects")
+          end,
+        },
+        {
+          "ac",
+          function()
+            select.select_textobject("@class.outer", "textobjects")
+          end,
+        },
+        {
+          "if",
+          function()
+            select.select_textobject("@function.inner", "textobjects")
+          end,
+        },
+        {
+          "ic",
+          function()
+            select.select_textobject("@class.inner", "textobjects")
+          end,
+        },
+        {
+          "aa",
+          function()
+            select.select_textobject("@parameter.outer", "textobjects")
+          end,
+        },
+      }
+
       for _, mapping in ipairs(move_mappings) do
         mapping.mode = { "n", "x", "o" }
       end
@@ -88,7 +127,11 @@ return {
         mapping.mode = { "n" }
       end
 
-      return utils.concat(move_mappings, swap_mappings)
+      for _, mapping in ipairs(select_mappings) do
+        mapping.mode = { "x", "o" }
+      end
+
+      return utils.concat(move_mappings, swap_mappings, select_mappings)
     end,
   },
 }
