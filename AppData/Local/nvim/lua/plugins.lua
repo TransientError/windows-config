@@ -25,7 +25,18 @@ return {
       },
     },
   },
-  { "tpope/vim-surround", event = "LazyFile" },
+  {
+    "echasnovski/mini.surround",
+    version = false,
+    keys = { { "ys", "ds", "cs" } },
+    opts = {
+      mappings = {
+        add = "ys",
+        delete = "ds",
+        replace = "cs",
+      },
+    },
+  },
   { "mattn/emmet-vim", ft = { "html", "xml" } },
   { "vim-scripts/ReplaceWithRegister", event = "LazyFile" },
   {
@@ -40,6 +51,7 @@ return {
     "folke/which-key.nvim",
     cond = utils.vscode,
     opts = {},
+    event = "VeryLazy",
   },
   {
     "windwp/nvim-autopairs",
@@ -72,6 +84,7 @@ return {
   { "windwp/nvim-ts-autotag", event = "LazyFile" },
   {
     "williamboman/mason.nvim",
+    event = "VeryLazy",
     opts = {},
   },
   {
