@@ -111,12 +111,6 @@ return {
             select.select_textobject("@class.inner", "textobjects")
           end,
         },
-        {
-          "aa",
-          function()
-            select.select_textobject("@parameter.outer", "textobjects")
-          end,
-        },
       }
 
       for _, mapping in ipairs(move_mappings) do
