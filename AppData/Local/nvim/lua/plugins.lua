@@ -83,7 +83,8 @@ return {
   },
   { "AndrewRadev/tagalong.vim", ft = { "html", "xml" } },
   {
-    "williamboman/mason.nvim", opts = {}
+    "williamboman/mason.nvim",
+    opts = {},
   },
   {
     "b0o/SchemaStore",
@@ -126,5 +127,13 @@ return {
         desc = "Quickfix List (Trouble)",
       },
     },
+  },
+  {
+    "github/copilot.vim",
+    event = "LazyFile",
+    cmd = { "Copilot" },
+    keys = {
+      {"<right>", 'copilot#Accept("\\<right>")', mode = "i", expr = true, replace_keycodes = false }
+    }
   },
 }
