@@ -6,28 +6,7 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = {},
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
-    cond = utils.not_vscode
-  },
-  {
-    "tpope/vim-fugitive",
-    cond = function()
-      return utils.not_vscode() and vim.fn.glob ".git" ~= nil
-    end,
-    keys = {
-      {
-        "<leader>gg",
-        ":Git<CR>",
-      },
-    },
-    cmd = "Git",
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "fugitive",
-        callback = function()
-          vim.keymap.set("n", "pu", ":Git push<CR>", { noremap = true, buffer = true })
-        end,
-      })
-    end,
+    cond = utils.not_vscode,
   },
   {
     "cedarbaum/fugitive-azure-devops.vim",
@@ -36,5 +15,29 @@ return {
       "tpope/vim-rhubarb",
       "tpope/vim-fugitive",
     },
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+    cmd = "Neogit",
+    keys = {
+      {
+        "<leader>gg",
+        "<cmd>Neogit<cr>",
+        silent = true,
+      },
+    },
+    opts = function()
+      local colors = require "material.colors"
+      return {
+        highlight = {
+          bg_green = colors.editor.bg,
+          bg_red = colors.editor.bg,
+        },
+      }
+    end,
   },
 }

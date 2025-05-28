@@ -65,15 +65,6 @@ return {
     end,
   },
   { "mattn/emmet-vim", ft = { "html", "xml" } },
-  { "vim-scripts/ReplaceWithRegister", event = "LazyFile" },
-  {
-    "ggandor/leap.nvim",
-    keys = {
-      { "s", "<Plug>(leap-forward)" },
-      { "S", "<Plug>(leap-backward)" },
-      { "gs", "<Plug>(leap-from-window)" },
-    },
-  },
   {
     "folke/which-key.nvim",
     cond = utils.vscode,
@@ -125,11 +116,82 @@ return {
     ft = { "json", "jsonc", "yaml" },
   },
   {
-    "github/copilot.vim",
-    event = "LazyFile",
-    cmd = { "Copilot" },
+    "gbprod/substitute.nvim",
+    opts = {},
     keys = {
-      { "<right>", 'copilot#Accept("\\<right>")', mode = "i", expr = true, replace_keycodes = false },
+      {
+        "gr",
+        function()
+          require("substitute").operator()
+        end,
+        mode = "n",
+        noremap = true,
+      },
     },
   },
+  {
+    "aaronik/treewalker.nvim",
+    opts = {},
+    keys = {
+      {
+        "<leader>sl",
+        "<cmd>Treewalker SwapRight<cr>",
+        silent = true,
+      },
+      {
+        "<leader>sh",
+        "<cmd>Treewalker SwapLeft<cr>",
+        silent = true,
+      },
+      {
+        "<leader>sj",
+        "<cmd>Treewalker SwapDown<cr>",
+        silent = true,
+      },
+      {
+        "<leader>sk",
+        "<cmd>Treewalker SwapUp<cr>",
+        silent = true,
+      },
+    },
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "s",
+        function()
+          require("flash").jump()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Flash",
+      },
+      {
+        "S",
+        function()
+          require("flash").treesitter()
+        end,
+        mode = { "n" },
+        desc = "Flash Treesitter",
+      },
+      {
+        "r",
+        function()
+          require("flash").remote()
+        end,
+        mode = { "o", "x" },
+        desc = "Flash Remote",
+      },
+      {
+        "R",
+        function()
+          require("flash").treesitter_search()
+        end,
+        mode = { "o", "x" },
+        desc = "Flash Treesitter Search",
+      }
+    }
+  }
 }
