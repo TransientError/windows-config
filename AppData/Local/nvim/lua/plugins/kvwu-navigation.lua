@@ -33,4 +33,49 @@ return {
       { "<M-d>", "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", mode = { "n", "x" }, desc = "Jump to next cword" },
     },
   },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {
+      modes = {
+        search =  {
+          enabled = true,
+        }
+      }
+    },
+    keys = {
+      {
+        "s",
+        function()
+          require("flash").jump()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Flash",
+      },
+      {
+        "S",
+        function()
+          require("flash").treesitter()
+        end,
+        mode = { "n" },
+        desc = "Flash Treesitter",
+      },
+      {
+        "r",
+        function()
+          require("flash").remote()
+        end,
+        mode = { "o", "x" },
+        desc = "Flash Remote",
+      },
+      {
+        "R",
+        function()
+          require("flash").treesitter_search()
+        end,
+        mode = { "o", "x" },
+        desc = "Flash Treesitter Search",
+      },
+    },
+  },
 }
