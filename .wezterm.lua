@@ -2,7 +2,7 @@ local wezterm = require "wezterm" --[[@as Wezterm]]
 local config = wezterm.config_builder()
 
 local tabline = wezterm.plugin.require "https://github.com/michaelbrusegard/tabline.wez"
-tabline.setup { options = { theme = "Tomorrow Night Bright" } }
+tabline.setup { options = { theme = "Tomorrow Night Bright" } } ---@diagnostic disable-line: undefined-field
 tabline.apply_to_config(config)
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
