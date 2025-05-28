@@ -36,8 +36,8 @@ return {
       select = {
         include_surrounding_whitespace = {
           ["@parameter.outer"] = true,
-        }
-      }
+        },
+      },
     },
     keys = function()
       local move = require "nvim-treesitter-textobjects.move"
@@ -127,5 +127,31 @@ return {
 
       return utils.concat(move_mappings, swap_mappings, select_mappings)
     end,
+  },
+  {
+    "aaronik/treewalker.nvim",
+    opts = {},
+    keys = {
+      {
+        "<leader>sl",
+        "<cmd>Treewalker SwapRight<cr>",
+        silent = true,
+      },
+      {
+        "<leader>sh",
+        "<cmd>Treewalker SwapLeft<cr>",
+        silent = true,
+      },
+      {
+        "<leader>sj",
+        "<cmd>Treewalker SwapDown<cr>",
+        silent = true,
+      },
+      {
+        "<leader>sk",
+        "<cmd>Treewalker SwapUp<cr>",
+        silent = true,
+      },
+    },
   },
 }
