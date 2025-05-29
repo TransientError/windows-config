@@ -21,6 +21,10 @@ function utils.not_vscode()
   return fn.exists "g:vscode" == 0
 end
 
+function utils.is_vscode()
+  return fn.exists "g:vscode" == 1
+end
+
 ---@generic T
 ---@param ... (T[]|T)[] 
 ---@return T[]
@@ -49,6 +53,17 @@ function utils.merge(...)
     end
   end
   return t
+end
+
+--- add defaults to my plugin specs
+---@param specs LazyPluginSpec[]
+function utils.add_defaults(specs)
+  for _, v in ipairs(specs) do
+    if v.cond == nil then
+      v.cond = utils.not_vscode
+    end
+  end
+  return specs
 end
 
 return utils

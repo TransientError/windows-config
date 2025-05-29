@@ -1,4 +1,7 @@
 local utils = require "utils"
+if utils.is_vscode() then
+  return {}
+end
 
 return {
   {
@@ -20,24 +23,24 @@ return {
       local dap = require "dap"
       dap.adapters["ngetcoredbg"] = {
         type = "executable",
-        command = vim.fn.exepath("netcoredbg"),
-        args = {"--interpreter=vscode"},
+        command = vim.fn.exepath "netcoredbg",
+        args = { "--interpreter=vscode" },
         options = {
-          detached = false
-        }
+          detached = false,
+        },
       }
       dap.configurations["cs"] = {
         {
           type = "netcoredbg",
           name = "Launch file",
           request = "launch",
-          program = function ()
+          program = function()
             return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/", "file")
           end,
-          cwd = "${workspaceFolder}"
-        }
+          cwd = "${workspaceFolder}",
+        },
       }
-    end
+    end,
   },
   {
     "mfussenegger/nvim-dap-python",

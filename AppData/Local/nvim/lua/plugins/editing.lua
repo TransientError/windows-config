@@ -1,34 +1,31 @@
+local utils = require "utils"
+
+local add = "gsa"
+local delete = "gsd"
+local replace = "gsr"
+
 return {
   {
     "echasnovski/mini.surround",
     version = false,
+    -- lazy = false,
     ---@type LazyKeysSpec[]
     keys = {
-      { "ys", "", desc = "add surround" },
-      { "ds", "", desc = "delete surround" },
-      { "cs", "", desc = "replace surround" },
-      {
-        "S",
-        function()
-          require("mini.surround").add "visual"
-        end,
-        mode = { "v" },
-        silent = true,
-      },
+      { add, desc = "add surround" },
+      { delete, desc = "delete surround" },
+      { replace, desc = "replace surround" },
     },
     opts = {
       mappings = {
-        add = "ys",
-        delete = "ds",
-        replace = "cs",
+        add = add,
+        delete = delete,
+        replace = replace,
       },
     },
-    config = function()
-      vim.keymap.del("x", "ys")
-    end,
   },
   {
     "stevearc/conform.nvim",
+    cond = utils.not_vscode,
     event = "LazyFile",
     cmd = { "ConformInfo" },
     keys = {
@@ -62,7 +59,7 @@ return {
      ]]
     end,
   },
-  { "mattn/emmet-vim", ft = { "html", "xml" } },
+  { "mattn/emmet-vim", ft = { "html", "xml" }, cond = utils.not_vscode },
   {
     "windwp/nvim-autopairs",
     opts = {},

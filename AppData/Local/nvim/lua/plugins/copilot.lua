@@ -1,3 +1,7 @@
+if require("utils").is_vscode() then
+  return {}
+end
+
 return {
   {
     "zbirenbaum/copilot.lua",
@@ -9,6 +13,7 @@ return {
         keymap = {
           accept = "<right>",
           accept_word = "<C-right>",
+          accept_line = "<C-S-right>",
         },
       },
     },

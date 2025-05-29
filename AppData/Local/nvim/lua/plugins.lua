@@ -1,9 +1,12 @@
 local utils = require "utils"
 
+if utils.is_vscode() then
+  return {}
+end
+
 return {
   {
     "folke/which-key.nvim",
-    cond = utils.vscode,
     opts = {},
     event = "VeryLazy",
   },

@@ -1,6 +1,10 @@
 local utils = require "utils"
 local config = require "kvwu-config"
 
+if utils.is_vscode() then
+  return {}
+end
+
 return {
   {
     "lewis6991/gitsigns.nvim",

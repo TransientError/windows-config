@@ -1,6 +1,8 @@
+local utils = require "utils"
 return {
   {
     "nvim-tree/nvim-tree.lua",
+    cond = utils.not_vscode,
     opts = {
       update_focused_file = {
         enable = true,

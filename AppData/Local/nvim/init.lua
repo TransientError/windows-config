@@ -43,10 +43,12 @@ else
   map.set("n", "<leader>qq", ":qa!<CR>", { noremap = true })
   map.set("n", "<leader>ot", ":split term://fish<CR>", { noremap = true })
   map.set("n", "<leader>bl", "<C-o>", { noremap = true })
-  map.set("n", "<leader>bd", ":bdelete", { noremap = true })
+  map.set("n", "<leader>bd", ":bdelete<cr>", { noremap = true })
+  map.set("n", "<leader>bn", ":new<cr>", { noremap = true })
+  map.set("n", "<leader>hs", ":new ++ff=lua<cr>", { noremap = true })
   map.set("n", "<leader>fp", ":cd ~/AppData/Local/nvim<CR>:e ~/AppData/Local/nvim/init.lua<CR>", { noremap = true })
   map.set("n", "<leader>l", ":Lazy<CR>", { noremap = true })
-  map.set("n", "<ldeader>m", ":Mason<CR>", { noremap = true })
+  map.set("n", "<leader>m", ":Mason<CR>", { noremap = true })
 
   vim.api.nvim_create_autocmd("VimResized", { pattern = "*", command = "wincmd =" })
 end

@@ -1,3 +1,7 @@
+if require("utils").is_vscode() then
+  return {}
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
