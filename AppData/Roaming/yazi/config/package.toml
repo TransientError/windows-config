@@ -1,5 +1,32 @@
-[plugin]
-deps = []
+[[plugin.deps]]
+use = "dedukun/relative-motions"
+rev = "ce2e890"
+hash = "1c1fc68fc0c8728e15ba0fa41716ec1e"
+
+[[plugin.deps]]
+use = "DreamMaoMao/searchjump"
+rev = "fe884f4"
+hash = "b4c00ef6899a9563af8d577d0bb46998"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-filter"
+rev = "864a021"
+hash = "475bcde87495ff68f017f39e0a138ac1"
+
+[[plugin.deps]]
+use = "hankertrix/augment-command"
+rev = "051a8c6"
+hash = "f38fd6170659e28806bc185f58b30cec"
+
+[[plugin.deps]]
+use = "dedukun/bookmarks"
+rev = "fbb7c00"
+hash = "49378c96ad8bcb66ee29abaa49901d3b"
+
+[[plugin.deps]]
+use = "Ape/open-with-cmd"
+rev = "433cf30"
+hash = "a6d150d153ed3491505b02f4dc174e89"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:dracula"
