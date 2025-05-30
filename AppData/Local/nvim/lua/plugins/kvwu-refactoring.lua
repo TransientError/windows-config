@@ -62,6 +62,58 @@ return {
           refactoring.debug.cleanup {}
         end,
       },
+      { "<localleader>r", "", desc = "+refactor", mode = { "n", "v" } },
+      {
+        "<localleader>rs",
+        function()
+          require("telescope").extensions.refactoring.refactors()
+        end,
+        mode = "v",
+        desc = "Refactor",
+      },
+      {
+        "<localleader>ri",
+        function()
+          refactoring.refactor "Inline Variable"
+        end,
+        mode = { "n", "v" },
+        desc = "Inline Variable",
+      },
+      {
+        "<localleader>rf",
+        function()
+          refactoring.refactor "Extract Function"
+        end,
+        mode = "v",
+        desc = "Extract Function",
+      },
+      {
+        "<localleader>rx",
+        function()
+          ("refactoring").refactor "Extract Variable"
+        end,
+        mode = "v",
+        desc = "Extract Variable",
+      },
+      {
+        "<localleader>rp",
+        function()
+          refactoring.debug.printf { below = false }
+        end,
+      },
+      {
+        "<localleader>rv",
+        function()
+          refactoring.debug.print_var {}
+        end,
+        mode = { "n", "x" },
+      },
+      {
+        "<localleader>rc",
+        function()
+          refactoring.debug.cleanup {}
+        end,
+      },
     }
   end,
   config = function(_, opts)

@@ -80,4 +80,14 @@ return {
       },
     },
   },
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    cmd = { "Yazi" },
+    keys = {{"<leader>fe", "<Cmd>Yazi<CR>", mode = {"n", "v"}, desc = "Yazi: Open"}},
+    opts = {
+      open_for_directories = true,
+    },
+    cond = utils.is_neovide,
+  }
 }

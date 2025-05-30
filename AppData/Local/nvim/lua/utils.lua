@@ -25,6 +25,10 @@ function utils.is_vscode()
   return fn.exists "g:vscode" == 1
 end
 
+function utils.is_neovide()
+  return g.neovide 
+end
+
 ---@generic T
 ---@param ... (T[]|T)[] 
 ---@return T[]

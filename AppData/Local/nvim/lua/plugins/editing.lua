@@ -36,6 +36,13 @@ return {
         end,
         desc = "Format with Conform",
       },
+      {
+        "<localleader>cf",
+        function()
+          require("conform").format { async = true }
+        end,
+        desc = "Format with Conform",
+      },
     },
     ---@module "conform"
     ---@type conform.setupOpts
@@ -46,6 +53,12 @@ return {
         ocaml = { "ocamlformat" },
         lua = { "stylua" },
       },
+      formatters = {
+        stylua = {
+          command = "stylua",
+          prepend_args = { "--config-path", vim.fn.expand "~/.config/stylua.toml" },
+        },
+      }
     },
   },
   {

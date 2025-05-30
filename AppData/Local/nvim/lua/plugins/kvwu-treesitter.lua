@@ -5,7 +5,6 @@ return {
     branch = "main",
     lazy = false,
     build = ":TSUpdate",
-    cond = utils.not_vscode,
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "*",
@@ -131,6 +130,7 @@ return {
   {
     "aaronik/treewalker.nvim",
     opts = {},
+    cmd = "Treewalker",
     keys = {
       {
         "<leader>sl",

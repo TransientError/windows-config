@@ -1,4 +1,6 @@
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+
 local utils = require "utils"
 
 local g = vim.g
@@ -17,7 +19,7 @@ utils.process_settings {
 }
 
 if g.vscode then
-  require "vscode"
+  require "kvwu-vscode"
 else
   if g.neovide or g.nvy then
     opt.guifont = "LigaHack Nerd Font:h12"
@@ -36,10 +38,15 @@ else
   map.set("n", "<leader>wj", ":wincmd j<CR>", { noremap = true })
   map.set("n", "<leader>wk", ":wincmd k<CR>", { noremap = true })
   map.set("n", "<leader>wl", ":wincmd l<CR>", { noremap = true })
+  map.set("n", "<leader>wH", ":wincmd H<CR>", { noremap = true })
+  map.set("n", "<leader>wJ", ":wincmd J<CR>", { noremap = true })
+  map.set("n", "<leader>wK", ":wincmd K<CR>", { noremap = true })
+  map.set("n", "<leader>wL", ":wincmd L<CR>", { noremap = true })
   map.set("n", "<leader>ws", ":wincmd s<CR>", { noremap = true })
   map.set("n", "<leader>wv", ":wincmd v<CR>", { noremap = true })
   map.set("n", "<leader>w=", ":wincmd =<CR>", { noremap = true })
   map.set("n", "<leader>wd", ":close<CR>", { noremap = true })
+  map.set("n", "<leader>wo", ":wincmd o<CR>", { noremap = true })
   map.set("n", "<leader>qq", ":qa!<CR>", { noremap = true })
   map.set("n", "<leader>ot", ":split term://fish<CR>", { noremap = true })
   map.set("n", "<leader>bl", "<C-o>", { noremap = true })
