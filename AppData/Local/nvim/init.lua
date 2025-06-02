@@ -23,6 +23,11 @@ if g.vscode then
 else
   if g.neovide or g.nvy then
     opt.guifont = "LigaHack Nerd Font:h12"
+
+    map.set("n", "<leader>qr", function()
+      os.execute "start neovide"
+      cmd "qa!"
+    end, { noremap = true })
   end
   utils.process_settings {
     opt = {
@@ -48,11 +53,11 @@ else
   map.set("n", "<leader>wd", ":close<CR>", { noremap = true })
   map.set("n", "<leader>wo", ":wincmd o<CR>", { noremap = true })
   map.set("n", "<leader>qq", ":qa!<CR>", { noremap = true })
-  map.set("n", "<leader>ot", ":split term://fish<CR>", { noremap = true })
+  map.set("n", "<leader>ot", ":split term://pwsh<CR>", { noremap = true })
   map.set("n", "<leader>bl", "<C-o>", { noremap = true })
   map.set("n", "<leader>bd", ":bdelete<cr>", { noremap = true })
   map.set("n", "<leader>bn", ":new<cr>", { noremap = true })
-  map.set("n", "<leader>hs", ":new ++ff=lua<cr>", { noremap = true })
+  map.set("n", "<leader>hs", ":new | :set ft=lua<cr>", { noremap = true })
   map.set("n", "<leader>fp", ":cd ~/AppData/Local/nvim<CR>:e ~/AppData/Local/nvim/init.lua<CR>", { noremap = true })
   map.set("n", "<leader>l", ":Lazy<CR>", { noremap = true })
   map.set("n", "<leader>m", ":Mason<CR>", { noremap = true })

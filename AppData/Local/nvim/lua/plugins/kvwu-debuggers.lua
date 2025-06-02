@@ -21,7 +21,7 @@ return {
     end,
     config = function()
       local dap = require "dap"
-      dap.adapters["ngetcoredbg"] = {
+      dap.adapters["netcoredbg"] = {
         type = "executable",
         command = vim.fn.exepath "netcoredbg",
         args = { "--interpreter=vscode" },

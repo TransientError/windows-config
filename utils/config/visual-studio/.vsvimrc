@@ -30,6 +30,13 @@ nnoremap <Space>wj :vsc Tools.NavigateTabGroups.Down<CR>
 nnoremap <Space>wl :vsc Tools.NavigateTabGroups.Right<CR>
 nnoremap <Space>wh :vsc Tools.NavigateTabGroups.Left<CR>
 nnoremap <Space>wd :vsc Window.CloseDocumentWindow<CR>
+nnoremap <Space>wp :vsc Window.PinTab<CR>
+"function CloseAllButThis()
+"  :vsc Window.PinTab
+"  :vsc Window.CloseAllButPinned
+"  :vsc Window.PinTab
+"endfunction
+nnoremap <Space>wc :vsc Window.CloseAllButPinned<CR>
 
 " git
 nnoremap <Space>gb :vsc Team.Git.Annotate<CR>
@@ -55,6 +62,7 @@ nnoremap gu :vsc Edit.FindAllReferences<CR>
 
 " reload
 nnoremap <Space>hrr :so ~/.vsvimrc<CR>
+nnoremap <Space>fp :e ~/.vsvimrc<CR>
 
 " buffer
 nnoremap <Space>bl :vsc View.NavigateBackward<CR>
