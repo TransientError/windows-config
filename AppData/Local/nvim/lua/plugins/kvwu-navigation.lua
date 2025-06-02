@@ -90,7 +90,7 @@ return {
         function()
           require("flash").treesitter()
         end,
-        mode = { "n" },
+        mode = { "n", "o", "x" },
         desc = "Flash Treesitter",
       },
       {
