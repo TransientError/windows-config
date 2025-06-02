@@ -11,7 +11,7 @@ return {
     -- lazy = false,
     ---@type LazyKeysSpec[]
     keys = {
-      { add, desc = "add surround" },
+      { add, desc = "add surround", mode = { "n", "x" } },
       { delete, desc = "delete surround" },
       { replace, desc = "replace surround" },
     },
@@ -58,7 +58,7 @@ return {
           command = "stylua",
           prepend_args = { "--config-path", vim.fn.expand "~/.config/stylua.toml" },
         },
-      }
+      },
     },
   },
   {

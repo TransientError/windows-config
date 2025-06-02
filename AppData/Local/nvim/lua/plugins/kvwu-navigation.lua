@@ -1,8 +1,10 @@
 local utils = require "utils"
+
 return {
   {
     "nvim-tree/nvim-tree.lua",
     cond = utils.not_vscode,
+    enabled = false,
     opts = {
       update_focused_file = {
         enable = true,
@@ -24,6 +26,35 @@ return {
     keys = { { "<leader>op", ":NvimTreeToggle<CR>", mode = { "n", "v" } } },
   },
   {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    lazy = false,
+    opts = {
+      filesystem = {
+        bind_to_cwd = true,
+      },
+      window = {
+        mappings = {
+          ["l"] = "set_root",
+          ["s"] = {
+            function(state)
+              utils.flash_jump()
+            end,
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      require("neo-tree").setup(opts)
+      vim.keymap.set("n", "<leader>op", "<Cmd>Neotree toggle<CR>", { desc = "NeoTree: Toggle" })
+    end,
+  },
+  {
     "brenton-leighton/multiple-cursors.nvim",
     opts = {}, -- This causes the plugin setup function to be called
     keys = {
@@ -40,16 +71,16 @@ return {
     event = "VeryLazy",
     opts = {
       modes = {
-        search =  {
+        search = {
           enabled = true,
-        }
-      }
+        },
+      },
     },
     keys = {
       {
         "s",
         function()
-          require("flash").jump()
+          utils.flash_jump()
         end,
         mode = { "n", "x", "o" },
         desc = "Flash",
@@ -65,7 +96,11 @@ return {
       {
         "r",
         function()
-          require("flash").remote()
+          require("flash").remote {
+            jump = {
+              autojump = true,
+            },
+          }
         end,
         mode = { "o", "x" },
         desc = "Flash Remote",
@@ -84,10 +119,10 @@ return {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
     cmd = { "Yazi" },
-    keys = {{"<leader>fe", "<Cmd>Yazi<CR>", mode = {"n", "v"}, desc = "Yazi: Open"}},
+    keys = { { "<leader>y", "<Cmd>Yazi<CR>", mode = { "n", "v" }, desc = "Yazi: Open" } },
     opts = {
       open_for_directories = true,
     },
     cond = utils.is_neovide,
-  }
+  },
 }

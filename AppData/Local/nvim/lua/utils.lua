@@ -26,11 +26,11 @@ function utils.is_vscode()
 end
 
 function utils.is_neovide()
-  return g.neovide 
+  return g.neovide
 end
 
 ---@generic T
----@param ... (T[]|T)[] 
+---@param ... (T[]|T)[]
 ---@return T[]
 function utils.concat(...)
   local t = {}
@@ -68,6 +68,22 @@ function utils.add_defaults(specs)
     end
   end
   return specs
+end
+
+function utils.flash_jump()
+  require("flash").jump {
+    search = {
+      mode = function(str)
+        if str == "  " then
+          return "^$"
+        end
+        return str
+      end,
+    },
+    jump = {
+      autojump = true,
+    },
+  }
 end
 
 return utils
