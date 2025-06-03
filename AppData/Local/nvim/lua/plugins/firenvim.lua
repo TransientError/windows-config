@@ -20,7 +20,7 @@ return {
           selector = "#rooster-editor"
         },
         ["https://outlook.office.com/"] = {
-          selector = "div[aria-label='Message body']",
+          selector = "div[aria-label='Message body'][role='textbox']",
         }
       }
     }
