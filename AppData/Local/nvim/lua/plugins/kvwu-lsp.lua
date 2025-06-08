@@ -35,7 +35,6 @@ return {
           vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
           vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
           vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-          vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
           vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, bufopts)
           vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
 

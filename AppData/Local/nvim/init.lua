@@ -55,7 +55,6 @@ else
   map.set("n", "<leader>hs", ":new ++ff=lua<cr>", { noremap = true })
   map.set("n", "<leader>fp", ":cd ~/AppData/Local/nvim<CR>:e ~/AppData/Local/nvim/init.lua<CR>", { noremap = true })
   map.set("n", "<leader>l", ":Lazy<CR>", { noremap = true })
-  map.set("n", "<leader>m", ":Mason<CR>", { noremap = true })
 
   vim.api.nvim_create_autocmd("VimResized", { pattern = "*", command = "wincmd =" })
 end

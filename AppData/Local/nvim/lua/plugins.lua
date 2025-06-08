@@ -42,6 +42,10 @@ return {
   {
     "williamboman/mason.nvim",
     event = "VeryLazy",
+    cmd = "Mason",
+    keys = {
+      { "<leader>m", "<cmd>Mason<cr>", desc = "Mason" },
+    },
     opts = {},
   },
   {

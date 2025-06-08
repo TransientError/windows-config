@@ -7,18 +7,9 @@ return {
   config = function()
     vim.g.firenvim_config = {
       localSettings = {
-        ["https://mail.google.com/"] = {
+        [".*"] = {
           takeover = "never",
         },
-        ["https://chat.openai.com/"] = {
-          takeover = "never",
-        },
-        ["https://google.com/"] = {
-          takeover = "never"
-        },
-        ["https://mail.proton.me/"] = {
-          selector = "#rooster-editor"
-        }
       }
     }
   end,

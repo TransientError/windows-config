@@ -44,4 +44,33 @@ return {
       }
     end,
   },
+  {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    opts = {
+      default_mappings = false,
+    },
+    dependencies = {
+      "nvimtools/hydra.nvim",
+    },
+    config = function(_, opts)
+      require("git-conflict").setup(opts)
+      local Hydra = require "hydra"
+      Hydra {
+        name = "Git Conflict",
+        mode = { "n" },
+        body = "<leader>gc",
+        heads = {
+          { "h", "<Plug>(git-conflict-ours)", { desc = "Use ours" } },
+          { "l", "<Plug>(git-conflict-theirs)", { desc = "Use theirs" } },
+          { "b", "<Plug>(git-conflict-both)", { desc = "Use both" } },
+          { "0", "<Plug>(git-conflict-none)", { desc = "Use neither" } },
+          { "p", "<Plug>(git-conflict-prev-conflict)", { desc = "Previous conflict" } },
+          { "n", "<Plug>(git-conflict-next-conflict)", { desc = "Next conflict" } },
+          { "r", "<Plug>(git-conflict-reset)", { desc = "Reset conflict" } },
+          { "<Esc>", nil, { exit = true, nowait = true } },
+        },
+      }
+    end,
+  },
 }

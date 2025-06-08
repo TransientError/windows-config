@@ -58,6 +58,7 @@ return {
   {
     "mxsdev/nvim-dap-vscode-js",
     cond = utils.not_vscode,
+    pin = true,
     ft = "typescript",
     dependencies = {
       "mfussenegger/nvim-dap",

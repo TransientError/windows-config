@@ -1,13 +1,14 @@
 local utils = require "utils"
 
-local add = "gsa"
-local delete = "gsd"
-local replace = "gsr"
+local surround_prefix = "gj"
+local add = surround_prefix .. "a"
+local delete = surround_prefix .. "d"
+local replace = surround_prefix .. "r"
 
 return {
   {
     "echasnovski/mini.surround",
-    version = false,
+    version = "*",
     -- lazy = false,
     ---@type LazyKeysSpec[]
     keys = {
