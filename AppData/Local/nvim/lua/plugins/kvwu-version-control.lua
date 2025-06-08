@@ -38,8 +38,8 @@ return {
       local colors = require "material.colors"
       return {
         highlight = {
-          bg_green = colors.editor.bg,
-          bg_red = colors.editor.bg,
+          line_green = colors.editor.bg,
+          line_red = colors.editor.bg,
         },
       }
     end,
