@@ -1,30 +1,9 @@
 local utils = require "utils"
+if utils.is_vscode() then
+  return {}
+end
 
 return {
-  {
-    "nvim-tree/nvim-tree.lua",
-    cond = utils.not_vscode,
-    enabled = false,
-    opts = {
-      update_focused_file = {
-        enable = true,
-      },
-      sync_root_with_cwd = true,
-      respect_buf_cwd = true,
-      on_attach = function(bufnr)
-        local api = require "nvim-tree.api"
-        api.config.mappings.default_on_attach(bufnr)
-
-        local function opts(desc)
-          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-        end
-
-        vim.keymap.set("n", "l", api.tree.change_root_to_node, opts "cd")
-      end,
-    },
-    cmd = { "NvimTreeToggle" },
-    keys = { { "<leader>op", ":NvimTreeToggle<CR>", mode = { "n", "v" } } },
-  },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -32,6 +11,7 @@ return {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       "nvim-tree/nvim-web-devicons",
+      "ggandor/leap.nvim"
     },
     lazy = false,
     opts = {
@@ -51,7 +31,7 @@ return {
               target_windows = { require("leap.util").get_enterable_windows() },
             }
           end,
-          ["v"] = "open_split",
+          ["v"] = "open_vsplit",
         },
       },
     },
@@ -73,56 +53,6 @@ return {
     },
   },
   {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      modes = {
-        search = {
-          enabled = true,
-        },
-      },
-    },
-    keys = {
-      --   {
-      --     "s",
-      --     function()
-      --       utils.flash_jump()
-      --     end,
-      --     mode = { "n", "x", "o" },
-      --     desc = "Flash",
-      --   },
-      --   {
-      --     "S",
-      --     function()
-      --       require("flash").treesitter()
-      --     end,
-      --     mode = { "n", "o", "x" },
-      --     desc = "Flash Treesitter",
-      --   },
-      --   {
-      --     "r",
-      --     function()
-      --       require("flash").remote {
-      --         jump = {
-      --           autojump = true,
-      --         },
-      --       }
-      --     end,
-      --     mode = { "o", "x" },
-      --     desc = "Flash Remote",
-      --   },
-      --   {
-      --     "R",
-      --     function()
-      --       require("flash").treesitter_search()
-      --     end,
-      --     mode = { "o", "x" },
-      --     desc = "Flash Treesitter Search",
-      --   },
-      -- },
-    },
-  },
-  {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
     cmd = { "Yazi" },
@@ -131,20 +61,5 @@ return {
       open_for_directories = true,
     },
     cond = utils.is_neovide,
-  },
-  {
-    "ggandor/leap.nvim",
-    lazy = false,
-    init = function()
-      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)", { desc = "Leap: Search" })
-      vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-from-window)", { desc = "Leap: from window" })
-      vim.keymap.set({ "n", "x", "o" }, "gs", function()
-        require("leap.remote").action()
-      end)
-      vim.keymap.set({ "x", "o" }, "R", function()
-        require("leap.treesitter").select()
-      end)
-      vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
-    end,
   },
 }
