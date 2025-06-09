@@ -49,6 +49,10 @@ return {
     opts = {},
   },
   {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {}
+  },
+  {
     "b0o/SchemaStore",
     ft = { "json", "jsonc", "yaml" },
   },

@@ -53,6 +53,17 @@ return {
     },
   },
   {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {
+      modes = {
+        search = {
+          enabled = true,
+        },
+      },
+    },
+  },
+  {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
     cmd = { "Yazi" },
@@ -61,5 +72,20 @@ return {
       open_for_directories = true,
     },
     cond = utils.is_neovide,
+  },
+  {
+    "ggandor/leap.nvim",
+    lazy = false,
+    init = function()
+      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
+      vim.keymap.set({ "n" }, "S", "<Plug>(leap-from-window)")
+      vim.keymap.set({ "x", "o" }, "r", function()
+        require("leap.remote").action()
+      end)
+      vim.keymap.set({ "n", "x", "o" }, "R", function()
+        require("leap.treesitter").select()
+      end)
+      vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
+    end,
   },
 }
