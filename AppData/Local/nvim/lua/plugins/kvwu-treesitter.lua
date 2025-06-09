@@ -6,23 +6,18 @@ return {
     lazy = false,
     build = ":TSUpdate",
     init = function()
-      -- vim.api.nvim_create_autocmd("FileType", {
-      --   pattern = "*",
-      --   callback = function(args)
-      --     local ft = vim.bo.filetype
-      --     local lang = vim.treesitter.language.get_lang(ft)
-      --     if lang == nil then
-      --       return
-      --     end
-      --
-      --     if vim.treesitter.language.add(lang) then
-      --       vim.treesitter.start(args.buf, lang)
-      --     end
-      --   end,
-      -- })
-
       vim.treesitter.language.register("powershell", "ps1")
     end,
+    opts = {
+      ensure_installed = {
+        "csharp",
+        "xml",
+        "typescript",
+        "javascript",
+        "html",
+        "powershell"
+      }
+    }
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
