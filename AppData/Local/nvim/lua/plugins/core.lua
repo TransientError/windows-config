@@ -34,10 +34,16 @@ return {
     end,
   },
   {
-    "echasnovski/mini.pairs",
-    version = "*",
-    event = "VeryLazy",
-    opts = {},
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      local npairs = require "nvim-autopairs"
+      npairs.setup {
+        check_ts = true,
+      }
+      local Rule = require "nvim-autopairs.rule"
+      npairs.add_rule(Rule("`", "`", "-ocaml"))
+    end,
   },
   {
     "echasnovski/mini.splitjoin",
