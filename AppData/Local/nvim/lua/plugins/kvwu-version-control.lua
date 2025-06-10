@@ -8,7 +8,33 @@ end
 return {
   {
     "lewis6991/gitsigns.nvim",
-    opts = {},
+    opts = {
+      on_attach = function(bufnr)
+        local gs = require "gitsigns"
+        local function map(mode, l, r, desc)
+          vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+        end
+
+        map("n", "]h", function()
+          if vim.wo.diff then
+            vim.cmd.normal { "]c", bang = true }
+          else
+            gs.nav_hunk "next"
+          end
+        end)
+        map("n", "[h", function()
+          if vim.wo.diff then
+            vim.cmd.normal { "[c", bang = true }
+          else
+            gs.nav_hunk "prev"
+          end
+        end)
+        map({ "n", "v" }, "<localleader>ghs", gs.stage_hunk, "Stage hunk")
+        map({ "n", "v" }, "<localleader>ghr", gs.reset_hunk, "Unstage hunk")
+        map({ "n", "v" }, "<localleader>ghS", gs.stage_buffer, "Stage buffer")
+        map({ "n", "v" }, "<localleader>ghR", gs.reset_buffer, "reset buffer")
+      end,
+    },
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     cond = utils.not_vscode,
   },
