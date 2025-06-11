@@ -1,6 +1,11 @@
 [merge]
   conflictstyle = zdiff3
-  tool = nvimdiff
+  tool = diffview
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "diffview"]
+  cmd = "nvim -n -c "DiffviewOpen" $MERGE
 
 [alias]
    lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
@@ -27,5 +32,8 @@
    autoSetupRemote = true
 
 [diff]
-   guitool = nvimdiff
+   guitool = diffview
+
+[difftool "diffview"]
+  cmd = nvim -f -c "DiffviewOpen"
 
