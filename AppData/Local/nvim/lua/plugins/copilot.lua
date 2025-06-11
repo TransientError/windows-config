@@ -11,10 +11,24 @@ return {
       suggestion = {
         auto_trigger = true,
         keymap = {
-          accept = "<right>",
+          accept = false,
           accept_word = "<C-right>",
           accept_line = "<C-S-right>",
         },
+      },
+    },
+    keys = {
+      {
+        "<right>",
+        function()
+          local suggestion = require "copilot.suggestion"
+          if suggestion.is_visible() then
+            suggestion.accept()
+          else
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<right>", true, false, true), "n", false)
+          end
+        end,
+        mode = "i",
       },
     },
   },

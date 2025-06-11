@@ -57,6 +57,7 @@ else
   map.set("n", "<leader>l", ":Lazy<CR>", { noremap = true })
 
   vim.api.nvim_create_autocmd("VimResized", { pattern = "*", command = "wincmd =" })
+  vim.api.nvim_create_autocmd("FileType", { pattern = "help", command = "wincmd L" })
 end
 
 require "config.lazy"

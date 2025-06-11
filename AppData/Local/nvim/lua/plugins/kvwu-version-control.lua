@@ -31,12 +31,15 @@ return {
         end)
         map({ "n", "v" }, "<localleader>ghs", gs.stage_hunk, "Stage hunk")
         map({ "n", "v" }, "<localleader>ghr", gs.reset_hunk, "Unstage hunk")
-        map({ "n", "v" }, "<localleader>ghS", gs.stage_buffer, "Stage buffer")
-        map({ "n", "v" }, "<localleader>ghR", gs.reset_buffer, "reset buffer")
+        map("n", "<localleader>ghS", gs.stage_buffer, "Stage buffer")
+        map("n", "<localleader>ghR", gs.reset_buffer, "reset buffer")
       end,
     },
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     cond = utils.not_vscode,
+    dependencies = {
+      "tpope/vim-repeat",
+    },
   },
   {
     "cedarbaum/fugitive-azure-devops.vim",
@@ -50,7 +53,6 @@ return {
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
     },
     cmd = "Neogit",
     keys = {
@@ -69,6 +71,33 @@ return {
         },
       }
     end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFileHistory" },
+    opts = function()
+      return {
+        keymaps = {
+          file_panel = {
+            ["S"] = false,
+            { "n", "<leader>gd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+          },
+          view = {
+            { "n", "<leader>gd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+          },
+          file_history_panel = {
+            { "n", "<leader>gd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+          }
+        },
+      }
+    end,
+    keys = {
+      {
+        "<leader>gd",
+        "<cmd>DiffviewOpen<cr>",
+        desc = "Open Diffview",
+      },
+    },
   },
   {
     "akinsho/git-conflict.nvim",

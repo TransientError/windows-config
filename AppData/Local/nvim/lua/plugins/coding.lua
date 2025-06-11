@@ -43,4 +43,34 @@ return {
     },
   },
   { "mattn/emmet-vim", ft = { "html", "xml" } },
+  {
+    "hedyhli/outline.nvim",
+    keys = {
+      { "<leader>oo", "<cmd>Outline<cr>", desc = "Toggle Outline" },
+    },
+    cmd = {
+      "Outline",
+    },
+    opts = {
+      providers = {
+        priority = {
+          "lsp",
+          "markdown",
+          "treesitter",
+        },
+      },
+    },
+    dependencies = {
+      "epheien/outline-treesitter-provider.nvim",
+    },
+  },
+  {
+    "stevearc/aerial.nvim",
+    opts = {},
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    cmd = { "AerialNavToggle" },
+  },
 }

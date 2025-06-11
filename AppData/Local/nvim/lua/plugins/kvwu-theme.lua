@@ -99,4 +99,28 @@ return {
       }
     end,
   },
+  {
+    "akinsho/bufferline.nvim",
+    event = "VeryLazy",
+    opts = function()
+      local colors = require "material.colors"
+      return {
+        options = {
+          mode = "tabs",
+          right_mouse_command = nil,
+          middle_mouse_command = "bdelete! %d",
+          always_show_bufferline = false,
+        },
+        highlights = {
+          fill = {
+            bg = colors.editor.bg
+          }
+        }
+      }
+    end,
+    config = function(_, opts)
+      require("bufferline").setup(opts)
+      vim.o.showtabline = 1
+    end,
+  },
 }
