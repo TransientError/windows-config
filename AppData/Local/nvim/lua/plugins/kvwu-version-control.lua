@@ -46,7 +46,36 @@ return {
     cond = config.profiles.work,
     dependencies = {
       "tpope/vim-rhubarb",
-      "tpope/vim-fugitive",
+    },
+  },
+  {
+    "tpope/vim-fugitive",
+    cmd = { "Git" },
+    keys = {
+      {
+        "<leader>gC",
+        "<cmd>Git commit<cr>",
+        silent = true,
+        desc = "git commit",
+      },
+      {
+        "<leader>gp",
+        "<cmd>Git pull<cr>",
+        silent = true,
+        desc = "git pull",
+      },
+      {
+        "<leader>gP",
+        "<cmd>Git push<cr>",
+        silent = true,
+        desc = "git push",
+      },
+      {
+        "<leader>gs",
+        "<cmd>Git switch -c ",
+        silent = true,
+        desc = "git new branch",
+      },
     },
   },
   {
@@ -81,13 +110,19 @@ return {
           file_panel = {
             ["S"] = false,
             { "n", "<leader>gd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+            { "n", "<leader>wd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+            { "n", "c", "<cmd>Git commit<cr>", { desc = "git commit" } },
+            { "n", "p", "<cmd>Git pull<cr>", { desc = "git pull" } },
+            { "n", "P", "<cmd>Git push<cr>", { desc = "git push" } },
           },
           view = {
             { "n", "<leader>gd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+            { "n", "<leader>wd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
           },
           file_history_panel = {
             { "n", "<leader>gd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
-          }
+            { "n", "<leader>wd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+          },
         },
       }
     end,
@@ -96,6 +131,16 @@ return {
         "<leader>gd",
         "<cmd>DiffviewOpen<cr>",
         desc = "Open Diffview",
+      },
+      {
+        "<leader>gH",
+        "<cmd>DiffviewFileHistory<cr>",
+        desc = "DiffviewFileHistory",
+      },
+      {
+        "<leader>gh",
+        "<cmd>DiffviewFileHistory %<CR>",
+        desc = "DiffviewFileHistory file",
       },
     },
   },
