@@ -111,6 +111,7 @@ return {
             ["S"] = false,
             { "n", "<leader>gd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
             { "n", "<leader>wd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
+            { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
             { "n", "c", "<cmd>Git commit<cr>", { desc = "git commit" } },
             { "n", "p", "<cmd>Git pull<cr>", { desc = "git pull" } },
             { "n", "P", "<cmd>Git push<cr>", { desc = "git push" } },
