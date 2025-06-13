@@ -29,7 +29,7 @@ return {
     ---@type conform.setupOpts
     opts = {
       formatters_by_ft = {
-        csharp = { "csharpier" },
+        cs = { "csharpier" },
         python = { "black" },
         ocaml = { "ocamlformat" },
         lua = { "stylua" },
@@ -38,6 +38,11 @@ return {
         stylua = {
           command = "stylua",
           prepend_args = { "--config-path", vim.fn.expand "~/.config/stylua.toml" },
+        },
+        csharpier = {
+          command = "dotnet",
+          args = { "csharpier", "format", "--write-stdout" },
+          stdin = true,
         },
       },
     },

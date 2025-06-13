@@ -50,10 +50,20 @@ return {
   },
   {
     "mason-org/mason-lspconfig.nvim",
-    opts = {}
+    opts = {},
   },
   {
     "b0o/SchemaStore",
     ft = { "json", "jsonc", "yaml" },
+  },
+  {
+    "deponian/nvim-base64",
+    version = "*",
+    keys = {
+      { "<localleader>eb", "<Plug>(ToBase64)", mode = "x",desc = "Base64 Encode", buffer = true },
+      { "<localleader>db", "<Plug>(FromBase64)", mode = "x", desc = "Base64 Decode", buffer = true },
+    },
+    ft = { "text", "markdown" },
+    opts = {},
   },
 }

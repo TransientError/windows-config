@@ -13,6 +13,11 @@ return {
       { add, desc = "add surround", mode = { "n", "x", "o" } },
       { delete, desc = "delete surround", mode = { "n", "x", "o" } },
       { replace, desc = "replace surround", mode = { "n", "x", "o" } },
+      {
+        "S",
+        ":<C-u>lua require('mini.surround').add 'visual'<cr>",
+        mode = "x",
+      },
     },
     opts = {
       mappings = {
