@@ -11,7 +11,7 @@ return {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       "nvim-tree/nvim-web-devicons",
-      "ggandor/leap.nvim"
+      "ggandor/leap.nvim",
     },
     lazy = false,
     opts = {
@@ -86,6 +86,41 @@ return {
         require("leap.treesitter").select()
       end)
       vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
+    end,
+  },
+  {
+    "cbochs/portal.nvim",
+    keys = {
+      {
+        "gl",
+        "<cmd>Portal jumplist backward<CR>",
+        mode = { "n" },
+        desc = "Portal: Jump to last location",
+      },
+      {
+        "gh",
+        "<cmd>Portal jumplist forward<CR>",
+        mode = { "n" },
+        desc = "Portal: Jump to next location",
+      },
+    },
+  },
+  {
+    "cbochs/grapple.nvim",
+    event = "VeryLazy",
+    opts = {
+      scope = "git_branch"
+    },
+    keys = {
+      { "<leader>M", "<cmd>Grapple toggle_tags<cr>", desc = "Toggle tags menu" },
+      { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Toggle tag" },
+      { "H", "<cmd>Grapple cycle_tags next<cr>", desc = "Go to next tag" },
+      { "L", "<cmd>Grapple cycle_tags prev<cr>", desc = "Go to previous tag" },
+    },
+    config = function(_, opts)
+      require("grapple").setup(opts)
+      require("telescope").load_extension "grapple"
+      vim.keymap.set("n", ";", "<Cmd>Telescope grapple tags<CR>", { desc = "Grapple: Search tags" })
     end,
   },
 }

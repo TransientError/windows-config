@@ -64,6 +64,8 @@ return {
       { "<localleader>db", "<Plug>(FromBase64)", mode = "x", desc = "Base64 Decode", buffer = true },
     },
     ft = { "text", "markdown" },
-    opts = {},
+    config = function()
+      require("nvim-base64").setup()
+    end,
   },
 }

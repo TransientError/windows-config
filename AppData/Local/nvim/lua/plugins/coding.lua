@@ -16,13 +16,7 @@ return {
           require("conform").format { async = true }
         end,
         desc = "Format with Conform",
-      },
-      {
-        "<localleader>cf",
-        function()
-          require("conform").format { async = true }
-        end,
-        desc = "Format with Conform",
+        mode = { "n", "x" },
       },
     },
     ---@module "conform"
@@ -34,6 +28,7 @@ return {
         ocaml = { "ocamlformat" },
         lua = { "stylua" },
         json = { "prettier" },
+        markdown = { "cbfmt" },
       },
       formatters = {
         stylua = {
@@ -44,6 +39,13 @@ return {
           command = "dotnet",
           args = { "csharpier", "format", "--write-stdout" },
           stdin = true,
+        },
+        injected = {
+          options = {
+            lang_to_formatters = {
+              json = { "prettier" },
+            },
+          },
         },
       },
     },

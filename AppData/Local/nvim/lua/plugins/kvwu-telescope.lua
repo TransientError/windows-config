@@ -25,6 +25,13 @@ return {
       telescope.load_extension "live_grep_args"
 
       telescope.setup {
+        defaults = {
+          mappings = {
+            n = {
+              ["q"] = require("telescope.actions").close
+            }
+          }
+        },
         extensions = {
           live_grep_args = {
             mappings = {
