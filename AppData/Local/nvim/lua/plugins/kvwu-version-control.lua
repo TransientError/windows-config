@@ -31,8 +31,8 @@ return {
         end)
         map({ "n", "v" }, "<localleader>ghs", gs.stage_hunk, "Stage hunk")
         map({ "n", "v" }, "<localleader>ghr", gs.reset_hunk, "Unstage hunk")
-        map("n", "<localleader>ghS", gs.stage_buffer, "Stage buffer")
-        map("n", "<localleader>ghR", gs.reset_buffer, "reset buffer")
+        map("n", "<localleader>gS", gs.stage_buffer, "Stage buffer")
+        map("n", "<localleader>gR", gs.reset_buffer, "reset buffer")
       end,
     },
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },

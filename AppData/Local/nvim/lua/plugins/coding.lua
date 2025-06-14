@@ -33,6 +33,7 @@ return {
         python = { "black" },
         ocaml = { "ocamlformat" },
         lua = { "stylua" },
+        json = { "prettier" },
       },
       formatters = {
         stylua = {
