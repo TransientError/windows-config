@@ -23,12 +23,12 @@ return {
 
             vim.keymap.set("n", "gD", omnisharp_extended.lsp_type_definition, bufopts)
             vim.keymap.set("n", "gd", omnisharp_extended.lsp_definition, bufopts)
-            vim.keymap.set("n", "gu", omnisharp_extended.lsp_references, bufopts)
+            vim.keymap.set("n", "gu", omnisharp_extended.telescope_lsp_references, bufopts)
             vim.keymap.set("n", "gi", omnisharp_extended.lsp_implementation, bufopts)
           else
             vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-            vim.keymap.set("n", "gu", vim.lsp.buf.references, bufopts)
+            vim.keymap.set("n", "gu", require("telescope.builtin").lsp_references, bufopts)
             vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
           end
 
@@ -79,6 +79,14 @@ return {
       })
 
       vim.lsp.config("omnisharp", {
+        cmd = {
+          "omnisharp",
+          "-z",
+          "--languageserver",
+          "--encoding",
+          "utf-8",
+          "Dotnet:enablePackageRestore=false",
+        },
         enable_roslyn_analyzers = true,
         organize_imports_on_format = true,
         enable_import_completion = true,
@@ -94,13 +102,12 @@ return {
         },
       })
 
-      local bicep_lsp_bin = vim.fn.stdpath "data"
-        .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
+      local bicep_lsp_bin = vim.fn.stdpath "data" .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
       vim.lsp.config("bicep", {
         cmd = { bicep_lsp_bin },
       })
 
-      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep", "yamlls", "ts_ls" }
+      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep", "yamlls", "ts_ls", "omnisharp" }
     end,
   },
   {

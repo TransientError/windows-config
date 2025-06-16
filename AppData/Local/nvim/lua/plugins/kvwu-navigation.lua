@@ -92,13 +92,13 @@ return {
     "cbochs/portal.nvim",
     keys = {
       {
-        "gl",
+        "<leader>bL",
         "<cmd>Portal jumplist backward<CR>",
         mode = { "n" },
         desc = "Portal: Jump to last location",
       },
       {
-        "gh",
+        "<leader>bH",
         "<cmd>Portal jumplist forward<CR>",
         mode = { "n" },
         desc = "Portal: Jump to next location",
@@ -113,7 +113,7 @@ return {
     },
     keys = {
       { "<leader>M", "<cmd>Grapple toggle_tags<cr>", desc = "Toggle tags menu" },
-      { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Toggle tag" },
+      { "<C-s>", "<cmd>Grapple toggle<cr>", desc = "Toggle tag" },
       { "H", "<cmd>Grapple cycle_tags next<cr>", desc = "Go to next tag" },
       { "L", "<cmd>Grapple cycle_tags prev<cr>", desc = "Go to previous tag" },
     },

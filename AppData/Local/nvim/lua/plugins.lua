@@ -22,7 +22,7 @@ return {
       condition = function(buf)
         local path = vim.fn.expand "%:p"
         local file_name = vim.fn.expand "%:t"
-        local configs = { vim.fn.stdpath "config", vim.env.USERPROFILE .. "\\.config\\wezterm" }
+        local configs = { vim.env.USERPROFILE .. "\\.config\\wezterm" }
         local config_files = { ".wezterm.lua" }
         local is_in_config = vim.tbl_contains(configs, function(v)
           return string.find(path, "^" .. v) ~= nil
@@ -60,12 +60,29 @@ return {
     "deponian/nvim-base64",
     version = "*",
     keys = {
-      { "<localleader>eb", "<Plug>(ToBase64)", mode = "x",desc = "Base64 Encode", buffer = true },
+      { "<localleader>eb", "<Plug>(ToBase64)", mode = "x", desc = "Base64 Encode", buffer = true },
       { "<localleader>db", "<Plug>(FromBase64)", mode = "x", desc = "Base64 Decode", buffer = true },
     },
     ft = { "text", "markdown" },
     config = function()
       require("nvim-base64").setup()
     end,
+  },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      bigfile = {},
+      lazygit = {},
+    },
+    lazy = false,
+    keys = {
+      {
+        "<leader>gg",
+        function()
+          require("snacks").lazygit()
+        end,
+        desc = "Snacks LazyGit",
+      },
+    },
   },
 }

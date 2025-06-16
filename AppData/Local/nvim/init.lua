@@ -23,6 +23,11 @@ if g.vscode then
 else
   if g.neovide or g.nvy then
     opt.guifont = "LigaHack Nerd Font:h12"
+
+    map.set("n", "<leader>qr", function()
+      cmd "!start neovide"
+      cmd "qa!"
+    end)
   end
   utils.process_settings {
     opt = {
@@ -51,11 +56,18 @@ else
   map.set("n", "<leader>qq", ":qa!<CR>", { noremap = true })
   map.set("n", "<leader>ot", ":split term://fish<CR>", { noremap = true })
   map.set("n", "<leader>bl", "<C-o>", { noremap = true })
+  map.set("n", "<leader>bh", "<C-i>", { noremap = true })
   map.set("n", "<leader>bd", ":bdelete<cr>", { noremap = true })
-  map.set("n", "<leader>bn", ":new<cr>", { noremap = true })
+  map.set("n", "<leader>bn", ":vnew<cr>", { noremap = true })
   map.set("n", "<leader>hs", ":new ++ff=lua<cr>", { noremap = true })
   map.set("n", "<leader>fp", ":cd ~/AppData/Local/nvim<CR>:e ~/AppData/Local/nvim/init.lua<CR>", { noremap = true })
   map.set("n", "<leader>l", ":Lazy<CR>", { noremap = true })
+  map.set("i", "<C-z>", "<Esc>zzi<Tab>", { noremap = true, silent = true })
+  map.set("n", "<leader>tN", ":tabnew<CR>", { noremap = true })
+  map.set("n", "<leader>te", ":tabedit %<CR>", { noremap = true })
+  map.set("n", "<leader>td", ":tabclose<CR>", { noremap = true })
+  map.set("n", "<leader>tn", ":tabnext<CR>", { noremap = true })
+  map.set("n", "<leader>tp", ":tabprev<CR>", { noremap = true })
 
   vim.api.nvim_create_autocmd("VimResized", { pattern = "*", command = "wincmd =" })
   vim.api.nvim_create_autocmd("FileType", { pattern = "help", command = "wincmd L" })

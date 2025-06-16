@@ -79,29 +79,6 @@ return {
     },
   },
   {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = "Neogit",
-    keys = {
-      {
-        "<leader>gg",
-        "<cmd>Neogit<cr>",
-        silent = true,
-      },
-    },
-    opts = function()
-      local colors = require "material.colors"
-      return {
-        highlight = {
-          line_green = colors.editor.bg,
-          line_red = colors.editor.bg,
-        },
-      }
-    end,
-  },
-  {
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFileHistory" },
     opts = function()
