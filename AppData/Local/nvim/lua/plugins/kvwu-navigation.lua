@@ -12,6 +12,7 @@ return {
       "MunifTanjim/nui.nvim",
       "nvim-tree/nvim-web-devicons",
       "ggandor/leap.nvim",
+      "s1n7ax/nvim-window-picker",
     },
     lazy = false,
     opts = {
