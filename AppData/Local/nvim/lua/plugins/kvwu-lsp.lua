@@ -18,18 +18,19 @@ return {
 
           local bufopts = { noremap = true, silent = true, buffer = ev.buf }
 
+          local builtin = require "telescope.builtin"
           if client.name == "omnisharp" then
             local omnisharp_extended = require "omnisharp_extended"
 
             vim.keymap.set("n", "gD", omnisharp_extended.lsp_type_definition, bufopts)
-            vim.keymap.set("n", "gd", omnisharp_extended.lsp_definition, bufopts)
+            vim.keymap.set("n", "gd", omnisharp_extended.telescope_lsp_definition, bufopts)
             vim.keymap.set("n", "gu", omnisharp_extended.telescope_lsp_references, bufopts)
-            vim.keymap.set("n", "gi", omnisharp_extended.lsp_implementation, bufopts)
+            vim.keymap.set("n", "gi", omnisharp_extended.telescope_lsp_implementation, bufopts)
           else
-            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-            vim.keymap.set("n", "gu", require("telescope.builtin").lsp_references, bufopts)
-            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set("n", "gD", builtin.lsp_type_definitions, bufopts)
+            vim.keymap.set("n", "gd", builtin.lsp_definitions, bufopts)
+            vim.keymap.set("n", "gu", builtin.lsp_references, bufopts)
+            vim.keymap.set("n", "gi", builtin.lsp_implementations, bufopts)
           end
 
           vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
@@ -38,7 +39,6 @@ return {
           vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, bufopts)
           vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
 
-          local builtin = require "telescope.builtin"
           vim.keymap.set("n", "<leader>si", builtin.lsp_document_symbols, bufopts)
           vim.keymap.set("n", "<leader>sI", builtin.lsp_workspace_symbols, bufopts)
         end,
