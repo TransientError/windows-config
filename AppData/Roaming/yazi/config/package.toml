@@ -28,6 +28,11 @@ use = "Ape/open-with-cmd"
 rev = "433cf30"
 hash = "a6d150d153ed3491505b02f4dc174e89"
 
+[[plugin.deps]]
+use = "DreamMaoMao/keyjump"
+rev = "2cf7963"
+hash = "b68f6cfcbea6971ad65c39ba91112b0f"
+
 [[flavor.deps]]
 use = "yazi-rs/flavors:dracula"
 rev = "02f3fc6"

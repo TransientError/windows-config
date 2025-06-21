@@ -30,8 +30,14 @@ desc = "Open with command"
 
 [[mgr.prepend_keymap]]
 on = "s"
-run = "plugin searchjump -- autocd"
-desc = "search jump"
+run = "plugin keyjump -- global once"
+desc = "keyjump jump"
+
+[[mgr.prepend_keymap]]
+on = "R"
+run = "plugin keyjump -- select"
+desc = "key jump select"
+
 
 [[mgr.prepend_keymap]]
 on = "F"
