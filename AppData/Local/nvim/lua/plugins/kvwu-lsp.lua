@@ -34,6 +34,7 @@ return {
           end
 
           vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+          vim.keymap.set("n", "<leader>k", require("lsp_signature").toggle_float_win, bufopts)
           vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
           vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
           vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, bufopts)
@@ -129,7 +130,17 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm { select = true },
+          ["<CR>"] = cmp.mapping {
+            i = function(fallback)
+              if cmp.visible() and cmp.get_active_entry() then
+                cmp.confirm { select = false, behavior = cmp.ConfirmBehavior.Replace }
+              else
+                fallback()
+              end
+            end,
+            s = cmp.mapping.confirm { select = true },
+            c = cmp.mapping.confirm { select = false, behavior = cmp.ConfirmBehavior.Replace },
+          },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -185,6 +196,32 @@ return {
       { "hrsh7th/cmp-vsnip", lazy = true },
       { "hrsh7th/vim-vsnip", lazy = true },
       { "Hoffs/omnisharp-extended-lsp.nvim", lazy = true },
+      { "ray-x/lsp_signature.nvim", lazy = true },
     },
+  },
+  {
+    "hrsh7th/vim-vsnip",
+    event = "InsertEnter",
+    config = function()
+      vim.keymap.set("i", "<Tab>", function()
+        if vim.fn["vsnip#available"](1) == 1 then
+          return "<Plug>(vsnip-jump-next)"
+        else
+          return "<Tab>"
+        end
+      end, { expr = true, silent = true })
+      vim.keymap.set("i", "<S-Tab>", function()
+        if vim.fn["vsnip#available"](-1) == 1 then
+          return "<Plug>(vsnip-jump-prev)"
+        else
+          return "<S-Tab>"
+        end
+      end, { expr = true, silent = true })
+    end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "InsertEnter",
+    opts = {},
   },
 }
