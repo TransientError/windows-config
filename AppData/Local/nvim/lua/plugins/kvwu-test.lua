@@ -6,12 +6,13 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "Issafalcon/neotest-dotnet",
+      "nsidorenco/neotest-vstest",
     },
     lazy = false,
     config = function()
       require("neotest").setup {
         adapters = {
-          require "neotest-dotnet" {},
+          require "neotest-vstest" {},
         },
       }
     end,
