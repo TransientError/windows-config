@@ -11,7 +11,7 @@ hash = "b4c00ef6899a9563af8d577d0bb46998"
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-filter"
 rev = "864a021"
-hash = "475bcde87495ff68f017f39e0a138ac1"
+hash = "979899d87f80e306b5cb091b180a66aa"
 
 [[plugin.deps]]
 use = "hankertrix/augment-command"
@@ -32,6 +32,11 @@ hash = "a6d150d153ed3491505b02f4dc174e89"
 use = "DreamMaoMao/keyjump"
 rev = "2cf7963"
 hash = "b68f6cfcbea6971ad65c39ba91112b0f"
+
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "b74b7b8"
+hash = "65cb22e84e971048b0c7bac5f9353c8c"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:dracula"
