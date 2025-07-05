@@ -42,6 +42,10 @@ return {
 
           vim.keymap.set("n", "<leader>si", builtin.lsp_document_symbols, bufopts)
           vim.keymap.set("n", "<leader>sI", builtin.lsp_workspace_symbols, bufopts)
+
+          if client.name == "jsonls" then
+            require("nvim-navic").attach(client, ev.buf)
+          end
         end,
       })
 
@@ -110,6 +114,9 @@ return {
 
       vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep", "yamlls", "ts_ls", "omnisharp" }
     end,
+    dependencies = {
+      "SmiteshP/nvim-navic",
+    },
   },
   {
     "hrsh7th/nvim-cmp",

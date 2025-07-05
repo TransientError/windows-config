@@ -167,4 +167,8 @@ return {
     "windwp/nvim-ts-autotag",
     event = "LazyFile",
   },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    cmd = "TSContext"
+  }
 }

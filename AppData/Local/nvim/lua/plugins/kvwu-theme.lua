@@ -16,10 +16,14 @@ return {
       plugins = {
         "dap",
         "nvim-cmp",
-        "nvim-tree",
         "telescope",
         "which-key",
         "gitsigns",
+        "nvim-navic",
+        "neotest",
+        "neo-tree",
+        "nvim-web-devicons",
+        "trouble"
       },
       custom_colors = function(colors)
         colors.editor.fg = "#eeffff"
@@ -64,6 +68,15 @@ return {
               a = { fg = colors.editor.fg, bg = colors.editor.bg, gui = "bold" },
               b = { fg = colors.editor.fg, bg = colors.editor.line_numbers },
               c = { fg = colors.editor.fg, bg = colors.editor.selection },
+            },
+          },
+        },
+        winbar = {
+          lualine_c = {
+            {
+              "navic",
+              color_correction = nil,
+              navic_opts = nil,
             },
           },
         },
@@ -113,9 +126,9 @@ return {
         },
         highlights = {
           fill = {
-            bg = colors.editor.bg
-          }
-        }
+            bg = colors.editor.bg,
+          },
+        },
       }
     end,
     config = function(_, opts)
