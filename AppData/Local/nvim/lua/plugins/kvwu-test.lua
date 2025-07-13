@@ -40,6 +40,13 @@ return {
         desc = "Run Nearest (Neotest)",
       },
       {
+        "<leader>td",
+        function()
+          require("neotest").run.run { strategy = "dap", suite = false }
+        end,
+        desc = "Run Nearest (Neotest)",
+      },
+      {
         "<leader>tl",
         function()
           require("neotest").run.run_last()

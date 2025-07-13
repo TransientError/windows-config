@@ -92,14 +92,13 @@ return {
           "utf-8",
           "Dotnet:enablePackageRestore=false",
         },
-        enable_roslyn_analyzers = true,
-        organize_imports_on_format = true,
-        enable_import_completion = true,
-        analyze_open_documents_only = true,
         root_markers = { "*.sln", "*.csproj", "omnisharp.json", "function.json" },
         settings = {
           RoslynExtensionsOptions = {
-            enableDecompilationSupport = true,
+            EnableDecompilationSupport = true,
+            EnableImportCompletion = true,
+            EnableAnalyzersSupport = true,
+            AnalyzeOpenDocumentsOnly = true,
           },
           Sdk = {
             IncludePrereleases = true,

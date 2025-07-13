@@ -21,7 +21,7 @@ return {
     end,
     config = function()
       local dap = require "dap"
-      dap.adapters["ngetcoredbg"] = {
+      dap.adapters["netcoredbg"] = {
         type = "executable",
         command = vim.fn.exepath "netcoredbg",
         args = { "--interpreter=vscode" },
@@ -90,7 +90,13 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     cond = utils.not_vscode,
-    keys = "<leader>dh",
+    keys = { "<leader>dh", {
+      "<leader>do",
+      function()
+        require("dapui").toggle {}
+      end,
+      desc = "Toggle DAP UI",
+    } },
     config = function()
       local dap, dapui = require "dap", require "dapui"
       dapui.setup {
