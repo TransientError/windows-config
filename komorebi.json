@@ -38,6 +38,13 @@
   "border_implementation": "Komorebi",
   "transparency": true,
   "transparency_alpha": 200,
+  "transparency_ignore_rules": [
+    {
+      "id": "YouTube",
+      "kind": "Title",
+      "matching_strategy": "Contains"
+    }
+  ],
   "default_workspace_padding": 10,
   "default_container_padding": 10,
   "monitors": [
