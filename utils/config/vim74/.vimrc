@@ -77,6 +77,7 @@ nnoremap <leader>b[ :bprevious<CR>
 " vimwiki
 nnoremap <leader>t :VimwikiToggleListItem<CR>
 nnoremap <tab> :VimwikiToggleListItem<CR>
+inoreabbrev cdate <C-r>=strftime("%x")<CR>
 
 " autocmd
 autocmd VimResized * :wincmd =
