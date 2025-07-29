@@ -5,7 +5,7 @@
   "resize_delta": 50,
   "window_container_behaviour": "Create",
   "cross_monitor_move_behaviour": "Insert",
-  "cross_boundary_behaviour": "Workspace",
+  "cross_boundary_behaviour": "Monitor",
   "unmanaged_window_operation_behaviour": "Op",
   "mouse_follows_focus": true,
   "border_width": 8,
@@ -38,6 +38,13 @@
   "border_implementation": "Komorebi",
   "transparency": true,
   "transparency_alpha": 200,
+  "transparency_ignore_rules": [
+    {
+      "id": "YouTube",
+      "kind": "Title",
+      "matching_strategy": "Contains"
+    }
+  ],
   "default_workspace_padding": 10,
   "default_container_padding": 10,
   "monitors": [
@@ -54,11 +61,27 @@
         }
       ],
       "window_based_work_area_offset_limit": 1
+    },
+    {
+      "workspaces": [
+        {
+          "name": "III",
+          "layout": "Rows",
+          "layout_rules": {},
+          "apply_window_based_work_area_offset": true
+        },
+        {
+          "name": "IV"
+        }
+      ]
     }
   ],
   "window_hiding_behaviour": "Minimize",
   "monitor_index_preferences": {},
-  "display_index_preferences": {},
+  "display_index_preferences": {
+    "0": "0",
+    "1": "1"
+  },
   "slow_application_compensation_time": 50,
   "slow_application_identifiers": [
     {
@@ -67,5 +90,5 @@
       "matching_strategy": "Equals"
     }
   ],
-  "app_specific_configuration_path": "C:/Users/kvwu/applications.json",
+  "app_specific_configuration_path": "C:/Users/kvwu/applications.json"
 }
