@@ -13,6 +13,7 @@ execute pathogen#infect()
 " vim-closetag
 " vim-ps1
 " vimwiki
+" vim-calendar
 
 syntax on
 filetype plugin indent on
@@ -62,12 +63,15 @@ nnoremap <leader>wl :wincmd l<CR>
 nnoremap <leader>ws :wincmd s<CR>
 nnoremap <leader>wv :wincmd v<CR>
 nnoremap <leader>w= :wincmd =<CR>
-nnoremap <leader>wd :close<CR>
+nnoremap <leader>wd :close!<CR>
 nnoremap <leader>bl <C-o>
 nnoremap <Esc><Esc> :noh<CR>
 
 "nerdtree
 nnoremap <leader>op :NERDTreeToggle<CR>
+
+" calendar
+nnoremap <leader>oc :Calendar<CR>
 
 "buffers
 nnoremap <leader>bd :bdelete!<CR>
@@ -78,6 +82,12 @@ nnoremap <leader>b[ :bprevious<CR>
 nnoremap <leader>t :VimwikiToggleListItem<CR>
 nnoremap <tab> :VimwikiToggleListItem<CR>
 inoreabbrev cdate <C-r>=strftime("%x")<CR>
+let g:vimwiki_list = []
+let g:vimwiki_list += [{
+  \ 'path': '/Users/wukevin/Work Folders/Documents/vimwiki',
+ \ }]
 
 " autocmd
 autocmd VimResized * :wincmd =
+" autosave?
+au TextChanged,TextChangedI <buffer> if &readonly == 0 && filereadable(bufname('%')) | silent write | endif
