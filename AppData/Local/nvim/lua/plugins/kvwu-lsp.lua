@@ -116,6 +116,16 @@ return {
             IncludePrereleases = true,
           },
         },
+        on_error = function(code, err)
+          local client_errors = require('vim.lsp.rpc').client_errors
+          if code == client_errors.INVALID_SERVER_JSON then
+            -- This is a known error code for omnisharp when it fails to start.
+            -- We can ignore it as it will be retried later.
+            return
+          else 
+            error(err)
+          end
+        end,
       })
 
       local bicep_lsp_bin = vim.fn.stdpath "data" .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
