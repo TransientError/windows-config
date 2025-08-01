@@ -92,7 +92,19 @@ return {
           "utf-8",
           "Dotnet:enablePackageRestore=false",
         },
-        root_markers = { "*.sln", "*.csproj", "omnisharp.json", "function.json" },
+        enable_roslyn_analyzers = true,
+        organize_imports_on_format = true,
+        enable_import_completion = true,
+        analyze_open_documents_only = true,
+        root_markers = {
+          "*.sln",
+          "*.csproj",
+          "omnisharp.json",
+          "function.json",
+          "Directory.packages.props",
+          "owners.txt",
+          ".gitignore",
+        },
         settings = {
           RoslynExtensionsOptions = {
             EnableDecompilationSupport = true,

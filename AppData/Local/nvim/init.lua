@@ -25,7 +25,7 @@ else
     opt.guifont = "LigaHack Nerd Font:h12"
 
     map.set("n", "<leader>qr", function()
-      cmd "!start neovide"
+      cmd "!start nvy"
       cmd "qa!"
     end)
   end
@@ -76,4 +76,5 @@ else
   vim.api.nvim_create_autocmd("FileType", { pattern = "help", command = "wincmd L" })
 end
 
+vim.g.material_style = "darker"
 require "config.lazy"

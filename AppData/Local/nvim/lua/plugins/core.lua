@@ -98,7 +98,7 @@ return {
     lazy = false,
     opts = {
       safe_labels = "sfnut/'",
-      labels = "sfnjklhodweimbuyvrgtaqpcxz/'"
+      labels = "sfnjklhodweimbuyvrgtaqpcxz/'",
     },
     init = function(_, opts)
       require("leap").opts = opts;
