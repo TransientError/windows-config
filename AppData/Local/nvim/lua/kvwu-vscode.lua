@@ -9,3 +9,7 @@ end)
 map.set("n", "~", function()
   vscode.call "bookmarks.list"
 end)
+
+vim.keymap.set({ "n", "x" }, "<Space>", function()
+  vim.fn.VSCodeNotify "vspacecode.space"
+end, { noremap = true, silent = true })
