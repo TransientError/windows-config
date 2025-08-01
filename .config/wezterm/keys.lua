@@ -57,6 +57,16 @@ function M.apply_to_config(config)
       mods = "CTRL",
       action = wezterm.action.SpawnTab "CurrentPaneDomain",
     },
+    {
+      key = "f",
+      mods = "CTRL|SHIFT",
+      action = wezterm.action.Search { CaseInSensitiveString = "" },
+    },
+    {
+      key = "/",
+      mods = "LEADER",
+      action = wezterm.action.Search { CaseInSensitiveString = "" },
+    },
   }
 
   for i = 0, 9, 1 do
