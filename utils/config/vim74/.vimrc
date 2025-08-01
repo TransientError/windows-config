@@ -9,7 +9,7 @@ execute pathogen#infect()
 " vim-over
 " vim-whichkey
 " emmet-vim
-" vim-easymotion 
+" vim-easymotion
 " vim-closetag
 " vim-ps1
 " vimwiki
@@ -39,11 +39,14 @@ set number
 set relativenumber
 set backspace=indent,eol,start
 set incsearch
+set laststatus=2
 
 let mapleader="\<space>"
 let g:over_enable_auto_nohlsearch = 1
 let g:over#command_line#substitute#replace_pattern_visually = 1
 let g:over_enable_cmd_window = 1
+
+inoremap <C-v> <esc>"+pa
 
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nmap s <Plug>(easymotion-overwin-f2)
@@ -87,7 +90,15 @@ let g:vimwiki_list += [{
   \ 'path': '/Users/wukevin/Work Folders/Documents/vimwiki',
  \ }]
 
+nnoremap <leader>xt :e ~/Work Folders/todo.dotoo<CR>
+
 " autocmd
 autocmd VimResized * :wincmd =
+
 " autosave?
-au TextChanged,TextChangedI <buffer> if &readonly == 0 && filereadable(bufname('%')) | silent write | endif
+autocmd FocusLost,InsertLeave,BufLeave * if &readonly == 0 && filereadable(bufname('%')) | silent write | endif
+
+" vim-rooter
+let g:rooter_pattern = ["=Work Folders"]
+let g:rooter_change_directory_for_non_project_files = 'current'
+

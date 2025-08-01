@@ -36,7 +36,8 @@ return {
   {
     "airblade/vim-rooter",
     init = function()
-      vim.g.rooter_patterns = { ".git", "=nvim", "=work", "=utils", "*.sln", "*.csproj" }
+      local user = vim.fn.getenv "USERPROFILE"
+      vim.g.rooter_patterns = { ".git", "=nvim", "=work", "=utils", "*.sln", "*.csproj", "=" .. user, "=org-roam", "=config" }
     end,
   },
   {
