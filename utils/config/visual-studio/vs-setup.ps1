@@ -28,7 +28,8 @@ if ($extensions) {
             "Viasfora",
             "MaterialTheme",
             "EditorGuidelinesPreview",
-            "NavigateTabGroups"
+            "NavigateTabGroups",
+            "CloseTabs"
         );
     };
 
