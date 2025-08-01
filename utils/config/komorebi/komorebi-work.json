@@ -1,0 +1,72 @@
+{
+  "resize_delta": 50,
+  "window_container_behaviour": "Create",
+  "cross_monitor_move_behaviour": "Insert",
+  "unmanaged_window_operation_behaviour": "Op",
+  "focus_follows_mouse": "Windows",
+  "mouse_follows_focus": true,
+  "border_width": 8,
+  "border_offset": -1,
+  "active_window_border": true,
+  "active_window_border_colours": {
+    "single": {
+      "r": 142,
+      "g": 140,
+      "b": 216
+    },
+    "stack": {
+      "r": 142,
+      "g": 140,
+      "b": 216
+    },
+    "monocle": {
+      "r": 142,
+      "g": 140,
+      "b": 216
+    }
+  },
+  "active_window_border_style": "System",
+  "default_workspace_padding": 10,
+  "default_container_padding": 10,
+  "monitors": [
+    {
+      "workspaces": [
+        {
+          "name": "main",
+          "layout": "BSP",
+          "layout_rules": {}
+        }
+      ]
+    },
+    {
+      "workspaces": [
+        {
+          "name": "vert",
+          "layout": "Rows",
+          "layout_rules": {}
+        }
+      ]
+    }
+  ],
+  "window_hiding_behaviour": "Minimize",
+  "monitor_index_preferences": {},
+  "display_index_preferences": {},
+  "app_specific_configuration_path": "C:\\Users\\wukevin\\applications.yaml",
+  "floating_applications": [
+    {
+      "kind": "Title",
+      "id": "WindowsFormsParkingWindow",
+      "matching_strategy": "Equals"
+    },
+    {
+      "kind": "Exe",
+      "id": "ServiceHub.ThreadedWaitDialog.exe",
+      "matching_strategy": "Equals"
+    },
+    {
+      "kind": "Exe",
+      "id": "Microsoft.CmdPal.UI.exe",
+      "matching_strategy": "Equals"
+    }
+  ]
+}
