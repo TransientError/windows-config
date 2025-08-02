@@ -73,6 +73,9 @@ alt + shift + ctrl + 1  : komorebic move-to-monitor 0
 alt + shift + ctrl + 2  : komorebic move-to-monitor 1
 alt + shift + ctrl + 3  : komorebic move-to-monitor 2
 
+alt + shift + ctrl + oem_4  : komorebic cycle-monitor previous # [
+alt + shift + ctrl + oem_6  : komorebic cycle-monitor next # ]
+
 ## hap
 ctrl + oem_1 : C:\Users\kvwu\utils\hap\hap.exe /hint # ;
 ctrl + shift + oem_1 : C:\Users\kvwu\utils\hap\hap.exe /tray # ;
