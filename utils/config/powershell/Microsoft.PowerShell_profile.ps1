@@ -110,3 +110,47 @@ function winget-upgrade {
         Write-Host "Cleaned up $($_.Name)" -ForegroundColor DarkGray
     }
 }
+
+function gs {
+    param(
+        [string]$RepoUrl
+    )
+    
+    # Extract repo name from URL
+    $repoName = $RepoUrl -replace '.*[/:]([^/]+)(?:\.git)?/?$', '$1'
+    
+    New-Item -ItemType Directory -Path $repoName
+    git clone --bare $RepoUrl "$repoName\$repoName.git"
+    
+    $defaultBranch = git --git-dir="$repoName\$repoName.git" symbolic-ref refs/remotes/origin/HEAD | ForEach-Object { $_ -replace 'refs/remotes/origin/', '' }
+    
+    $normalizedBranch = $defaultBranch -replace '/', '-'
+    
+    git --git-dir="$repoName\$repoName.git" worktree add "$repoName\$normalizedBranch" $defaultBranch
+}
+
+function gc {
+    param(
+        [string]$RepoPath
+    )
+    
+    if ($RepoPath) {
+        # Handle passed repo path
+        $gitDir = "$RepoPath.git"
+        Move-Item -Path $RepoPath -Destination $gitDir
+        New-Item -ItemType Directory -Path $RepoPath
+        Move-Item -Path "$gitDir\.git" -Destination "$RepoPath\$RepoPath.git"
+        Set-Location -Path $RepoPath
+        $currentBranch = git --git-dir="$RepoPath\$RepoPath.git" branch --show-current
+        git --git-dir="$RepoPath\$RepoPath.git" config core.bare true
+        git --git-dir="$RepoPath\$RepoPath.git" worktree add $currentBranch
+    } else {
+        # Handle current directory as repo
+        $repoName = Split-Path -Leaf (Get-Location)
+        $currentBranch = git branch --show-current
+        Move-Item -Path ".git" -Destination "$repoName.git"
+        git --git-dir="$repoName.git" config core.bare true
+        git --git-dir="$repoName.git" worktree add $currentBranch
+    }
+}
+
