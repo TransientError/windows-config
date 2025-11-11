@@ -154,3 +154,17 @@ function gc {
     }
 }
 
+function add-remote-branch {
+    param(
+        [string]$Remote,
+        [string]$Branch
+    )
+    
+    if (-not $Remote -or -not $Branch) {
+        Write-Host "Usage: add-remote-branch <remote> <branch>"
+        return
+    }
+    
+    git config --add "remote.$Remote.fetch" "+refs/heads/$Branch`:refs/remotes/$Remote/$Branch"
+    git fetch $Remote $Branch
+}
