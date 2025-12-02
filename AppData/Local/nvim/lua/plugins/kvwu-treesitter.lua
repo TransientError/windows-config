@@ -21,6 +21,7 @@ return {
         end,
       })
       vim.treesitter.language.register("powershell", "ps1")
+      vim.treesitter.language.register("jsonc", "json")
     end,
     opts = {
       ensure_installed = {

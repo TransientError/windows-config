@@ -24,9 +24,7 @@ return {
     "yuki-uthman/vimpad.nvim",
     ft = "vim",
     keys = {
-      {
-        { "<leader>pt", "<Plug>(vimpad-toggle)", desc = "toggle VimPad", ft = "vim" },
-      },
+      { "<leader>pt", "<Plug>(vimpad-toggle)", { desc = "toggle VimPad", ft = "vim" } },
     },
   },
 }

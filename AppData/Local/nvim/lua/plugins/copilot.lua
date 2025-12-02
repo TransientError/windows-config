@@ -37,6 +37,9 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+    keys = {
+      {"<leader>oc", "<cmd>CopilotChatToggle<cr>", desc = "Toggle Copilot Chat"},
+    },
     cmd = {
       "CopilotChat",
       "CopilotChatOpen",
@@ -46,6 +49,21 @@ return {
       "CopilotChatLoad",
       "CopilotChatPrompts",
     },
-    opts = {},
+    opts = {
+      model = "claude-sonnet-4",
+      prompts = {
+        generate = {
+          prompt = "Generate template for this file",
+          system = "Generate the boilerplate for this file. You may find additional information in the comments in the file",
+        },
+        imports = {
+          prompt = "Generate imports for this file",
+          system = "Fix the imports in this file",
+        }
+      },
+      sticky = {
+        "#buffer"
+      }
+    },
   },
 }

@@ -102,6 +102,15 @@ return {
             { "n", "<leader>wd", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" } },
           },
         },
+        hooks = {
+          diff_buf_read = function(bufnr, ctx)
+            for _, client in pairs(vim.lsp.get_clients { bufnr = bufnr }) do
+              vim.defer_fn(function()
+                vim.lsp.buf_detach_client(bufnr, client.id)
+              end, 10)
+            end
+          end,
+        },
       }
     end,
     keys = {

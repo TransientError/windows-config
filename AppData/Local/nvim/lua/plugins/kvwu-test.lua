@@ -5,8 +5,7 @@ return {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
-      "Issafalcon/neotest-dotnet",
-      "nsidorenco/neotest-vstest",
+      {"nsidorenco/neotest-vstest", commit = "da003f2d0710efb54c92ec5653f0027fb929c3e3" },
     },
     lazy = false,
     config = function()
