@@ -106,7 +106,7 @@ widgets:
   cpu:
     type: "yasb.cpu.CpuWidget"
     options:
-      label: "<span>\uf4bc</span> {info[percent][total]}%"
+      label: "<span>\uf4bc</span>        {info[percent][total]}%"
       label_alt: "<span>\uf437</span> {info[histograms][cpu_percent]}"
       update_interval: 2000
       histogram_icons:
@@ -135,13 +135,20 @@ widgets:
   komorebi_workspaces:
     type: "komorebi.workspaces.WorkspaceWidget"
     options:
-      label_offline: "Komorebi Offline"
+      label_offline: "\u23fc Offline"
       label_workspace_btn: "\udb81\udc3d"
-      label_workspace_active_btn: "\udb81\udc3e"
+      label_workspace_active_btn: ""
+      label_workspace_populated_btn: "\udb81\udc3e"
       label_default_name: "{index}"
       label_zero_index: false
       hide_empty_workspaces: false
       hide_if_offline: false
+      animation: true
+      container_padding:
+        top: 0
+        left: 8
+        bottom: 0
+        right: 8
 
   komorebi_active_layout:
     type: "komorebi.active_layout.ActiveLayoutWidget"
@@ -308,7 +315,7 @@ widgets:
   whkd:
     type: "yasb.whkd.WhkdWidget"
     options:
-      label: "<span>\uf11c</span>"
+      label: "<span>\uf11c </span>"
       special_keys:
         - key: "win"
           key_replace: "\ue70f"

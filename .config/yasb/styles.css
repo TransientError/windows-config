@@ -6,295 +6,268 @@
   --blue-color: #89b4fa;
   --font-family: "CodeNewRoman Nerd Font";
 }
-QToolTip {
-  margin: 6px;
-  color: #cdd6f4;
-  font-size: 12px;
-  background-color: #12151b;
-  border: 0px solid #313244;
-  border-radius: 6px;
-}
-* {
-  font-size: 14px;
-  color: var(--foreground-color);
-  font-weight: 400;
-  font-family: var(--font-family);
-  margin: 0;
-  padding: 0;
+QToolTip { margin:6px; color: #cdd6f4;font-size:12px; background-color: #12151b; border: 0px solid #313244; border-radius: 6px; }
+*{
+	font-size: 14px;
+	color: var(--foreground-color);
+	font-weight: 400;
+	font-family: var(--font-family);
+	margin: 0;
+	padding: 0;
 }
 .yasb-bar {
-  padding: 0 8px;
-  margin: 0;
-  background-color: var(--background-color);
-  border-radius: 8px;
+	padding: 0 8px;
+	margin: 0; 
+    background-color: var(--background-color);
 }
 .widget {
-  padding: 0 8px;
-  margin: 0;
+    padding: 0 8px;
+    margin: 0;
 }
-
-.icon {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
 /* Clock widget */
 .clock-widget .label {
-  font-size: 20px;
-  font-weight: 900;
-  background-color: var(--blue-color);
-  margin: 0;
-  padding: 8px;
-  color: var(--background-color);
-  border-radius: 8px;
+    font-size: 20px;
+    font-weight: 900;
+    background-color: var(--blue-color);
+    margin: 0;
+    padding: 0;
+    color: var(--background-color);
 }
-
 .clock-widget .icon {
-  font-size: 50px;
-  margin: 0 -1px;
-  padding: 0;
-  font-weight: 600;
-  color: var(--blue-color);
+    font-size: 50px;
+    margin: 0 -1px;
+    padding: 0;
+    font-weight: 600;
+    color: var(--blue-color)
 }
 .clock-widget {
-  padding: 0 20px;
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    padding: 0 20px;
 }
 .calendar {
-  background-color: var(--background-color);
+    background-color: var(--background-color);
 }
 .calendar .calendar-table,
 .calendar .calendar-table::item {
-  background-color: rgba(17, 17, 27, 0);
-  color: rgba(162, 177, 196, 0.85);
-  font-family: "Segoe UI", Tahoma, Verdana;
-  margin: 0;
-  padding: 0;
-  border: none;
-  outline: none;
+    background-color: rgba(17, 17, 27, 0);
+    color: rgba(162, 177, 196, 0.85);
+    font-family: 'Segoe UI';
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;  
 }
 .calendar .calendar-table::item:selected {
-  color: rgb(255, 255, 255);
-  background-color: var(--highlight-color);
-  border-radius: 12px;
+    color: rgb(255, 255, 255);
+    background-color: var(--highlight-color);
+    border-radius: 12px;
 }
 .calendar .day-label {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 .calendar .day-label,
 .calendar .month-label,
 .calendar .date-label {
-  font-family: "Segoe UI", Tahoma, Verdana;
-  font-size: 16px;
-  color: var(--foreground-color);
-  font-weight: 600;
-  min-width: 180px;
-  max-width: 180px;
+    font-family: 'Segoe UI';
+    font-size: 16px;
+    color: var(--foreground-color);
+    font-weight: 600;
+    min-width: 180px;
+    max-width: 180px;
 }
 .calendar .month-label {
-  font-weight: normal;
+    font-weight: normal;
 }
 .calendar .date-label {
-  font-size: 88px;
-  font-weight: 900;
-  color: #ffffff;
-  margin-top: -20px;
+    font-size: 88px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-top: -20px;
 }
 /* Home menu widget */
 .home-widget .icon {
-  color: #b4befe;
-  font-size: 20px;
+    color: #b4befe;
+    font-size: 20px;
 }
 .home-widget .icon:hover {
-  color: #cdd6f4;
+    color: #cdd6f4;
 }
 .home-menu {
-  background-color: var(--background-color);
+    background-color:var(--background-color); 
 }
 .home-menu .menu-item {
-  padding: 8px 48px 9px 16px;
-  font-size: 14px;
-  font-family: "Segoe UI", Tahoma, Verdana;
-  color: var(--foreground-color);
-  font-weight: 600;
+    padding: 8px 48px 9px 16px;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+    color: var(--foreground-color); 
+    font-weight: 600;
 }
 .home-menu .menu-item:hover {
-  background-color: rgba(128, 130, 158, 0.15);
-  color: #fff;
+    background-color:rgba(128, 130, 158, 0.15);
+    color: #fff;
 }
 .home-menu .separator {
-  max-height: 1px;
-  background-color: rgba(128, 130, 158, 0.3);
+    max-height: 1px;
+    background-color:rgba(128, 130, 158, 0.3);
 }
 /* Power Menu Widget */
-.power-menu-widget .label {
-  font-size: 18px;
-  color: #f38ba8;
+.power-menu-widget .label { 
+    font-size: 18px;
+    color: #f38ba8;
 }
 .power-menu-popup .button {
-  padding: 0;
-  width: 180px;
-  height: 230px;
-  border-radius: 8px;
-  border: 2px solid var(--border-color);
-  background-color: var(--background-color);
-  color: var(--foreground-color);
+	padding: 0;
+	width: 180px;
+	height: 230px;
+	border-radius: 8px;
+    border:2px solid var(--border-color);
+	background-color: var(--background-color);
+	color:var(--foreground-color);
 }
 .power-menu-popup .button:hover {
-  border: 2px solid #ffffff;
+	border:2px solid #ffffff
 }
 .power-menu-popup .button .label {
-  margin-bottom: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--foreground-color);
+	margin-bottom: 8px;
+	font-size: 16px;
+	font-weight: 500;
+	color: var(--foreground-color)
 }
 .power-menu-popup .button .icon {
-  font-size: 64px;
-  padding-top: 32px;
-  color: var(--foreground-color);
+	font-size: 64px;
+	padding-top: 32px;
+	color: var(--foreground-color)
 }
 /* Volume widget */
 .volume-widget .icon {
-  font-size: 18px;
-  color: #a6e3a1;
-  padding-right: 4px;
+    font-size: 18px;
+    color: #a6e3a1;
+    padding-right: 4px;
 }
 .volume-slider {
-  border: none;
+    border: none;
 }
 .audio-menu {
-  background-color: var(--background-color);
+    background-color:var(--background-color); 
 }
 .audio-container .device {
-  background-color: transparent;
-  border: none;
-  padding: 6px 8px 6px 4px;
-  margin: 2px 0;
-  font-size: 12px;
-  border-radius: 4px;
+    background-color:transparent;
+    border: none;
+    padding:6px 8px 6px 4px;
+    margin: 2px 0;
+    font-size: 12px;
+    border-radius: 4px;
 }
 .audio-container .device.selected {
-  background-color: rgba(255, 255, 255, 0.085);
+    background-color: rgba(255, 255, 255, 0.085);
 }
 .audio-container .device:hover {
-  background-color: rgba(255, 255, 255, 0.06);
+    background-color: rgba(255, 255, 255, 0.06);
 }
 /* Weather Widget */
 .weather-widget .icon {
-  font-size: 22px;
-  padding-right: 4px;
-  color: #f9e2af;
+    font-size: 22px;
+    padding-right: 4px;
+    color: #f9e2af;
 }
 /* Weather card style */
 .weather-card {
-  background-color: var(--background-color);
+    background-color:var(--background-color);
 }
-
+ 
 .weather-card-today .label {
-  font-size: 12px;
+    font-size: 12px;
 }
 .weather-card-today .label.location {
-  font-size: 24px;
-  font-weight: 600;
+    font-size: 24px;
+    font-weight: 600;
 }
 .weather-card-today .label.arert {
-  font-size: 12px;
-  font-weight: 600;
-  background-color: rgb(167, 108, 0);
-  color: rgb(255, 255, 255);
-  border-radius: 6px;
-  padding: 5px 0;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: rgb(167, 108, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 6px;
+    padding: 5px 0;
 }
 .weather-card-day {
-  border: 1px solid #282936;
-  border-radius: 8px;
+    border: 1px solid #282936;
+    border-radius: 8px;
 }
 .weather-card-day .label {
-  font-size: 12px;
+    font-size: 12px;
 }
 /* Komorebi Control Widget */
 .komorebi-control-widget .icon {
-  font-size: 20px;
+    font-size: 20px;
 }
 .komorebi-control-menu {
-  background-color: var(--background-color);
+    background-color: var(--background-color)
 }
 .komorebi-control-menu .button {
-  color: rgba(162, 177, 199, 0.4);
-  padding: 8px 16px;
-  font-size: 32px;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.04);
+    color: rgba(162, 177, 199, 0.4);
+    padding: 8px 16px;
+    font-size: 32px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.04);
 }
 .komorebi-control-menu .button.active {
-  color: rgb(228, 228, 228);
-  background-color: rgba(255, 255, 255, 0.04);
+    color: rgb(228, 228, 228);
+    background-color: rgba(255, 255, 255, 0.04);
 }
 .komorebi-control-menu .button:disabled,
 .komorebi-control-menu .button.active:disabled {
-  background-color: rgba(255, 255, 255, 0.01);
-  color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.01);
+    color: rgba(255, 255, 255, 0.2);
 }
 .komorebi-control-menu .footer .text {
-  font-size: 12px;
-  color: #6c7086;
+    font-size: 12px;
+    color: #6c7086;
 }
 /* Komorebi Workspace Widget */
 .komorebi-workspaces .ws-btn {
-  border: none;
-  color: transparent;
-  margin: 0 3px;
-  border-radius: 8px;
-  font-size: 1px;
-  background-color: #4f5868;
-  height: 16px;
-  width: 16px;
+    border: none;
+    color:transparent;
+	margin:0 3px;
+    border-radius: 8px;
+    font-size:1px;
+    background-color: #4f5868;
+    height: 16px;
+    width: 16px;
 }
 .komorebi-workspaces .ws-btn:hover {
-  background-color: var(--blue-color);
+    background-color: var(--blue-color)
 }
 .komorebi-workspaces .ws-btn.populated {
-  background-color: #b4befe;
+    background-color: #b4befe;
 }
 .komorebi-workspaces .ws-btn.active {
-  width: 46px;
-  max-width: 46px;
-  background-color: var(--blue-color);
+    width: 46px;
+    max-width: 46px;
+    background-color: var(--blue-color)
 }
 .komorebi-workspaces .float-override {
-  color: #a6e3a1;
-  padding-left: 6px;
+    color: #a6e3a1;
+    padding-left: 6px;
 }
 .komorebi-workspaces .workspace-layer {
-  padding-left: 6px;
+    padding-left:6px;
 }
 .komorebi-workspaces .workspace-layer.tiling {
-  color: #a6e3a1;
+    color: #a6e3a1;
 }
 .komorebi-workspaces .workspace-layer.floating {
-  color: #eba0ac;
+    color: #eba0ac;
 }
 /* Notifications Widget */
 .notification-widget .icon {
-  font-size: 18px;
-  padding-right: 4px;
+    font-size: 18px;
+    padding-right: 4px;
 }
 .notification-widget .icon.new-notification {
-  color: var(--blue-color);
+    color: var(--blue-color);
 }
 .notification-widget .label.new-notification {
-  color: var(--blue-color);
-}
-
-.traffic-widget {
-  min-width: 180px;
-}
-
-.media-widget .btn {
-  padding: 8px;
-}
-
-.media-widget .btn.play {
-  font-size: 20px;
-  margin-top: -4px;
+    color: var(--blue-color)
 }
