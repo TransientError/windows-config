@@ -35,20 +35,27 @@ return {
           name = "Launch file",
           request = "launch",
           program = function()
-            return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/", "file")
+            local dll_dir = vim.fn.getcwd() .. "\\bin\\Debug\\net8.0"
+            if vim.g.dap_dll then
+              local dll = vim.fn.glob(dll_dir .. "\\" .. vim.g.dap_dll, false, false)
+              if dll ~= "" then
+                return dll
+              end
+            end
+            return vim.fn.input("Path to dll: ", dll_dir, "file")
           end,
           cwd = "${workspaceFolder}",
         },
       }
     end,
   },
-  {
-    "mfussenegger/nvim-dap-python",
-    ft = "python",
-    opts = {
-      "/home/kvwu/.venvs/debugpy/bin/python",
-    },
-  },
+  -- {
+  --   "mfussenegger/nvim-dap-python",
+  --   ft = "python",
+  --   opts = {
+  --     "/home/kvwu/.venvs/debugpy/bin/python",
+  --   },
+  -- },
   {
     "leoluz/nvim-dap-go",
     ft = "go",
@@ -90,13 +97,16 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     cond = utils.not_vscode,
-    keys = { "<leader>dh", {
-      "<leader>do",
-      function()
-        require("dapui").toggle {}
-      end,
-      desc = "Toggle DAP UI",
-    } },
+    keys = {
+      "<leader>dh",
+      {
+        "<leader>do",
+        function()
+          require("dapui").toggle {}
+        end,
+        desc = "Toggle DAP UI",
+      },
+    },
     config = function()
       local dap, dapui = require "dap", require "dapui"
       dapui.setup {

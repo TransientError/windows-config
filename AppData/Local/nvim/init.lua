@@ -74,6 +74,30 @@ else
 
   vim.api.nvim_create_autocmd("VimResized", { pattern = "*", command = "wincmd =" })
   vim.api.nvim_create_autocmd("FileType", { pattern = "help", command = "wincmd L" })
+
+  local function set_dap_dll()
+    local projects = require("kvwu-config").projects or {}
+    if vim.fn.glob "*.{sln,csproj}" ~= "" then
+      local project_files = vim.fn.glob("*.{sln,csproj}", false, true)
+      for _, file in ipairs(project_files) do
+        local project_name = vim.fn.fnamemodify(file, ":t:r")
+        for project_key, dll_pattern in pairs(projects) do
+          if project_name:find(project_key, 1, true) then
+            vim.g.dap_dll = dll_pattern
+            return
+          end
+        end
+      end
+    end
+  end
+
+  vim.api.nvim_create_autocmd("DirChanged", {
+    pattern = "global",
+    callback = set_dap_dll,
+  })
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = set_dap_dll,
+  })
 end
 
 vim.g.material_style = "darker"
