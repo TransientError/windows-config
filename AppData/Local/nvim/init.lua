@@ -35,6 +35,7 @@ else
       relativenumber = true,
       listchars = { tab = "▸▸", trail = "·" },
       colorcolumn = "120",
+      autoread = true,
     },
   }
 
@@ -74,6 +75,10 @@ else
 
   vim.api.nvim_create_autocmd("VimResized", { pattern = "*", command = "wincmd =" })
   vim.api.nvim_create_autocmd("FileType", { pattern = "help", command = "wincmd L" })
+  vim.api.nvim_create_autocmd(
+    { "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" },
+    { pattern = "*", command = "checktime" }
+  )
 
   local function set_dap_dll()
     local projects = require("kvwu-config").projects or {}
