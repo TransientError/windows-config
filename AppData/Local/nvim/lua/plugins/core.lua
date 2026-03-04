@@ -94,7 +94,7 @@ return {
     },
   },
   {
-    "ggandor/leap.nvim",
+    "https://codeberg.org/andyg/leap.nvim",
     lazy = false,
     opts = {
       safe_labels = "sfnut/'",

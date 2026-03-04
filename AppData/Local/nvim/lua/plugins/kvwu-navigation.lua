@@ -11,7 +11,6 @@ return {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       "nvim-tree/nvim-web-devicons",
-      "ggandor/leap.nvim",
       "s1n7ax/nvim-window-picker",
     },
     lazy = false,
@@ -22,16 +21,8 @@ return {
       window = {
         mappings = {
           ["l"] = "set_root",
-          ["s"] = function(state)
-            require("leap").leap {
-              target_windows = { vim.api.nvim_get_current_win() },
-            }
-          end,
-          ["S"] = function(state)
-            require("leap").leap {
-              target_windows = { require("leap.util").get_enterable_windows() },
-            }
-          end,
+          ["s"] = false,
+          ["S"] = false,
           ["v"] = "open_vsplit",
         },
       },
@@ -73,21 +64,6 @@ return {
       open_for_directories = true,
     },
     cond = utils.is_neovide,
-  },
-  {
-    "ggandor/leap.nvim",
-    lazy = false,
-    init = function()
-      vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)")
-      vim.keymap.set({ "n" }, "S", "<Plug>(leap-from-window)")
-      vim.keymap.set({ "x", "o" }, "r", function()
-        require("leap.remote").action()
-      end)
-      vim.keymap.set({ "n", "x", "o" }, "R", function()
-        require("leap.treesitter").select()
-      end)
-      vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
-    end,
   },
   {
     "cbochs/portal.nvim",
