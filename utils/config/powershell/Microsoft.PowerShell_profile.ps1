@@ -39,6 +39,24 @@ $env:startup = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Pr
 $env:home = $env:USERPROFILE
 $env:YAZI_FILE_ONE = "C:\Program Files\Git\usr\bin\file.exe"
 
+# NuGet cache directories on D:
+if (Test-Path "D:\") {
+  $env:NUGET_PACKAGES = "D:\.nuget\packages"
+  $env:NUGET_HTTP_CACHE_PATH = "D:\.nuget\v3-cache"
+  $env:NUGET_PLUGINS_CACHE_PATH = "D:\.nuget\plugins-cache"
+}
+
+# Use x64 dotnet on ARM machines (credential provider has no ARM64 build)
+if ([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture -eq 'Arm64' -and (Test-Path "C:\Program Files\dotnet\x64\dotnet.exe")) {
+  $env:DOTNET_ROOT = "C:\Program Files\dotnet\x64"
+  $env:Path = "C:\Program Files\dotnet\x64;" + ($env:Path -replace [regex]::Escape("C:\Program Files\dotnet\x64;"), "")
+
+  # Enable WAM for NuGet credential provider (replaces deprecated Windows Integrated Auth)
+  $env:NUGET_CREDENTIALPROVIDER_MSAL_AUTHORITY = "https://login.microsoftonline.com/common"
+  $env:NUGET_CREDENTIALPROVIDER_MSAL_FILECACHE_ENABLED = "true"
+  $env:NUGET_CREDENTIALPROVIDER_FORCE_CANSHOWDIALOG_TO = "true"
+}
+
 $solutionPackagerPath = 'C:\Program Files\PackageManagement\NuGet\Packages\Microsoft.CrmSdk.CoreTools.9.1.0.92\content\bin\coretools\SolutionPackager.exe'
 if (Test-Path($solutionPackagerPath)) {
   Set-Alias -Name SolutionPackager -Value $solutionPackagerPath
@@ -47,6 +65,7 @@ if (Test-Path($solutionPackagerPath)) {
 Set-Alias -Name devenv -Value 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\Launch-VsDevShell'
 Set-Alias -Name trash -Value "$env:USERPROFILE\utils\windows-config\scripts\trash.ps1"
 function config { git --git-dir=$env:USERPROFILE\utils\windows-config\.git --work-tree=$env:USERPROFILE $args}
+function lconfig { lazygit --git-dir=$env:USERPROFILE\utils\windows-config\.git --work-tree=$env:USERPROFILE }
 function y {
     $tmp = [System.IO.Path]::GetTempFileName()
     yazi $args --cwd-file="$tmp"
@@ -59,6 +78,7 @@ function y {
 
 Invoke-Expression (& { $hook = if ($PSVersionTable.PSVersion.Major -ge 6) { 'pwd' } else { 'prompt' } (zoxide init powershell --hook $hook | Out-String) })
 
+if (-not $env:Path.EndsWith(";")) { $env:Path += ";" }
 $env:Path += Join-String -Separator ";" -InputObject @(
   "${env:userprofile}/.dotnet/tools",
   "/Program Files/dotnet/",
@@ -165,6 +185,80 @@ function add-remote-branch {
         return
     }
     
+    # Check if the remote branch exists
+    $remoteBranches = git ls-remote --heads $Remote 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Error: Could not connect to remote '$Remote'" -ForegroundColor Red
+        return
+    }
+    
+    $branchExists = $remoteBranches | Where-Object { $_ -match "refs/heads/$Branch$" }
+    if (-not $branchExists) {
+        Write-Host "Error: Branch '$Branch' does not exist on remote '$Remote'" -ForegroundColor Red
+        return
+    }
+    
+    Write-Host "Found branch '$Branch' on remote '$Remote', adding..." -ForegroundColor Green
+
     git config --add "remote.$Remote.fetch" "+refs/heads/$Branch`:refs/remotes/$Remote/$Branch"
     git fetch $Remote $Branch
+}
+
+function cleanup-remote-branches {
+    param(
+        [string]$Remote
+    )
+
+    $remotes = if ($Remote) { @($Remote) } else { @(git remote 2>$null) }
+    if (-not $remotes) {
+        Write-Host "No remotes found" -ForegroundColor Red
+        return
+    }
+
+    $totalCleaned = 0
+    foreach ($r in $remotes) {
+        $fetchSpecs = @(git config --get-all "remote.$r.fetch" 2>$null)
+        if (-not $fetchSpecs) { continue }
+
+        $remoteBranches = git ls-remote --heads $r 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Could not connect to remote '$r', skipping" -ForegroundColor Yellow
+            continue
+        }
+
+        $existingBranches = @($remoteBranches | ForEach-Object {
+            if ($_ -match 'refs/heads/(.+)$') { $Matches[1] }
+        })
+
+        foreach ($spec in $fetchSpecs) {
+            if ($spec -match '\*') { continue }
+            if ($spec -match '\+?refs/heads/(.+):') {
+                $branch = $Matches[1]
+                if ($branch -notin $existingBranches) {
+                    Write-Host "Removing stale refspec: $r/$branch" -ForegroundColor Yellow
+                    git config --fixed-value --unset "remote.$r.fetch" $spec
+                    $totalCleaned++
+                }
+            }
+        }
+
+        # Prune stale remote tracking refs
+        git remote prune $r 2>$null
+    }
+
+    if ($totalCleaned -eq 0) {
+        Write-Host "No stale branch refspecs found" -ForegroundColor Green
+    } else {
+        Write-Host "Cleaned up $totalCleaned stale refspec(s)" -ForegroundColor Green
+    }
+}
+
+function nuget-auth {
+    $token = az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
+    if (-not $token) { Write-Host "Failed to get token. Run 'az login' first." -ForegroundColor Red; return }
+    $env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS = '{"endpointCredentials":[{"endpoint":"https://pkgs.dev.azure.com/dynamicscrm/OneCRM/_packaging/SXG-ICon-CRiBS/nuget/v3/index.json","username":"az","password":"' + $token + '"}]}'
+    $env:Path = "C:\Program Files\dotnet\x64;" + ($env:Path -replace [regex]::Escape("C:\Program Files\dotnet\x64;"), "")
+    $env:DOTNET_ROOT = "C:\Program Files\dotnet\x64"
+    $env:HUSKY = "0"
+    Write-Host "NuGet auth configured. Token expires in ~1 hour." -ForegroundColor Green
 }
