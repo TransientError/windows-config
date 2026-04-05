@@ -133,7 +133,23 @@ return {
         cmd = { bicep_lsp_bin },
       })
 
-      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep", "yamlls", "ts_ls", "omnisharp" }
+      -- copilot LSP for sidekick.nvim NES
+      vim.lsp.config("copilot-nes", {
+        cmd = { "copilot-language-server", "--stdio" },
+        root_markers = { ".git/" },
+        init_options = {
+          editorInfo = {
+            name = "Neovim",
+            version = string.match(vim.fn.execute("version"), "NVIM v(%S+)"),
+          },
+          editorPluginInfo = {
+            name = "sidekick.nvim",
+            version = "0.1.0",
+          },
+        },
+      })
+
+      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep", "yamlls", "ts_ls", "omnisharp", "copilot-nes" }
     end,
     dependencies = {
       "SmiteshP/nvim-navic",
