@@ -24,6 +24,7 @@ return {
       vim.treesitter.language.register("jsonc", "json")
     end,
     opts = {
+      install = { compilers = { "zig", "gcc" } },
       ensure_installed = {
         "csharp",
         "xml",
