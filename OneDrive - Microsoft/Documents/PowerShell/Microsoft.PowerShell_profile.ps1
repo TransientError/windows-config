@@ -1,7 +1,7 @@
 # Scott's
 # https://gist.github.com/shanselman/25f5550ad186189e0e68916c6d7f44c3?WT.mc_id=-blog-scottha
 
-if ($env:COMPUTERNAME -ne 'CPC-wukev-VZQ8I') {
+if ($env:COMPUTERNAME -notin @('CPC-wukev-VZQ8I', 'LAPTOP-PH431T53')) {
   Invoke-Expression (&starship init powershell)
 } else {
   oh-my-posh init powershell --config "$env:USERPROFILE\.spaceship.omp.json" | Invoke-Expression
