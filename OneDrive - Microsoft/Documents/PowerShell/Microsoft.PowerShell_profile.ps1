@@ -117,6 +117,10 @@ function winget-install {
     }
 }
 
+function winget-safe-update {
+    & "$env:USERPROFILE\utils\config\scripts\winget-safe-update.ps1" @args
+}
+
 function winget-upgrade {
     $preDesktop = [Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('CommonDesktop') |
         Get-ChildItem -Filter '*.lnk'
@@ -255,6 +259,10 @@ function cleanup-remote-branches {
     } else {
         Write-Host "Cleaned up $totalCleaned stale refspec(s)" -ForegroundColor Green
     }
+}
+
+function scoop-safe-update {
+    & "$env:USERPROFILE\utils\config\scripts\scoop-safe-update.ps1" @args
 }
 
 function nuget-auth {
