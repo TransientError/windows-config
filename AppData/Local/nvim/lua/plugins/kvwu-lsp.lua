@@ -7,7 +7,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     init = function()
-      vim.opt.completeopt = { "menuone", "noselect", "menu" }
+      vim.opt.completeopt = { "menuone", "noselect", "menu", "longest", "preview" }
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
           local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -19,19 +19,10 @@ return {
           local bufopts = { noremap = true, silent = true, buffer = ev.buf }
 
           local builtin = require "telescope.builtin"
-          if client.name == "omnisharp" then
-            local omnisharp_extended = require "omnisharp_extended"
-
-            vim.keymap.set("n", "gD", omnisharp_extended.lsp_type_definition, bufopts)
-            vim.keymap.set("n", "gd", omnisharp_extended.telescope_lsp_definition, bufopts)
-            vim.keymap.set("n", "gu", omnisharp_extended.telescope_lsp_references, bufopts)
-            vim.keymap.set("n", "gi", omnisharp_extended.telescope_lsp_implementation, bufopts)
-          else
-            vim.keymap.set("n", "gD", builtin.lsp_type_definitions, bufopts)
-            vim.keymap.set("n", "gd", builtin.lsp_definitions, bufopts)
-            vim.keymap.set("n", "gu", builtin.lsp_references, bufopts)
-            vim.keymap.set("n", "gi", builtin.lsp_implementations, bufopts)
-          end
+          vim.keymap.set("n", "gD", builtin.lsp_type_definitions, bufopts)
+          vim.keymap.set("n", "gd", builtin.lsp_definitions, bufopts)
+          vim.keymap.set("n", "gu", builtin.lsp_references, bufopts)
+          vim.keymap.set("n", "gi", builtin.lsp_implementations, bufopts)
 
           vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
           vim.keymap.set("n", "<leader>k", require("lsp_signature").toggle_float_win, bufopts)
@@ -83,52 +74,7 @@ return {
         capabilities = json_capabilities,
       })
 
-      vim.lsp.config("omnisharp", {
-        cmd = {
-          "omnisharp",
-          "-z",
-          "--languageserver",
-          "--encoding",
-          "utf-8",
-          "Dotnet:enablePackageRestore=false",
-        },
-        enable_roslyn_analyzers = true,
-        organize_imports_on_format = true,
-        enable_import_completion = true,
-        analyze_open_documents_only = true,
-        root_markers = {
-          "*.sln",
-          "*.csproj",
-          "omnisharp.json",
-          "function.json",
-          "Directory.packages.props",
-          "owners.txt",
-          ".gitignore",
-        },
-        settings = {
-          RoslynExtensionsOptions = {
-            EnableDecompilationSupport = true,
-            EnableImportCompletion = true,
-            EnableAnalyzersSupport = true,
-            AnalyzeOpenDocumentsOnly = true,
-          },
-          Sdk = {
-            IncludePrereleases = true,
-          },
-        },
-        on_error = function(code, err)
-          local client_errors = require('vim.lsp.rpc').client_errors
-          if code == client_errors.INVALID_SERVER_JSON then
-            -- This is a known error code for omnisharp when it fails to start.
-            -- We can ignore it as it will be retried later.
-            return
-          else 
-            error(err)
-          end
-        end,
-      })
-
-      local bicep_lsp_bin = vim.fn.stdpath "data" .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
+      localbicep_lsp_bin = vim.fn.stdpath "data" .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
       vim.lsp.config("bicep", {
         cmd = { bicep_lsp_bin },
       })
@@ -149,7 +95,7 @@ return {
         },
       })
 
-      vim.lsp.enable { "lua_ls", "powershell_es", "omnisharp", "jsonls", "bicep", "yamlls", "ts_ls", "omnisharp", "copilot-nes" }
+      vim.lsp.enable { "lua_ls", "powershell_es", "jsonls", "bicep", "yamlls", "ts_ls", "roslyn", "copilot-nes" }
     end,
     dependencies = {
       "SmiteshP/nvim-navic",
@@ -177,7 +123,7 @@ return {
           ["<CR>"] = cmp.mapping {
             i = function(fallback)
               if cmp.visible() and cmp.get_active_entry() then
-                cmp.confirm { select = false, behavior = cmp.ConfirmBehavior.Replace }
+                cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
               else
                 fallback()
               end
@@ -187,7 +133,7 @@ return {
           },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_next_item()
+              cmp.complete_common_string()
             else
               fallback()
             end
@@ -222,7 +168,26 @@ return {
       cmp.setup.cmdline({ "/", "?" }, { mapping = cmp.mapping.preset.cmdline(), sources = { { name = "buffer" } } })
 
       cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = {
+          ["<Tab>"] = {
+            c = function(fallback)
+              if cmp.visible() then
+                cmp.complete_common_string()
+              else
+                fallback()
+              end
+            end,
+          },
+          ["<CR>"] = {
+            c = function(fallback)
+              if cmp.visible() and cmp.get_active_entry() then
+                cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
+              else
+                fallback()
+              end
+            end,
+          },
+        },
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
       })
 
@@ -239,7 +204,6 @@ return {
       { "hrsh7th/cmp-buffer", lazy = true },
       { "hrsh7th/cmp-vsnip", lazy = true },
       { "hrsh7th/vim-vsnip", lazy = true },
-      { "Hoffs/omnisharp-extended-lsp.nvim", lazy = true },
       { "ray-x/lsp_signature.nvim", lazy = true },
     },
   },
@@ -267,5 +231,8 @@ return {
     "ray-x/lsp_signature.nvim",
     event = "InsertEnter",
     opts = {},
+  },
+  {
+    "seblyng/roslyn.nvim",
   },
 }
