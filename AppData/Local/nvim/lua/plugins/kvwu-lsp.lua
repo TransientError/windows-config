@@ -70,11 +70,22 @@ return {
 
       local json_capabilities = vim.lsp.protocol.make_client_capabilities()
       json_capabilities.textDocument.completion.completionItem.snippetSupport = true
+      local ok_schemastore, schemastore = pcall(require, "schemastore")
       vim.lsp.config("jsonls", {
+        cmd = { "vscode-json-language-server", "--stdio" },
+        filetypes = { "json", "jsonc" },
+        init_options = { provideFormatter = true },
+        root_markers = { ".git" },
         capabilities = json_capabilities,
+        settings = {
+          json = {
+            schemas = ok_schemastore and schemastore.json.schemas() or nil,
+            validate = { enable = true },
+          },
+        },
       })
 
-      localbicep_lsp_bin = vim.fn.stdpath "data" .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
+      local bicep_lsp_bin = vim.fn.stdpath "data" .. "\\mason\\packages\\bicep-lsp\\bicep-lsp.cmd"
       vim.lsp.config("bicep", {
         cmd = { bicep_lsp_bin },
       })
@@ -95,10 +106,24 @@ return {
         },
       })
 
+      -- On ARM64 Windows, x64 dotnet is first on PATH (needed for some
+      -- repos that don't build on arm64). roslyn.cmd just calls `dotnet`,
+      -- which resolves to that x64 dotnet and fails to load the arm64
+      -- native bits / requires net10. Force the roslyn process to find
+      -- the arm64 dotnet first without touching the global PATH.
+      if vim.env.PROCESSOR_ARCHITECTURE == "ARM64" then
+        vim.lsp.config("roslyn", {
+          cmd_env = {
+            PATH = "C:\\Program Files\\dotnet;" .. vim.env.PATH,
+          },
+        })
+      end
+
       vim.lsp.enable { "lua_ls", "powershell_es", "jsonls", "bicep", "yamlls", "ts_ls", "roslyn", "copilot-nes" }
     end,
     dependencies = {
       "SmiteshP/nvim-navic",
+      "b0o/SchemaStore",
     },
   },
   {
