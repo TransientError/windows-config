@@ -50,7 +50,7 @@ return {
   },
   {
     "tpope/vim-fugitive",
-    cmd = { "Git" },
+    cmd = { "Git", "GBrowse" },
     keys = {
       {
         "<leader>gC",
