@@ -170,35 +170,35 @@ vim.api.nvim_create_user_command("LazySyncSafe", function(cmd_opts)
 
   local msg = {}
   if #skipped > 0 then
-    table.insert(msg, "⏳ Skipped (tag < " .. days .. " days old):")
+    table.insert(msg, "[SKIP] Skipped (tag < " .. days .. " days old):")
     for _, s in ipairs(skipped) do
       table.insert(msg, s)
     end
   end
   if #commit_too_new > 0 then
-    table.insert(msg, "⏳ Tagless, no commit old enough:")
+    table.insert(msg, "[SKIP] Tagless, no commit old enough:")
     for _, s in ipairs(commit_too_new) do
       table.insert(msg, s)
     end
   end
   if #commit_skipped > 0 then
-    table.insert(msg, "✅ Tagless, already up to date:")
+    table.insert(msg, "[OK] Tagless, already up to date:")
     for _, s in ipairs(commit_skipped) do
       table.insert(msg, s)
     end
   end
   if #commit_eligible > 0 then
-    table.insert(msg, "📌 Tagless, checked out to oldest safe commit:")
+    table.insert(msg, "[PIN] Tagless, checked out to oldest safe commit:")
     for _, info in ipairs(commit_eligible) do
-      table.insert(msg, string.format("  %s → %s (%dd old)", info.name, info.hash:sub(1, 7), info.age))
+      table.insert(msg, string.format("  %s -> %s (%dd old)", info.name, info.hash:sub(1, 7), info.age))
     end
   end
   if #eligible > 0 then
-    table.insert(msg, "✅ Updating " .. #eligible .. " tagged plugins...")
+    table.insert(msg, "[OK] Updating " .. #eligible .. " tagged plugins...")
     vim.notify(table.concat(msg, "\n"), vim.log.levels.INFO)
     lazy.update { plugins = eligible, wait = headless, show = not headless }
   else
-    table.insert(msg, "✅ No tagged plugins eligible for update.")
+    table.insert(msg, "[OK] No tagged plugins eligible for update.")
     vim.notify(table.concat(msg, "\n"), vim.log.levels.INFO)
   end
 end, {
