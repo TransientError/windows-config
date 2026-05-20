@@ -6,6 +6,8 @@ if ($env:COMPUTERNAME -notin @('CPC-wukev-VZQ8I', 'LAPTOP-PH431T53')) {
 } else {
   oh-my-posh init powershell --config "$env:USERPROFILE\.spaceship.omp.json" | Invoke-Expression
 }
+$env:EDITOR = "nvim"
+
 Set-PsReadlineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
@@ -263,6 +265,94 @@ function cleanup-remote-branches {
 
 function scoop-safe-update {
     & "$env:USERPROFILE\utils\config\scripts\scoop-safe-update.ps1" @args
+}
+
+function Pick-Reviewer {
+    & "$env:USERPROFILE\OneDrive - Microsoft\Pick-Reviewer.ps1" @args
+}
+
+function sug {
+  $prompt = $args -join ' '
+  copilot --model "claude-sonnet-4.6" -p $prompt
+}
+
+function pr-worktree {
+    param(
+        [Parameter(Mandatory)]
+        [string]$PrUrl,
+        [string]$Name
+    )
+
+    # Extract PR ID from URL or use as-is if numeric
+    $prId = if ($PrUrl -match '/pullrequest/(\d+)') { $Matches[1] } elseif ($PrUrl -match '^\d+$') { $PrUrl } else {
+        Write-Host "Could not parse PR ID from: $PrUrl" -ForegroundColor Red; return
+    }
+
+    # Extract org/project/repo from URL for az CLI context
+    $org = $null; $project = $null; $repo = $null
+    if ($PrUrl -match 'dev\.azure\.com/([^/]+)/([^/]+)/_git/([^/]+)') {
+        $org = "https://dev.azure.com/$($Matches[1])"; $project = $Matches[2]; $repo = $Matches[3]
+    } elseif ($PrUrl -match '([^/]+)\.visualstudio\.com.*/([^/]+)/_git/([^/]+)') {
+        $org = "https://dev.azure.com/$($Matches[1])"; $project = $Matches[2]; $repo = $Matches[3]
+    }
+
+    # Get PR source branch and title
+    $azArgs = @("repos", "pr", "show", "--id", $prId, "--query", "[sourceRefName, title]", "-o", "tsv")
+    if ($org) { $azArgs += @("--org", $org) }
+    $prInfo = az @azArgs 2>$null
+    if (-not $prInfo) {
+        Write-Host "Failed to get PR #$prId details. Ensure 'az devops' is configured." -ForegroundColor Red; return
+    }
+    $lines = $prInfo -split "`n"
+    $sourceRef = $lines[0].Trim()
+    $prTitle = $lines[1].Trim()
+    $branch = $sourceRef -replace '^refs/heads/', ''
+
+    # Find the bare git dir — works from parent dir or inside a worktree
+    $gitDir = $null
+    # First check if we're inside a worktree already
+    $commonDir = git rev-parse --git-common-dir 2>$null
+    if ($LASTEXITCODE -eq 0 -and $commonDir) {
+        $gitDir = (Resolve-Path $commonDir).Path
+    }
+    # Otherwise scan current directory for a *.git bare repo
+    if (-not $gitDir) {
+        $gitDir = Get-ChildItem -Path (Get-Location) -Filter "*.git" -Directory | Where-Object {
+            (git --git-dir=$_.FullName rev-parse --is-bare-repository 2>$null) -eq 'true'
+        } | Select-Object -First 1 -ExpandProperty FullName
+    }
+
+    if (-not $gitDir) {
+        Write-Host "No bare git repo found in current directory or parent worktree" -ForegroundColor Red; return
+    }
+
+    $worktreeRoot = Split-Path $gitDir -Parent
+
+    # Determine worktree name from PR title
+    $worktreeName = if ($Name) { $Name } else {
+        $slug = $prTitle.ToLower() -replace '[^a-z0-9\s-]', '' -replace '\s+', '-' -replace '-+', '-' -replace '^-|-$', ''
+        if ($slug.Length -gt 50) { $slug = $slug.Substring(0, 50) -replace '-$', '' }
+        "pr-$prId-$slug"
+    }
+    $worktreePath = Join-Path $worktreeRoot $worktreeName
+
+    if (Test-Path $worktreePath) {
+        Write-Host "Worktree path '$worktreeName' already exists" -ForegroundColor Yellow; return
+    }
+
+    # Add branch refspec and fetch
+    Write-Host "Fetching branch '$branch'..." -ForegroundColor Cyan
+    git --git-dir=$gitDir config --add "remote.origin.fetch" "+refs/heads/$branch`:refs/remotes/origin/$branch"
+    git --git-dir=$gitDir fetch origin $branch
+
+    # Create worktree
+    Write-Host "Creating worktree '$worktreeName' on branch '$branch'..." -ForegroundColor Cyan
+    git --git-dir=$gitDir worktree add $worktreePath $branch
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Done! Worktree at: $worktreePath" -ForegroundColor Green
+        Set-Location $worktreePath
+    }
 }
 
 function nuget-auth {
