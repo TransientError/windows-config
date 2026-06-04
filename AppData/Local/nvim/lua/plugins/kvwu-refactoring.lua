@@ -4,6 +4,7 @@ end
 
 return {
   "ThePrimeagen/refactoring.nvim",
+  dependencies = { "lewis6991/async.nvim" },
   opts = { show_success_message = true },
   ft = { "c", "cpp", "lua", "python", "javascript", "typescript", "go", "csharp" },
   cmd = "Refactor",
