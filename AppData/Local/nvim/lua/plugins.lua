@@ -47,15 +47,34 @@ return {
     keys = {
       { "<leader>m", "<cmd>Mason<cr>", desc = "Mason" },
     },
-    opts = {},
+    opts = {
+      registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      },
+    },
   },
   {
     "mason-org/mason-lspconfig.nvim",
-    opts = {},
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    opts = {
+      ensure_installed = {
+        "jsonls",
+        "bicep",
+        "yamlls",
+        "ts_ls",
+        "powershell_es",
+      },
+      -- manual vim.lsp.enable list in kvwu-lsp.lua is source of truth
+      automatic_enable = false,
+    },
   },
   {
     "b0o/SchemaStore",
-    ft = { "json", "jsonc", "yaml" },
+    lazy = true,
   },
   {
     "deponian/nvim-base64",

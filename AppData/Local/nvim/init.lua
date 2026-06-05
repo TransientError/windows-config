@@ -1,6 +1,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+-- Force tree-sitter CLI to use zig cc on Windows (cl.exe needs vcvars env)
+vim.env.CC = vim.fn.expand("~/utils/bin/zig-cc.cmd")
+
 local utils = require "utils"
 
 local g = vim.g
@@ -39,7 +42,7 @@ else
     },
   }
 
-  map.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
+  map.set("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true })
   map.set("n", "<Esc><Esc>", ":noh<CR>", { noremap = true })
   map.set("n", "<leader><leader>", ":", { noremap = true })
   map.set("n", "<C-v>", '"+p', { noremap = true })

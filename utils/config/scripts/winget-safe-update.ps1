@@ -32,6 +32,13 @@ function Test-TrustedPublisher($packageId) {
     return $publisher -in $script:TrustedPublishers
 }
 
+# Get GitHub token for authenticated API calls (avoids 60 req/hr anonymous limit)
+$script:GitHubToken = $null
+try {
+    $token = gh auth token 2>$null
+    if ($LASTEXITCODE -eq 0 -and $token) { $script:GitHubToken = $token.Trim() }
+} catch { }
+
 function Get-ManifestCommitDate($packageId) {
     $parts = $packageId -split '\.', 2
     if ($parts.Count -lt 2) { return $null }
@@ -39,21 +46,14 @@ function Get-ManifestCommitDate($packageId) {
     $path = "manifests/$firstLetter/$($parts[0])/$($parts[1])"
 
     try {
-        # Use gh if authenticated, fall back to Invoke-RestMethod
-        $useGh = $false
-        try {
-            $null = gh auth status 2>&1
-            if ($LASTEXITCODE -eq 0) { $useGh = $true }
-        } catch { }
-
-        if ($useGh) {
-            $json = gh api "repos/microsoft/winget-pkgs/commits?path=$path&per_page=1" 2>$null
-            $response = $json | ConvertFrom-Json
-        } else {
-            $response = Invoke-RestMethod `
-                -Uri "https://api.github.com/repos/microsoft/winget-pkgs/commits?path=$path&per_page=1" `
-                -Headers @{ 'User-Agent' = 'winget-safe-update' }
+        $headers = @{ 'User-Agent' = 'winget-safe-update' }
+        if ($script:GitHubToken) {
+            $headers['Authorization'] = "Bearer $($script:GitHubToken)"
         }
+        $response = Invoke-RestMethod `
+            -Uri "https://api.github.com/repos/microsoft/winget-pkgs/commits?path=$path&per_page=1" `
+            -Headers $headers `
+            -TimeoutSec 10
 
         if ($response -and $response.Count -gt 0) {
             return [DateTimeOffset]::Parse($response[0].commit.author.date)
@@ -65,7 +65,13 @@ function Get-ManifestCommitDate($packageId) {
 }
 
 Write-Host "Checking for winget upgrades..." -ForegroundColor Cyan
-$rawOutput = winget upgrade --include-unknown 2>&1 | Out-String
+$prevEncoding = [Console]::OutputEncoding
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+try {
+    $rawOutput = winget upgrade --include-unknown --accept-source-agreements 2>&1 | Out-String
+} finally {
+    [Console]::OutputEncoding = $prevEncoding
+}
 $allLines = $rawOutput -split "`n"
 
 # Find header separator to parse columns

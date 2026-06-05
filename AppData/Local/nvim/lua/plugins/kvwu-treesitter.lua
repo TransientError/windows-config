@@ -31,7 +31,9 @@ return {
         "typescript",
         "javascript",
         "html",
-        "powershell"
+        "powershell",
+        "json",
+        "jsonc",
       }
     }
   },

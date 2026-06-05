@@ -2,7 +2,9 @@ if require("utils").is_vscode() then
   return {}
 end
 
-return {
+-- Replaced by agentic.nvim (ACP-based agent interface)
+-- To re-enable, uncomment and remove agentic.lua
+return {--[[
   {
     "folke/sidekick.nvim",
     config = function(_, opts)
@@ -103,4 +105,4 @@ return {
       },
     },
   },
-}
+}--]]}
