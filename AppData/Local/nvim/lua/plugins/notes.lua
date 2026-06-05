@@ -18,6 +18,11 @@ return {
       { "<localleader>dd", "<cmd>lua require('orgmode').action('org_mappings.org_deadline')<cr>", desc = "Deadline", ft = "org" },
     },
     config = function()
+      -- Orgmode's bundled installer hardcodes .so which doesn't work on Windows (.dll needed).
+      -- Parser is manually installed to nvim-data/lib/nvim/parser/org.dll instead.
+      local ts_install = require("orgmode.utils.treesitter.install")
+      ts_install.install = function() return false end
+
       require("orgmode").setup({
         org_agenda_files = "D:/OneDrive - Microsoft/org-roam/**/*",
         org_default_notes_file = "D:/OneDrive - Microsoft/org-roam/todo.org",
