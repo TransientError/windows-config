@@ -1,7 +1,7 @@
 # Scott's
 # https://gist.github.com/shanselman/25f5550ad186189e0e68916c6d7f44c3?WT.mc_id=-blog-scottha
 
-if ($env:COMPUTERNAME -notin @('CPC-wukev-VZQ8I', 'LAPTOP-PH431T53')) {
+if ($env:COMPUTERNAME -notin @('CPC-wukev-VZQ8I')) {
   Invoke-Expression (&starship init powershell)
 } else {
   oh-my-posh init powershell --config "$env:USERPROFILE\.spaceship.omp.json" | Invoke-Expression
@@ -16,7 +16,7 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Chord Ctrl+r -ScriptBlock {
   Get-Content (Get-PSReadlineoption).HistorySavePath | fzf | Invoke-expression
 }
-Set-PSReadLineKeyHandler -Chord Ctrl+Alt+Shift+f -Function SelectForwardWord
+Set-PSReadLineKeyHandler -Chord Alt+RightArrow -Function SelectForwardWord
 Set-PSReadLineKeyHandler -Chord Ctrl+Alt+Shift+a -Function SelectCommandArgument
 Set-PSReadLineKeyHandler -Chord Ctrl+Alt+Shift+x -Function ViEditVisually
 
@@ -138,21 +138,83 @@ function winget-upgrade {
 }
 
 function gs {
+    <#
+    .SYNOPSIS
+        Clone a repo as bare + worktree under D:\work.
+    .DESCRIPTION
+        Sets up a bare-clone + worktree layout:
+          <name>\
+            <name>-git\   (bare clone)
+            .git          (file pointing to <name>-git)
+            <branch>\     (worktree for the default branch)
+
+        By default <name> is derived from the URL (e.g. "KnowMe" from the repo URL).
+        Pass -Name to override it (e.g. -Name km).
+    .EXAMPLE
+        gs https://dynamicscrm.visualstudio.com/OneCRM/_git/KnowMe
+        # creates KnowMe\KnowMe-git, KnowMe\.git, and KnowMe\main
+
+        gs https://dynamicscrm.visualstudio.com/OneCRM/_git/KnowMe -Name km
+        # creates km\km-git, km\.git, and km\main
+
+        gs https://github.com/org/repo.git km
+        # positional shorthand — same as -Name km
+    #>
     param(
-        [string]$RepoUrl
+        [Parameter(Position = 0)]
+        [string]$RepoUrl,
+
+        [Parameter(Position = 1)]
+        [Alias("n")]
+        [string]$Name,
+
+        [Alias("h")]
+        [switch]$Help
     )
-    
-    # Extract repo name from URL
-    $repoName = $RepoUrl -replace '.*[/:]([^/]+)(?:\.git)?/?$', '$1'
-    
+
+    if ($Help -or -not $RepoUrl) {
+        Write-Host @"
+gs - Git Setup (bare clone + worktree)
+
+Usage:
+  gs <repo-url> [<name>]        Clone repo with optional custom directory name
+  gs <repo-url> -Name <name>    Same, using named parameter
+  gs -Help                      Show this help
+
+Arguments:
+  <repo-url>   Git remote URL (HTTPS or SSH)
+  <name>       Custom directory name (default: derived from URL)
+
+Examples:
+  gs https://dynamicscrm.visualstudio.com/OneCRM/_git/KnowMe
+      -> KnowMe\KnowMe-git + KnowMe\.git + KnowMe\main
+
+  gs https://dynamicscrm.visualstudio.com/OneCRM/_git/KnowMe km
+      -> km\km-git + km\.git + km\main
+
+  gs https://github.com/org/my-repo.git -Name myrepo
+      -> myrepo\myrepo-git + myrepo\.git + myrepo\main
+"@ -ForegroundColor Cyan
+        return
+    }
+
+    $repoName = if ($Name) { $Name } else { $RepoUrl -replace '.*[/:]([^/]+)(?:\.git)?/?$', '$1' }
+
     New-Item -ItemType Directory -Path $repoName
-    git clone --bare $RepoUrl "$repoName\$repoName.git"
+    git clone --bare $RepoUrl "$repoName\$repoName-git"
     
-    $defaultBranch = git --git-dir="$repoName\$repoName.git" symbolic-ref refs/remotes/origin/HEAD | ForEach-Object { $_ -replace 'refs/remotes/origin/', '' }
+    # Create .git pointer file so tools recognize the parent as a repo root
+    Set-Content -Path "$repoName\.git" -Value "gitdir: ./$repoName-git" -NoNewline
+    
+    # Configure fetch refspec for all branches
+    git --git-dir="$repoName\$repoName-git" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+    git --git-dir="$repoName\$repoName-git" fetch origin
+    
+    $defaultBranch = git --git-dir="$repoName\$repoName-git" symbolic-ref refs/remotes/origin/HEAD | ForEach-Object { $_ -replace 'refs/remotes/origin/', '' }
     
     $normalizedBranch = $defaultBranch -replace '/', '-'
     
-    git --git-dir="$repoName\$repoName.git" worktree add "$repoName\$normalizedBranch" $defaultBranch
+    git --git-dir="$repoName\$repoName-git" worktree add "$repoName\$normalizedBranch" $defaultBranch
 }
 
 function gc {
@@ -311,9 +373,10 @@ function pr-worktree {
     if ($LASTEXITCODE -eq 0 -and $commonDir) {
         $gitDir = (Resolve-Path $commonDir).Path
     }
-    # Otherwise scan current directory for a *.git bare repo
+    # Otherwise scan current directory for a *-git or *.git bare repo
     if (-not $gitDir) {
-        $gitDir = Get-ChildItem -Path (Get-Location) -Filter "*.git" -Directory | Where-Object {
+        $gitDir = Get-ChildItem -Path (Get-Location) -Directory | Where-Object {
+            ($_.Name -match '[-.]git$') -and
             (git --git-dir=$_.FullName rev-parse --is-bare-repository 2>$null) -eq 'true'
         } | Select-Object -First 1 -ExpandProperty FullName
     }
