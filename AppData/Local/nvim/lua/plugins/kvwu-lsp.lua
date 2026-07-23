@@ -106,18 +106,30 @@ return {
         },
       })
 
+      -- roslyn.nvim looks for "roslyn-language-server.cmd" but mason
+      -- installs the binary as "roslyn.cmd". Point cmd at mason's path.
+      local mason_roslyn = vim.fs.joinpath(vim.fn.stdpath "data", "mason", "bin", "roslyn.cmd")
+      local roslyn_overrides = {
+        cmd = function(dispatchers, config)
+          return vim.lsp.rpc.start({ mason_roslyn, "--stdio" }, dispatchers, {
+            cwd = config.cmd_cwd,
+            env = config.cmd_env,
+          })
+        end,
+      }
+
       -- On ARM64 Windows, x64 dotnet is first on PATH (needed for some
       -- repos that don't build on arm64). roslyn.cmd just calls `dotnet`,
       -- which resolves to that x64 dotnet and fails to load the arm64
       -- native bits / requires net10. Force the roslyn process to find
       -- the arm64 dotnet first without touching the global PATH.
       if vim.env.PROCESSOR_ARCHITECTURE == "ARM64" then
-        vim.lsp.config("roslyn", {
-          cmd_env = {
-            PATH = "C:\\Program Files\\dotnet;" .. vim.env.PATH,
-          },
-        })
+        roslyn_overrides.cmd_env = {
+          PATH = "C:\\Program Files\\dotnet;" .. vim.env.PATH,
+        }
       end
+
+      vim.lsp.config("roslyn", roslyn_overrides)
 
       vim.lsp.enable { "lua_ls", "powershell_es", "jsonls", "bicep", "yamlls", "ts_ls", "roslyn", "copilot-nes" }
     end,
