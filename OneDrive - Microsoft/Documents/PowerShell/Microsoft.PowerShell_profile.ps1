@@ -52,16 +52,12 @@ if (Test-Path "D:\") {
   $env:NUGET_PLUGINS_CACHE_PATH = "D:\.nuget\plugins-cache"
 }
 
-# Use x64 dotnet on ARM machines (credential provider has no ARM64 build)
-if ([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture -eq 'Arm64' -and (Test-Path "C:\Program Files\dotnet\x64\dotnet.exe")) {
-  $env:DOTNET_ROOT = "C:\Program Files\dotnet\x64"
-  $env:Path = "C:\Program Files\dotnet\x64;" + ($env:Path -replace [regex]::Escape("C:\Program Files\dotnet\x64;"), "")
+# Native arm64 dotnet (C:\Program Files\dotnet) is the default. The NuGet artifacts
+# credential provider auths ADO feeds via the arm64 MSAL broker on its own defaults --
+# no authority override needed. (Do NOT force authority to /common: under the arm64
+# broker the ADO token-exchange grant is rejected with AADSTS9001023, which breaks
+# `dotnet tool restore` / the Husky target.)
 
-  # Enable WAM for NuGet credential provider (replaces deprecated Windows Integrated Auth)
-  $env:NUGET_CREDENTIALPROVIDER_MSAL_AUTHORITY = "https://login.microsoftonline.com/common"
-  $env:NUGET_CREDENTIALPROVIDER_MSAL_FILECACHE_ENABLED = "true"
-  $env:NUGET_CREDENTIALPROVIDER_FORCE_CANSHOWDIALOG_TO = "true"
-}
 
 $solutionPackagerPath = 'C:\Program Files\PackageManagement\NuGet\Packages\Microsoft.CrmSdk.CoreTools.9.1.0.92\content\bin\coretools\SolutionPackager.exe'
 if (Test-Path($solutionPackagerPath)) {
@@ -355,12 +351,3 @@ function pr-worktree {
     }
 }
 
-function nuget-auth {
-    $token = az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
-    if (-not $token) { Write-Host "Failed to get token. Run 'az login' first." -ForegroundColor Red; return }
-    $env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS = '{"endpointCredentials":[{"endpoint":"https://pkgs.dev.azure.com/dynamicscrm/OneCRM/_packaging/SXG-ICon-CRiBS/nuget/v3/index.json","username":"az","password":"' + $token + '"}]}'
-    $env:Path = "C:\Program Files\dotnet\x64;" + ($env:Path -replace [regex]::Escape("C:\Program Files\dotnet\x64;"), "")
-    $env:DOTNET_ROOT = "C:\Program Files\dotnet\x64"
-    $env:HUSKY = "0"
-    Write-Host "NuGet auth configured. Token expires in ~1 hour." -ForegroundColor Green
-}
