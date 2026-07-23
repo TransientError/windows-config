@@ -18,6 +18,7 @@ utils.process_settings {
     ignorecase = true,
     smartcase = true,
     shiftwidth = 2,
+    fileformats = "dos,unix",
   },
 }
 

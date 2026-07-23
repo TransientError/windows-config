@@ -44,6 +44,10 @@ return {
   {
     "cedarbaum/fugitive-azure-devops.vim",
     cond = config.profiles.work,
+    init = function()
+      -- match both dev.azure.com and *.visualstudio.com remotes
+      vim.g.fugitive_azure_devops_baseurl = [[dev\.azure\.com\|[^/]*\.visualstudio\.com]]
+    end,
     dependencies = {
       "tpope/vim-rhubarb",
     },
