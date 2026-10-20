@@ -5,6 +5,8 @@
     Supply chain attack mitigation: only install updates whose bucket
     commit is at least 7 days old. Gives time for community to spot
     compromised packages.
+    Scoop runs in a separate PowerShell process so its parallel bucket
+    updates do not inherit this script's strict error handling.
 .PARAMETER MinAgeDays
     Minimum age in days for an update to be installed. Default: 7.
 .PARAMETER DryRun
@@ -21,11 +23,23 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $scoopDir = if ($env:SCOOP) { $env:SCOOP } else { "$env:USERPROFILE\scoop" }
+$scoopCommand = (Get-Command scoop -CommandType ExternalScript -ErrorAction Stop).Source
+$powerShellPath = (Get-Process -Id $PID).Path
+
+function Invoke-Scoop([string[]]$Arguments) {
+    $quotedArguments = @($scoopCommand) + $Arguments | ForEach-Object { "'$($_.Replace("'", "''"))'" }
+    # Format status objects before Scoop's exit can discard deferred table output.
+    $command = '& ' + ($quotedArguments -join ' ') + ' | Out-String -Stream -Width 4096; exit $LASTEXITCODE'
+    & $powerShellPath -NoProfile -Command $command
+    if ($LASTEXITCODE -ne 0) {
+        throw "scoop $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
+    }
+}
 
 Write-Host "Updating scoop and buckets..." -ForegroundColor Cyan
-scoop update
+Invoke-Scoop -Arguments @('update')
 
-$statusLines = scoop status 2>&1 | Out-String | ForEach-Object { $_ -split "`n" }
+$statusLines = Invoke-Scoop -Arguments @('status', '--local') | Out-String -Width 4096 | ForEach-Object { $_ -split "`n" }
 
 # Find header separator line (----) to determine column positions
 $separatorIdx = $null
@@ -139,7 +153,7 @@ if ($DryRun) {
 Write-Host "`nInstalling $($safeUpdates.Count) safe update(s)..." -ForegroundColor Cyan
 foreach ($u in $safeUpdates) {
     Write-Host "`n>> Updating $($u.Name) ($($u.Installed) -> $($u.Latest))..." -ForegroundColor Cyan
-    scoop update $u.Name
+    Invoke-Scoop -Arguments @('update', $u.Name)
 }
 
 Write-Host "`nDone." -ForegroundColor Green
